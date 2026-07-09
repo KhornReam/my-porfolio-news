@@ -42,6 +42,20 @@ const translations = {
     about: {
       heading: "About Me",
       subheading: "Education, skills, and journey",
+      // Personal Info
+      personalInfo: "Personal Information",
+      personalInfoSub: "A little bit about me",
+      personalBio: "Hi, I'm Ream! I'm a 20-year-old passionate developer born in the beautiful Kampong Thom province of Cambodia. I come from a family of two, and I'm proud of my roots. I'm a kind and friendly person who loves connecting with others and helping people through technology.",
+      personalDetails: {
+        age: "Age",
+        ageValue: "20",
+        birthplace: "Birthplace",
+        birthplaceValue: "Kampong Thom, Cambodia",
+        family: "Family Size",
+        familyValue: "2 members",
+        personality: "Personality",
+        personalityValue: "Kind & Friendly",
+      },
       education: "Education",
       educationSub: "Professional Training",
       edu1Title: "Passerelles Numériques Cambodia",
@@ -319,6 +333,20 @@ const translations = {
     about: {
       heading: "អំពីខ្ញុំ",
       subheading: "ការសិក្សា ជំនាញ និងដំណើរជីវិត",
+      // Personal Info
+      personalInfo: "ព័ត៌មានផ្ទាល់ខ្លួន",
+      personalInfoSub: "បន្តិចអំពីខ្ញុំ",
+      personalBio: "សួស្តី ខ្ញុំគឺ រាម! ខ្ញុំជាអ្នកអភិវឌ្ឍន៍អាយុ ២០ ឆ្នាំដែលមានចំណង់ចំណូលចិត្ត កើតនៅខេត្តកំពង់ធំដ៏ស្រស់ស្អាតរបស់កម្ពុជា។ ខ្ញុំមានគ្រួសារ ២ នាក់ ហើយខ្ញុំរីករាយនឹងដើមកំណើតរបស់ខ្ញុំ។ ខ្ញុំជាមនុស្សស្មោះត្រង់ និងរាក់ទាក់ដែលចូលចិត្តភ្ជាប់ទំនាក់ទំនងជាមួយអ្នកដទៃ និងជួយមនុស្សតាមរយៈបច្ចេកវិទ្យា។",
+      personalDetails: {
+        age: "អាយុ",
+        ageValue: "២០ ឆ្នាំ",
+        birthplace: "ទីកន្លែងកំណើត",
+        birthplaceValue: "កំពង់ធំ កម្ពុជា",
+        family: "ទំហំគ្រួសារ",
+        familyValue: "២ នាក់",
+        personality: "អត្តចរិត",
+        personalityValue: "ស្មោះត្រង់ & រាក់ទាក់",
+      },
       education: "ការសិក្សា",
       educationSub: "ការបណ្តុះបណ្តាលវិជ្ជាជីវៈ",
       edu1Title: "Passerelles Numériques កម្ពុជា",
@@ -382,7 +410,7 @@ const translations = {
     experiences: {
       badge: "🎯 បទពិសោធន៍បន្ថែម",
       titleMain: "ដំណើរ",
-      titleAccent: "និងសមិទ្ធផល",
+      titleAccent: "",
       subtitle:
         "ស្វែងយល់ជំនាញថ្មីៗ ចូលរួមសិក្ខាសាលា និងរួមចំណែកដល់សហគមន៍បច្ចេកវិទ្យា",
       seeMore: "មើលបន្ថែម",
@@ -494,7 +522,7 @@ const translations = {
     contacts: {
       badge: "📬 ទាក់ទងខ្ញុំ",
       titleMain: "តោះ",
-      titleAccent: "សហការគ្នា",
+      titleAccent: "",
       subtitle:
         "មានគម្រោងក្នុងចិត្តមែនទេ? ខ្ញុំតែងតែបើកចំហរក្នុងការពិភាក្សាអំពីឱកាស និងគំនិតថ្មីៗ។",
       infoTitle: "ព័ត៌មានទំនាក់ទំនង",

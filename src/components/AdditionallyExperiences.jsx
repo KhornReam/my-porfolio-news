@@ -129,15 +129,6 @@ function AdditionallyExperiences() {
                 key={exp.id}
                 className={`exp-item ${isExpanded ? "expanded" : ""}`}
                 style={{ "--service-color": exp.color, "--service-color-rgb": exp.colorRgb, "--delay": `${index * 0.1}s` }}
-                onClick={() => toggleExpand(exp.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    toggleExpand(exp.id);
-                  }
-                }}
               >
                 <div className="service-glow"></div>
                 <div className="service-background"></div>
@@ -230,10 +221,7 @@ function AdditionallyExperiences() {
                   <button
                     type="button"
                     className="exp-toggle-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleExpand(exp.id);
-                    }}
+                    onClick={() => toggleExpand(exp.id)}
                     aria-expanded={isExpanded}
                   >
                     <span>{isExpanded ? tShowLess : tSeeMore}</span>
