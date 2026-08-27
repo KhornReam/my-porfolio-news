@@ -1,16 +1,42 @@
 import "../css/About.css";
-import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile } from "react-icons/fa";
+import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import profile from "../assets/ream.png";
+import aboutVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
 
 function About() {
   const { t, lang } = useLanguage();
+  const [isImageOpen, setIsImageOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isImageOpen) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setIsImageOpen(false);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isImageOpen]);
 
   return (
     <section className="about-section" id="about">
       {/* Hero Background */}
       <div className="hero-background">
+        <video
+          className="about-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        >
+          <source src={aboutVideo} type="video/mp4" />
+        </video>
+        <div className="about-video-overlay" aria-hidden="true"></div>
+        <div className="about-grid-overlay" aria-hidden="true"></div>
         <div className="gradient-overlay"></div>
         <div className="particle-field">
           {[...Array(20)].map((_, i) => (
@@ -73,7 +99,15 @@ function About() {
               <div className="personal-profile-card">
                 <div className="personal-profile-glow"></div>
                 <div className="personal-image-wrapper">
-                  <img src={profile} alt="Ream Khorn" className="personal-profile-image" />
+                  <button
+                    type="button"
+                    className="image-trigger"
+                    onClick={() => setIsImageOpen(true)}
+                    aria-label="View a larger profile image"
+                  >
+                    <img src={profile} alt="Ream Khorn" className="personal-profile-image" />
+                    <span className="image-view-label">View image</span>
+                  </button>
                   <div className="personal-sparkle"></div>
                   <div className="personal-sparkle"></div>
                   <div className="personal-sparkle"></div>
@@ -423,6 +457,29 @@ function About() {
         </div>
 
       </div>
+
+      {isImageOpen && (
+        <div
+          className="image-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded profile image"
+          onClick={() => setIsImageOpen(false)}
+        >
+          <div className="image-modal-content" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="image-modal-close"
+              onClick={() => setIsImageOpen(false)}
+              aria-label="Close image viewer"
+            >
+              <FaTimes />
+            </button>
+            <img src={profile} alt="Ream Khorn enlarged profile" className="image-modal-photo" />
+            <span className="image-modal-caption">Ream Khorn · Full-Stack Developer</span>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

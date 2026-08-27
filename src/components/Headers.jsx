@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDownload } from "react-icons/fa";
-import profile from "../assets/ream.png";
+import profile from "../assets/Ream2.png";
+import heroVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
 import { SiTypescript } from "react-icons/si";
 import "../css/Headers.css";
@@ -32,7 +33,20 @@ function Headers() {
   }, [charIndex, index]);
 
   return (
-    <header className="hero">
+    <header className="hero" id="home">
+      <video
+        className="hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+      <div className="hero-video-overlay" aria-hidden="true"></div>
+      <div className="hero-grid-overlay" aria-hidden="true"></div>
+
       {/* Background Name */}
       <div className="hero-bg-text">
         <span className="bg-name-first">{t.hero.bgFirstName}</span>
@@ -57,15 +71,6 @@ function Headers() {
           </h2>
 
           <p>{t.hero.description}</p>
-
-          <div className="hero-stats">
-            {t.hero.stats.map((stat, i) => (
-              <div className="stat-box" key={i}>
-                <span className="stat-number">{stat.number}</span>
-                <span className="stat-label">{stat.label}</span>
-              </div>
-            ))}
-          </div>
 
           <div className="hero-buttons">
             <a href="#projects" className="btn primary">
@@ -159,6 +164,7 @@ function Headers() {
       </div>
 
       <a href="#about" className="scroll-indicator" aria-label="Scroll down">
+        <span>Scroll to explore</span>
         <FaChevronDown />
       </a>
     </header>

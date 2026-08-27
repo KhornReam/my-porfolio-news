@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "../css/Contact.css";
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaCheckCircle, FaPaperPlane, FaUser, FaCommentAlt, FaArrowRight } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaCheckCircle, FaPaperPlane, FaUser, FaCommentAlt, FaArrowRight, FaRobot } from "react-icons/fa";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function Contact() {
@@ -13,6 +13,16 @@ function Contact() {
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("");
   const itemsRef = useRef([]);
+  const [chatInput, setChatInput] = useState("");
+  const [chatMessages, setChatMessages] = useState([
+    {
+      id: 1,
+      sender: "bot",
+      text: lang === "km"
+        ? "សួស្តី! ខ្ញុំជាជំនួយការរបស់រាម។ សួរខ្ញុំអំពីជំនាញ គម្រោង ការសិក្សា ឬបទពិសោធន៍របស់គាត់បាន។"
+        : "Hi! I’m Ream’s portfolio assistant. Ask me about his skills, projects, education, experience, or availability.",
+    },
+  ]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -143,6 +153,66 @@ function Contact() {
     setExpandedContact((prev) => (prev === id ? null : id));
   };
 
+  const getBotReply = (question) => {
+    const query = question.toLowerCase();
+    const isKhmer = lang === "km";
+
+    if (/(hello|hi|hey|សួស្តី)/i.test(query)) {
+      return isKhmer ? "សួស្តី! តើអ្នកចង់ដឹងអ្វីអំពីរាម?" : "Hello! What would you like to know about Ream?";
+    }
+    if (/(skill|technology|stack|tech|ជំនាញ|បច្ចេកវិទ្យា)/i.test(query)) {
+      return isKhmer
+        ? "រាមមានជំនាញ Frontend (React, Vue, JavaScript, TypeScript, HTML, CSS), Backend (Node.js, Laravel, PHP, Python), Database (MySQL, MongoDB, Redis) និង tools ដូចជា Git, GitHub, AWS, Figma និង Power BI។"
+        : "Ream works with React, Vue, JavaScript, TypeScript, HTML, CSS, Node.js, Laravel, PHP, Python, MySQL, MongoDB, Redis, Git, GitHub, AWS, Figma, and Power BI.";
+    }
+    if (/(project|portfolio|គម្រោង)/i.test(query)) {
+      return isKhmer
+        ? "គម្រោងសំខាន់ៗរួមមាន Business Selling System, Weather App, Achar Booking System, E-commerce Platform, Personal Finance Tracker និង Power BI Dashboard។ អ្នកអាចមើលព័ត៌មានលម្អិតនៅផ្នែក Projects។"
+        : "Ream’s featured projects include a product-selling business system, Weather App, Achar Event Booking System, E-commerce Platform, Personal Finance Tracker, and Power BI Dashboard. See the Projects section for links.";
+    }
+    if (/(education|study|school|សិក្សា|ការអប់រំ)/i.test(query)) {
+      return isKhmer
+        ? "រាមកំពុងសិក្សា Full-Stack Web Development នៅ Passerelles Numériques Cambodia (2026–Present) ហើយបានបញ្ចប់វិទ្យាល័យក្នុងឆ្នាំ 2024។"
+        : "Ream is currently studying Full-Stack Web Development at Passerelles Numériques Cambodia (2026–Present). He completed high school in 2024.";
+    }
+    if (/(experience|workshop|journey|បទពិសោធន៍|ដំណើរ)/i.test(query)) {
+      return isKhmer
+        ? "បទពិសោធន៍របស់រាមរួមមាន Cybersecurity Workshop, mentoring យុវជនកម្ពុជា, Figma Workshop, technology competitions, company visits និង Canva/Cybersecurity training។"
+        : "Ream’s additional experience includes a Cybersecurity Workshop, mentoring Cambodian youth, a Figma Design Workshop, technology competitions, company visits, and Canva/Cybersecurity training.";
+    }
+    if (/(about|who|ream|រាម|អំពី)/i.test(query)) {
+      return isKhmer
+        ? "រាម ខន ជាអ្នកអភិវឌ្ឍន៍ Full-Stack អាយុ 20 ឆ្នាំ មកពីខេត្តកំពង់ធំ ប្រទេសកម្ពុជា។ គាត់ជាមនុស្សរួសរាយរាក់ទាក់ និងចូលចិត្តប្រើបច្ចេកវិទ្យាដើម្បីជួយអ្នកដទៃ។"
+        : "Ream Khorn is a 20-year-old Full-Stack Developer from Kampong Thom, Cambodia. He is friendly, passionate about technology, and enjoys building useful digital experiences.";
+    }
+    if (/(available|hire|job|intern|work|ការងារ|ជួល)/i.test(query)) {
+      return isKhmer
+        ? "បាទ/ចាស រាមកំពុងស្វែងរកឱកាសការងារ និង internship ដើម្បីបង្កើនបទពិសោធន៍។ អ្នកអាចផ្ញើសារតាម form ឬទាក់ទងតាម reamkhorn12345@gmail.com។"
+        : "Yes. Ream is currently open to job and internship opportunities. You can use the form here or email him at reamkhorn12345@gmail.com.";
+    }
+    if (/(contact|email|phone|ទំនាក់ទំនង|អ៊ីមែល|ទូរស័ព្ទ)/i.test(query)) {
+      return isKhmer
+        ? "អ្នកអាចទាក់ទងរាមតាមអ៊ីមែល reamkhorn12345@gmail.com ឬទូរស័ព្ទ +855 863 393 350។ អ្នកក៏អាចរកគាត់នៅ LinkedIn និង GitHub បាន។"
+        : "You can contact Ream at reamkhorn12345@gmail.com or +855 863 393 350. He is also available through LinkedIn and GitHub on this page.";
+    }
+
+    return isKhmer
+      ? "ខ្ញុំអាចប្រាប់អ្នកអំពីរាម ជំនាញ គម្រោង ការសិក្សា បទពិសោធន៍ និងឱកាសការងារ។ សាកសួរ ‘តើរាមចេះអ្វី?’ ឬ ‘តើរាមមានគម្រោងអ្វីខ្លះ?’"
+      : "I can tell you about Ream, his skills, projects, education, experience, and availability. Try asking “What are Ream’s skills?” or “What projects has he built?”";
+  };
+
+  const sendChatMessage = (message = chatInput) => {
+    const trimmedMessage = message.trim();
+    if (!trimmedMessage) return;
+
+    setChatMessages((previous) => [
+      ...previous,
+      { id: Date.now(), sender: "user", text: trimmedMessage },
+      { id: Date.now() + 1, sender: "bot", text: getBotReply(trimmedMessage) },
+    ]);
+    setChatInput("");
+  };
+
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
@@ -227,6 +297,39 @@ function Contact() {
                 <FaArrowRight className="direct-email-arrow" />
                 <div className="direct-email-glow"></div>
               </button>
+            </div>
+
+            <div className="portfolio-chatbot" ref={(el) => (itemsRef.current[6] = el)}>
+              <div className="chatbot-header">
+                <div className="chatbot-avatar"><FaRobot /></div>
+                <div>
+                  <h3>{lang === "km" ? "សួរអំពីរាម" : "Ask about Ream"}</h3>
+                  <p><span className="chatbot-status-dot"></span>{lang === "km" ? "ជំនួយការផតថលីអូ" : "Portfolio assistant"}</p>
+                </div>
+              </div>
+              <div className="chatbot-messages" aria-live="polite">
+                {chatMessages.map((message) => (
+                  <div key={message.id} className={`chat-message ${message.sender}`}>
+                    {message.sender === "bot" && <FaRobot className="chat-message-icon" />}
+                    <p>{message.text}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="chatbot-quick-actions">
+                {(lang === "km" ? ["ជំនាញរបស់រាម?", "គម្រោងរបស់រាម?", "តើអាចជួលបានទេ?"] : ["What are his skills?", "What projects has he built?", "Is he available?"]).map((question) => (
+                  <button key={question} type="button" onClick={() => sendChatMessage(question)}>{question}</button>
+                ))}
+              </div>
+              <form className="chatbot-form" onSubmit={(event) => { event.preventDefault(); sendChatMessage(); }}>
+                <input
+                  value={chatInput}
+                  onChange={(event) => setChatInput(event.target.value)}
+                  placeholder={lang === "km" ? "សរសេរសំណួររបស់អ្នក..." : "Ask me anything about Ream..."}
+                  aria-label={lang === "km" ? "សំណួរ" : "Question about Ream"}
+                  maxLength={300}
+                />
+                <button type="submit" aria-label={lang === "km" ? "ផ្ញើ" : "Send question"}><FaPaperPlane /></button>
+              </form>
             </div>
           </div>
 

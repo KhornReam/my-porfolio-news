@@ -65,10 +65,10 @@ function Footer() {
   ];
 
   const socials = [
-    { icon: <FaGithub />, label: "GitHub", href: "https://github.com/Ream-dev", color: "#61dafb" },
-    { icon: <FaLinkedin />, label: "LinkedIn", href: "https://linkedin.com/in/ream", color: "#0a66c2" },
-    { icon: <FaEnvelope />, label: "Email", href: "mailto:reamkhorn12345@gmail.com", color: "#3b82f6" },
-    { icon: <FaTelegram />, label: "Telegram", href: "https://t.me/ream", color: "#0088cc" },
+    { icon: <FaGithub />, label: "", href: "https://github.com/Ream-dev", color: "#61dafb" },
+    { icon: <FaLinkedin />, label: "", href: "https://linkedin.com/in/ream", color: "#0a66c2" },
+    { icon: <FaEnvelope />, label: "", href: "mailto:reamkhorn12345@gmail.com", color: "#3b82f6" },
+    { icon: <FaTelegram />, label: "", href: "https://t.me/ream", color: "#0088cc" },
   ];
 
   // Duplicate tech for seamless marquee

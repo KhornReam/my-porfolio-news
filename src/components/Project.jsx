@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaCode, FaServer, FaShoppingCart, FaCloud } from "react-icons/fa";
 import "../css/Project.css";
 import { useLanguage } from "../contexts/LanguageContext";
+import projectVideo from "../assets/262696.mp4";
 
 function Projects() {
   const { t, lang } = useLanguage();
@@ -103,6 +104,11 @@ function Projects() {
 
   return (
     <section className="projects" id="projects">
+      <video className="projects-video" autoPlay muted loop playsInline aria-hidden="true">
+        <source src={projectVideo} type="video/mp4" />
+      </video>
+      <div className="projects-video-overlay" aria-hidden="true"></div>
+      <div className="projects-grid-overlay" aria-hidden="true"></div>
       <div className="projects-container">
         {/* Header */}
         <div className="projects-header">
