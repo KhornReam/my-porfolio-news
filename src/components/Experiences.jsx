@@ -11,6 +11,7 @@ import {
   FaLightbulb,
   FaStar,
   FaTag,
+  FaTimes,
 } from "react-icons/fa";
 import "../css/AdditionallyExperiences.css";
 import cybersecurityImage from "../assets/cybersecurity.png";
@@ -24,6 +25,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 function Experiences() {
   const { t, lang } = useLanguage();
   const [expandedId, setExpandedId] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const expItems = document.querySelectorAll(".exp-item");
@@ -44,6 +46,17 @@ function Experiences() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!selectedImage) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setSelectedImage(null);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [selectedImage]);
+
   const toggleExpand = (id) => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
@@ -55,6 +68,7 @@ function Experiences() {
   const expColors = ["#00d4ff", "#ff6b6b", "#a855f7", "#f59e0b", "#4ecdc4", "#61dafb"];
   const expColorsRgb = ["0, 212, 255", "255, 107, 107", "168, 85, 247", "245, 158, 11", "78, 205, 196", "97, 218, 251"];
   const years = ["2026", "2026", "2026", "2026", "2026", "2026"];
+  const experienceItems = [...t.experiences.items, ...t.experiences.items];
 
   return (
     <section className="exp-section" id="Experiences">
@@ -73,47 +87,56 @@ function Experiences() {
         </div>
 
         {/* Experiences Grid */}
-        <div className="exp-grid">
-          {t.experiences.items.map((exp, index) => {
+        <div className="exp-grid-viewport">
+          <div className={`exp-grid ${expandedId !== null ? "has-expanded" : ""}`}>
+          {experienceItems.map((exp, index) => {
+            const cardIndex = index % expImages.length;
             const isExpanded = expandedId === index;
             return (
               <div
                 key={index}
                 className={`exp-item ${isExpanded ? "expanded" : ""}`}
-                style={{ '--service-color': expColors[index], '--service-color-rgb': expColorsRgb[index], '--delay': `${index * 0.1}s` }}
+                style={{ '--service-color': expColors[cardIndex], '--service-color-rgb': expColorsRgb[cardIndex], '--delay': `${index * 0.1}s`, '--image-delay': `${index * -1.2}s` }}
               >
                 <div className="service-glow"></div>
                 <div className="service-background"></div>
                 
                 {/* Image Section */}
                 <div className="exp-image-container">
-                  <img 
-                    src={expImages[index]} 
-                    alt={exp.title}
-                    className="exp-image"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextElementSibling.style.display = 'flex';
-                    }}
-                  />
-                  <div className="exp-icon-fallback" style={{ display: 'none' }}>
-                    {expIcons[index]}
-                  </div>
-                  <div className="exp-category-badge">
-                    {exp.category}
-                  </div>
-                  <div className="exp-year-badge">
-                    <FaCalendarAlt className="year-icon" />
-                    {years[index]}
-                  </div>
+                  <button
+                    type="button"
+                    className="exp-image-trigger"
+                    onClick={() => setSelectedImage({ src: expImages[cardIndex], title: exp.title, color: expColors[cardIndex] })}
+                    aria-label={`${lang === "km" ? "មើលរូបភាព" : "View image"}: ${exp.title}`}
+                  >
+                    <img 
+                      src={expImages[cardIndex]}
+                      alt={exp.title}
+                      className="exp-image"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="exp-icon-fallback" style={{ display: 'none' }}>
+                      {expIcons[cardIndex]}
+                    </div>
+                    <span className="exp-image-action">
+                      {lang === "km" ? "មើលរូបភាព" : "View photo"}
+                    </span>
+                  </button>
                 </div>
 
                 {/* Content Section */}
                 <div className="exp-content">
+                  <div className="exp-meta">
+                    <span className="exp-category-label">{exp.category}</span>
+                    <span className="exp-year-label"><FaCalendarAlt /> {years[cardIndex]}</span>
+                  </div>
                   <div className="exp-content-header">
                     <h3 className="exp-title">{exp.title}</h3>
-                    <div className="exp-icon-ring" style={{ color: expColors[index] }}>
-                      {expIcons[index]}
+                    <div className="exp-icon-ring" style={{ color: expColors[cardIndex] }}>
+                      {expIcons[cardIndex]}
                     </div>
                   </div>
 
@@ -141,7 +164,7 @@ function Experiences() {
                           <span
                             key={i}
                             className="exp-skill-tag"
-                            style={{ "--tag-color": expColors[index] }}
+                            style={{ "--tag-color": expColors[cardIndex] }}
                           >
                             {skill}
                           </span>
@@ -160,7 +183,7 @@ function Experiences() {
                           <li key={i} className="exp-highlight-item">
                             <span
                               className="highlight-dot"
-                              style={{ background: expColors[index] }}
+                              style={{ background: expColors[cardIndex] }}
                             ></span>
                             {item}
                           </li>
@@ -191,7 +214,20 @@ function Experiences() {
               </div>
             );
           })}
+          </div>
         </div>
+
+        {selectedImage && (
+          <div className="exp-image-modal" role="dialog" aria-modal="true" aria-label={selectedImage.title} onClick={() => setSelectedImage(null)}>
+            <div className="exp-image-modal-content" onClick={(event) => event.stopPropagation()} style={{ "--modal-color": selectedImage.color }}>
+              <button type="button" className="exp-image-modal-close" onClick={() => setSelectedImage(null)} aria-label={lang === "km" ? "បិទរូបភាព" : "Close image"}>
+                <FaTimes />
+              </button>
+              <img src={selectedImage.src} alt={selectedImage.title} className="exp-image-modal-photo" />
+              <div className="exp-image-modal-caption">{selectedImage.title}</div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

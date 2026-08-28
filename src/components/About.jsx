@@ -1,5 +1,5 @@
 import "../css/About.css";
-import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes } from "react-icons/fa";
+import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes, FaArrowRight } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import profile from "../assets/ream.png";
@@ -108,12 +108,69 @@ function About() {
                     <img src={profile} alt="Ream Khorn" className="personal-profile-image" />
                     <span className="image-view-label">View image</span>
                   </button>
+                  <div className="profile-orbit" aria-hidden="true">
+                    <span className="orbit-icon orbit-react"><FaReact /></span>
+                    <span className="orbit-icon orbit-node"><FaNodeJs /></span>
+                    <span className="orbit-icon orbit-js"><FaJsSquare /></span>
+                    <span className="orbit-icon orbit-python"><FaPython /></span>
+                  </div>
                   <div className="personal-sparkle"></div>
                   <div className="personal-sparkle"></div>
                   <div className="personal-sparkle"></div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="location-card">
+          <div className="location-map-wrap">
+            <div className="map-toolbar">
+              <span className="map-toolbar-title">{lang === "km" ? "ផែនទីទីតាំង" : "LOCATION MAP"}</span>
+              <span className="map-toolbar-mode">{lang === "km" ? "កម្ពុជា" : "CAMBODIA"}</span>
+            </div>
+            <div className="location-map-visual" role="img" aria-label="Map illustration showing Kampong Thom, Cambodia">
+              <svg viewBox="0 0 800 400" aria-hidden="true" focusable="false">
+                <path className="map-river" d="M80 40 C180 100 140 155 260 190 S400 205 465 285 S650 330 760 370" />
+                <path className="map-road road-main" d="M20 320 C160 275 265 300 370 230 S585 120 790 70" />
+                <path className="map-road" d="M110 20 C180 105 220 160 205 370" />
+                <path className="map-road" d="M420 20 C390 120 470 170 520 380" />
+                <path className="map-road" d="M630 30 C590 130 650 200 760 260" />
+                <path className="map-road road-small" d="M40 130 C175 180 300 135 420 160 S630 205 780 170" />
+                <circle className="map-area" cx="150" cy="260" r="28" />
+                <circle className="map-area" cx="650" cy="125" r="38" />
+                <circle className="map-area" cx="345" cy="100" r="18" />
+                <g className="map-marker" transform="translate(400 205) scale(1.25)">
+                  <circle className="map-marker-pulse" cx="0" cy="0" r="30" />
+                  <path d="M0 28 C-5 20 -22 4 -22 -9 A22 22 0 1 1 22 -9 C22 4 5 20 0 28Z" />
+                  <circle cx="0" cy="-9" r="7" />
+                </g>
+              </svg>
+              <div className="map-visual-label">
+                <span>{lang === "km" ? "ទីតាំង" : "LOCATION"}</span>
+                <strong>{lang === "km" ? "កំពង់ធំ" : "Kampong Thom"}</strong>
+                <small>Cambodia · 12.25°N, 104.67°E</small>
+              </div>
+            </div>
+            <div className="location-map-badge">
+              <FaMapMarkerAlt />
+              <span>{lang === "km" ? "កំពង់ធំ" : "Kampong Thom"}</span>
+            </div>
+          </div>
+          <div className="location-content">
+            <div className="location-icon"><FaMapMarkerAlt /></div>
+            <span className="location-eyebrow">{lang === "km" ? "កន្លែងកំណើត" : "MY ROOTS"}</span>
+            <h3>{lang === "km" ? "កំពង់ធំ ប្រទេសកម្ពុជា" : "Kampong Thom, Cambodia"}</h3>
+            <p>{lang === "km" ? "ទីកន្លែងដែលខ្ញុំកើត និងជាកន្លែងដែលចាប់ផ្តើមដំណើររបស់ខ្ញុំជាមួយបច្ចេកវិទ្យា។" : "The place I was born and where my journey with technology began."}</p>
+            <a
+              className="location-link"
+              href="https://www.google.com/maps/search/?api=1&query=Kampong+Thom%2C+Cambodia"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {lang === "km" ? "បើកក្នុង Google Maps" : "Open in Google Maps"}
+              <FaArrowRight />
+            </a>
           </div>
         </div>
         <div className="details-section">

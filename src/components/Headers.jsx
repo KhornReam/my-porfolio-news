@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDownload } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDownload, FaRobot } from "react-icons/fa";
 import profile from "../assets/Ream2.png";
 import heroVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
@@ -73,8 +73,9 @@ function Headers() {
           <p>{t.hero.description}</p>
 
           <div className="hero-buttons">
-            <a href="#projects" className="btn primary">
-              {t.hero.viewWork}
+            <a href="#portfolio-chatbot" className="btn primary chatbot-cta">
+              <FaRobot />
+              {lang === "km" ? "សួរជំនួយការ AI" : "Ask AI Assistant"}
             </a>
             <a href={cvFile} className="btn primary" download="Ream_Khorn_CV.pdf">
               <FaDownload /> {lang === 'km' ? 'ទាញយក CV' : 'Download CV'}
