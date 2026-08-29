@@ -20,7 +20,7 @@ import { SiTypescript } from "react-icons/si";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function Footer() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [emailCopied, setEmailCopied] = useState(false);
@@ -65,10 +65,10 @@ function Footer() {
   ];
 
   const socials = [
-    { icon: <FaGithub />, label: "", href: "https://github.com/Ream-dev", color: "#61dafb" },
-    { icon: <FaLinkedin />, label: "", href: "https://linkedin.com/in/ream", color: "#0a66c2" },
-    { icon: <FaEnvelope />, label: "", href: "mailto:reamkhorn12345@gmail.com", color: "#3b82f6" },
-    { icon: <FaTelegram />, label: "", href: "https://t.me/ream", color: "#0088cc" },
+    { icon: <FaGithub />, label: "GitHub", href: "https://github.com/Ream-dev", color: "#61dafb" },
+    { icon: <FaLinkedin />, label: "LinkedIn", href: "https://linkedin.com/in/ream", color: "#0a66c2" },
+    { icon: <FaEnvelope />, label: lang === "km" ? "អ៊ីមែល" : "Email", href: "mailto:reamkhorn12345@gmail.com", color: "#3b82f6" },
+    { icon: <FaTelegram />, label: "Telegram", href: "https://t.me/ream", color: "#0088cc" },
   ];
 
   // Duplicate tech for seamless marquee

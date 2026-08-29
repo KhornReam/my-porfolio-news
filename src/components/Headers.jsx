@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDownload, FaRobot } from "react-icons/fa";
-import profile from "../assets/Ream2.png";
+import profile from "../assets/ream1.png";
 import heroVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
 import { SiTypescript } from "react-icons/si";
