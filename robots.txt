@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://my-porfolio-ream-odaw.vercel.app/sitemap.xml
