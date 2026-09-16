@@ -1,3 +1,4 @@
+import 'leaflet/dist/leaflet.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Headers from './components/Headers'

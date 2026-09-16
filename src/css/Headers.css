@@ -1,11 +1,11 @@
 .hero {
   min-height: 100vh;
-  background: #020817;
+  background: linear-gradient(180deg, rgba(2, 8, 23, 0.2), rgba(2, 8, 23, 0.45));
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  padding: 80px 20px 40px 20px;
+  padding: 90px 20px 40px 20px;
   position: relative;
   overflow: hidden;
 }
@@ -119,6 +119,7 @@
   position: relative;
   z-index: 2;
   animation: heroReveal 0.9s ease-out both;
+  padding: 8px 0;
 }
 
 @keyframes heroReveal {

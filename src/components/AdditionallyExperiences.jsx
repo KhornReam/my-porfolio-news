@@ -36,7 +36,7 @@ function AdditionallyExperiences() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.18 }
     );
 
     expItems.forEach((item) => observer.observe(item));
@@ -103,7 +103,6 @@ function AdditionallyExperiences() {
   return (
     <section className="exp-section" id="experiences">
       <div className="exp-container">
-        {/* Header Section */}
         <div className="exp-header">
           <div className="header-badge">
             <span className="badge-text">{t.experiences.badge}</span>
@@ -116,7 +115,6 @@ function AdditionallyExperiences() {
           <p className="section-subtitle">{t.experiences.subtitle}</p>
         </div>
 
-        {/* Experiences Grid */}
         <div className="exp-grid">
           {experiences.map((exp, index) => {
             const isExpanded = expandedId === exp.id;
@@ -125,41 +123,41 @@ function AdditionallyExperiences() {
             const tShowLess = t.experiences.showLess;
 
             return (
-              <div
+              <article
                 key={exp.id}
                 className={`exp-item ${isExpanded ? "expanded" : ""}`}
-                style={{ "--service-color": exp.color, "--service-color-rgb": exp.colorRgb, "--delay": `${index * 0.1}s` }}
+                style={{
+                  "--service-color": exp.color,
+                  "--service-color-rgb": exp.colorRgb,
+                  "--delay": `${index * 0.1}s`,
+                  backgroundImage: `linear-gradient(180deg, rgba(2, 8, 23, 0.08), rgba(2, 8, 23, 0.72)), url(${exp.image})`,
+                }}
+                onClick={() => toggleExpand(exp.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    toggleExpand(exp.id);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
               >
-                <div className="service-glow"></div>
-                <div className="service-background"></div>
-
-                {/* Image Section */}
-                <div className="exp-image-container">
-                  <img
-                    src={exp.image}
-                    alt={trans.title}
-                    className="exp-image"
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                      e.target.nextElementSibling.style.display = "flex";
-                    }}
-                  />
-                  <div className="exp-icon-fallback" style={{ display: "none" }}>
-                    {exp.icon}
-                  </div>
-                  <div className="exp-category-badge">
-                    {trans.category}
-                  </div>
-                  <div className="exp-year-badge">
+                <div className="exp-card-overlay" aria-hidden="true" />
+                <div className="exp-card-topline">
+                  <span className="exp-category-badge">{trans.category}</span>
+                  <span className="exp-year-badge">
                     <FaCalendarAlt className="year-icon" />
                     {exp.year}
-                  </div>
+                  </span>
                 </div>
 
-                {/* Content Section */}
                 <div className="exp-content">
                   <div className="exp-content-header">
-                    <h3 className="exp-title">{trans.title}</h3>
+                    <div className="exp-header-copy">
+                      <span className="exp-mini-label">{trans.category}</span>
+                      <h3 className="exp-title">{trans.title}</h3>
+                    </div>
                     <div className="exp-icon-ring" style={{ color: exp.color }}>
                       {exp.icon}
                     </div>
@@ -167,73 +165,68 @@ function AdditionallyExperiences() {
 
                   <p className="exp-description">{trans.description}</p>
 
-                  {/* Expandable Content */}
                   <div className={`exp-expandable ${isExpanded ? "open" : ""}`}>
-                      {/* More Description */}
-                      <div className="exp-more-section">
-                        <div className="exp-section-label">
-                          <FaStar className="section-icon" />
-                          <span>{lang === "km" ? "ព័ត៌មានលម្អិត" : "Details"}</span>
-                        </div>
-                        <p className="exp-more-text">{trans.more}</p>
+                    <div className="exp-more-section">
+                      <div className="exp-section-label">
+                        <FaStar className="section-icon" />
+                        <span>{lang === "km" ? "ព័ត៌មានលម្អិត" : "Details"}</span>
                       </div>
+                      <p className="exp-more-text">{trans.more}</p>
+                    </div>
 
-                      {/* Skills Learned */}
-                      <div className="exp-skills-section">
-                        <div className="exp-section-label">
-                          <FaLightbulb className="section-icon" />
-                          <span>{lang === "km" ? "ជំនាញដែលបានរៀន" : "Skills Learned"}</span>
-                        </div>
-                        <div className="exp-skills-grid">
-                          {trans.skills && trans.skills.map((skill, i) => (
+                    <div className="exp-skills-section">
+                      <div className="exp-section-label">
+                        <FaLightbulb className="section-icon" />
+                        <span>{lang === "km" ? "ជំនាញដែលបានរៀន" : "Skills Learned"}</span>
+                      </div>
+                      <div className="exp-skills-grid">
+                        {trans.skills && trans.skills.map((skill, i) => (
+                          <span
+                            key={i}
+                            className="exp-skill-tag"
+                            style={{ "--tag-color": exp.color }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="exp-highlights-section">
+                      <div className="exp-section-label">
+                        <FaTag className="section-icon" />
+                        <span>{lang === "km" ? "ចំណុចសំខាន់ៗ" : "Key Highlights"}</span>
+                      </div>
+                      <ul className="exp-highlights-list">
+                        {trans.highlights && trans.highlights.map((item, i) => (
+                          <li key={i} className="exp-highlight-item">
                             <span
-                              key={i}
-                              className="exp-skill-tag"
-                              style={{ "--tag-color": exp.color }}
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Key Highlights */}
-                      <div className="exp-highlights-section">
-                        <div className="exp-section-label">
-                          <FaTag className="section-icon" />
-                          <span>{lang === "km" ? "ចំណុចសំខាន់ៗ" : "Key Highlights"}</span>
-                        </div>
-                        <ul className="exp-highlights-list">
-                          {trans.highlights && trans.highlights.map((item, i) => (
-                            <li key={i} className="exp-highlight-item">
-                              <span
-                                className="highlight-dot"
-                                style={{ background: exp.color }}
-                              ></span>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                              className="highlight-dot"
+                              style={{ background: exp.color }}
+                            ></span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
-                  {/* Toggle Button */}
                   <button
                     type="button"
                     className="exp-toggle-btn"
-                    onClick={() => toggleExpand(exp.id)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleExpand(exp.id);
+                    }}
                     aria-expanded={isExpanded}
                   >
                     <span>{isExpanded ? tShowLess : tSeeMore}</span>
-                    <FaChevronDown
-                      className={`toggle-chevron ${isExpanded ? "rotated" : ""}`}
-                    />
+                    <FaChevronDown className={`toggle-chevron ${isExpanded ? "rotated" : ""}`} />
                   </button>
                 </div>
 
-                {/* Animated Border */}
                 <div className="service-border"></div>
-              </div>
+              </article>
             );
           })}
         </div>

@@ -1,10 +1,453 @@
 import "../css/About.css";
-import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes, FaArrowRight } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes, FaArrowRight, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaExpand, FaExclamationTriangle, FaSpinner } from "react-icons/fa";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Circle, MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
 import { useLanguage } from "../contexts/LanguageContext";
 import profile from "../assets/ream.png";
 import aboutVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
+
+const defaultMapCenter = [0, 0];
+const posterImage = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+    <defs>
+      <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="#0f172a"/>
+        <stop offset="55%" stop-color="#111827"/>
+        <stop offset="100%" stop-color="#1d4ed8"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="50%" cy="25%" r="60%">
+        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="700" fill="url(#bg)"/>
+    <circle cx="620" cy="240" r="260" fill="url(#glow)"/>
+    <rect x="110" y="110" width="980" height="480" rx="28" fill="rgba(15,23,42,0.38)" stroke="rgba(148,163,184,0.48)"/>
+    <circle cx="430" cy="300" r="80" fill="rgba(59,130,246,0.45)"/>
+    <circle cx="840" cy="260" r="120" fill="rgba(168,85,247,0.35)"/>
+    <path d="M540 410L630 320L720 360L850 230" fill="none" stroke="#e2e8f0" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <text x="600" y="530" text-anchor="middle" font-family="Segoe UI, Arial" font-size="54" fill="#f8fafc" font-weight="700">Portfolio Reel</text>
+  </svg>
+`)}`;
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
+  const totalSeconds = Math.floor(seconds);
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+
+function MapCenter({ position }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (position) {
+      map.flyTo([position.lat, position.lng], 15, {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+  }, [map, position]);
+
+  return null;
+}
+
+function LiveLocationMap() {
+  const [location, setLocation] = useState(null);
+  const [locationStatus, setLocationStatus] = useState("requesting");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (!("geolocation" in navigator)) {
+      setLocationStatus("unsupported");
+      setErrorMessage("Location access is not supported in this browser.");
+      return undefined;
+    }
+
+    const onSuccess = (position) => {
+      const nextLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+      };
+
+      setLocation(nextLocation);
+      setLocationStatus("granted");
+      setErrorMessage("");
+    };
+
+    const onError = (error) => {
+      const message =
+        error.code === error.PERMISSION_DENIED
+          ? "Location permission was denied. Enable location access to show your live position."
+          : "Unable to read your current location right now. Please try again.";
+
+      setLocationStatus("denied");
+      setErrorMessage(message);
+    };
+
+    const watchId = navigator.geolocation.watchPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 1000,
+    });
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
+
+  const markerIcon = useMemo(
+    () =>
+      L.divIcon({
+        className: "live-location-marker",
+        html: '<span class="live-marker-dot"></span>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+      }),
+    []
+  );
+
+  const initialCenter = location ? [location.lat, location.lng] : defaultMapCenter;
+  const locationLabel = location
+    ? `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`
+    : "Waiting for GPS";
+
+  return (
+    <div className="location-map-wrap">
+      <div className="map-toolbar">
+        <span className="map-toolbar-title">{"LOCATION MAP"}</span>
+        <span className="map-toolbar-mode">{locationStatus === "granted" ? "LIVE" : "GPS"}</span>
+      </div>
+
+      <MapContainer
+        className="location-map-visual"
+        center={initialCenter}
+        zoom={location ? 15 : 2}
+        scrollWheelZoom
+        zoomControl
+        attributionControl
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+
+        {location && (
+          <>
+            <MapCenter position={location} />
+            <Circle
+              center={[location.lat, location.lng]}
+              radius={location.accuracy || 25}
+              pathOptions={{
+                color: "#38bdf8",
+                fillColor: "#38bdf8",
+                fillOpacity: 0.12,
+                weight: 1,
+              }}
+            />
+            <Marker position={[location.lat, location.lng]} icon={markerIcon}>
+              <Popup>
+                You are here.\n{locationLabel}
+              </Popup>
+            </Marker>
+          </>
+        )}
+      </MapContainer>
+
+      <div className="location-map-badge">
+        <span className="live-map-status-dot" aria-hidden="true" />
+        <span>{locationStatus === "granted" ? "Live location" : "Location status"}</span>
+      </div>
+
+      <div className="map-visual-label">
+        <span>LOCATION</span>
+        <strong>{locationStatus === "granted" ? "Current Position" : "Waiting for access"}</strong>
+        <small>{location ? locationLabel : "Requesting your GPS position…"}</small>
+      </div>
+
+      {locationStatus !== "granted" && (
+        <div className="location-status-toast" role="status" aria-live="polite">
+          {locationStatus === "requesting"
+            ? "Requesting your location permission…"
+            : errorMessage}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ModernVideoPlayer() {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [volume, setVolume] = useState(0.7);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const syncValues = () => {
+      setDuration(Number.isFinite(video.duration) ? video.duration : 0);
+      setProgress(video.currentTime || 0);
+      setIsPlaying(!video.paused && !video.ended);
+      setIsMuted(video.muted || volume === 0);
+    };
+
+    const handleLoadedMetadata = () => {
+      video.volume = volume;
+      video.playbackRate = playbackRate;
+      setDuration(Number.isFinite(video.duration) ? video.duration : 0);
+      setIsLoading(false);
+      setError("");
+      syncValues();
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      setError("");
+      if (!video.paused) {
+        setIsPlaying(true);
+      }
+    };
+
+    const handleWaiting = () => setIsLoading(true);
+    const handlePlaying = () => {
+      setIsLoading(false);
+      setIsPlaying(true);
+    };
+    const handlePause = () => setIsPlaying(false);
+    const handleTimeUpdate = () => setProgress(video.currentTime);
+    const handleError = () => {
+      setIsLoading(false);
+      setError("Unable to load the video. Please refresh or try again.");
+    };
+    const handleFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("waiting", handleWaiting);
+    video.addEventListener("playing", handlePlaying);
+    video.addEventListener("pause", handlePause);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    video.addEventListener("error", handleError);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("waiting", handleWaiting);
+      video.removeEventListener("playing", handlePlaying);
+      video.removeEventListener("pause", handlePause);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      video.removeEventListener("error", handleError);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [playbackRate, volume]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.volume = volume;
+    video.muted = isMuted;
+  }, [isMuted, volume]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.playbackRate = playbackRate;
+  }, [playbackRate]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.autoPlay = true;
+    video.loop = true;
+    video.muted = isMuted;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.play().catch(() => setIsPlaying(false));
+  }, []);
+
+  const togglePlay = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+        setIsPlaying(true);
+      } catch {
+        setError("Playback was blocked. Please interact with the player again.");
+      }
+      return;
+    }
+
+    video.pause();
+    setIsPlaying(false);
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+
+    if (!nextMuted && volume === 0) {
+      setVolume(0.7);
+      video.volume = 0.7;
+    }
+  };
+
+  const handleSeek = (event) => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextTime = Number(event.target.value);
+    video.currentTime = nextTime;
+    setProgress(nextTime);
+  };
+
+  const handleVolume = (event) => {
+    const nextVolume = Number(event.target.value);
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.volume = nextVolume;
+    setVolume(nextVolume);
+    setIsMuted(nextVolume === 0);
+    video.muted = nextVolume === 0;
+  };
+
+  const toggleFullscreen = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        await video.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch {
+      setError("Fullscreen is not available in this browser.");
+    }
+  };
+
+  const cyclePlaybackRate = () => {
+    const options = [1, 1.25, 1.5, 2];
+    const nextIndex = (options.indexOf(playbackRate) + 1) % options.length;
+    const nextRate = options[nextIndex];
+    const video = videoRef.current;
+    if (video) video.playbackRate = nextRate;
+    setPlaybackRate(nextRate);
+  };
+
+  return (
+    <div className="about-video-shell">
+      <div className="video-topbar">
+        <span className="video-badge">Featured reel</span>
+        <span className={`video-status ${isLoading ? "loading" : isPlaying ? "playing" : "ready"}`}>
+          {error ? "Error" : isLoading ? "Loading" : isPlaying ? "Playing" : "Ready"}
+        </span>
+      </div>
+
+      <div className="video-frame">
+        <video
+          ref={videoRef}
+          className="about-video-player"
+          src={aboutVideo}
+          poster={posterImage}
+          playsInline
+          preload="metadata"
+          muted={isMuted}
+          loop
+          autoPlay
+          aria-label="Portfolio video showcase"
+        />
+
+        {isLoading && (
+          <div className="video-loading-overlay" aria-live="polite">
+            <FaSpinner className="video-spinner" />
+            <span>Loading video</span>
+          </div>
+        )}
+
+        {error && (
+          <div className="video-error-overlay" role="alert">
+            <FaExclamationTriangle />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <div className="video-play-overlay">
+          <button
+            type="button"
+            className="video-main-toggle"
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Pause video" : "Play video"}
+          >
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
+        </div>
+      </div>
+
+      <div className="video-controls">
+        <button type="button" className="video-control-btn" onClick={togglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
+          {isPlaying ? <FaPause /> : <FaPlay />}
+        </button>
+
+        <button type="button" className="video-control-btn" onClick={toggleMute} aria-label={isMuted ? "Unmute" : "Mute"}>
+          {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+        </button>
+
+        <input
+          aria-label="Video progress"
+          className="video-progress"
+          type="range"
+          min="0"
+          max={duration || 0}
+          step="0.1"
+          value={progress}
+          onChange={handleSeek}
+        />
+
+        <span className="video-time">{formatTime(progress)} / {formatTime(duration)}</span>
+
+        <button type="button" className="video-speed-btn" onClick={cyclePlaybackRate} aria-label="Change playback speed">
+          {playbackRate}x
+        </button>
+
+        <button type="button" className="video-control-btn" onClick={toggleFullscreen} aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}>
+          <FaExpand />
+        </button>
+      </div>
+
+      <div className="video-volume-wrap">
+        <label htmlFor="video-volume" className="sr-only">Volume</label>
+        <input
+          id="video-volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleVolume}
+          className="video-volume"
+          aria-label="Volume"
+        />
+      </div>
+    </div>
+  );
+}
 
 function About() {
   const { t, lang } = useLanguage();
@@ -23,19 +466,7 @@ function About() {
 
   return (
     <section className="about-section" id="about">
-      {/* Hero Background */}
       <div className="hero-background">
-        <video
-          className="about-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-        >
-          <source src={aboutVideo} type="video/mp4" />
-        </video>
-        <div className="about-video-overlay" aria-hidden="true"></div>
         <div className="about-grid-overlay" aria-hidden="true"></div>
         <div className="gradient-overlay"></div>
         <div className="particle-field">
@@ -46,6 +477,7 @@ function About() {
       </div>
 
       <div className="about-container">
+        <ModernVideoPlayer />
         <div className="about-header">
           <h2 className="section-heading">{t.about.heading}</h2>
           <p className="section-subheading">{t.about.subheading}</p>
@@ -124,51 +556,23 @@ function About() {
         </div>
 
         <div className="location-card">
-          <div className="location-map-wrap">
-            <div className="map-toolbar">
-              <span className="map-toolbar-title">{lang === "km" ? "ផែនទីទីតាំង" : "LOCATION MAP"}</span>
-              <span className="map-toolbar-mode">{lang === "km" ? "កម្ពុជា" : "CAMBODIA"}</span>
-            </div>
-            <div className="location-map-visual" role="img" aria-label="Map illustration showing Kampong Thom, Cambodia">
-              <svg viewBox="0 0 800 400" aria-hidden="true" focusable="false">
-                <path className="map-river" d="M80 40 C180 100 140 155 260 190 S400 205 465 285 S650 330 760 370" />
-                <path className="map-road road-main" d="M20 320 C160 275 265 300 370 230 S585 120 790 70" />
-                <path className="map-road" d="M110 20 C180 105 220 160 205 370" />
-                <path className="map-road" d="M420 20 C390 120 470 170 520 380" />
-                <path className="map-road" d="M630 30 C590 130 650 200 760 260" />
-                <path className="map-road road-small" d="M40 130 C175 180 300 135 420 160 S630 205 780 170" />
-                <circle className="map-area" cx="150" cy="260" r="28" />
-                <circle className="map-area" cx="650" cy="125" r="38" />
-                <circle className="map-area" cx="345" cy="100" r="18" />
-                <g className="map-marker" transform="translate(400 205) scale(1.25)">
-                  <circle className="map-marker-pulse" cx="0" cy="0" r="30" />
-                  <path d="M0 28 C-5 20 -22 4 -22 -9 A22 22 0 1 1 22 -9 C22 4 5 20 0 28Z" />
-                  <circle cx="0" cy="-9" r="7" />
-                </g>
-              </svg>
-              <div className="map-visual-label">
-                <span>{lang === "km" ? "ទីតាំង" : "LOCATION"}</span>
-                <strong>{lang === "km" ? "កំពង់ធំ" : "Kampong Thom"}</strong>
-                <small>Cambodia · 12.25°N, 104.67°E</small>
-              </div>
-            </div>
-            <div className="location-map-badge">
-              <FaMapMarkerAlt />
-              <span>{lang === "km" ? "កំពង់ធំ" : "Kampong Thom"}</span>
-            </div>
-          </div>
+          <LiveLocationMap />
           <div className="location-content">
             <div className="location-icon"><FaMapMarkerAlt /></div>
             <span className="location-eyebrow">{lang === "km" ? "កន្លែងកំណើត" : "MY ROOTS"}</span>
-            <h3>{lang === "km" ? "កំពង់ធំ ប្រទេសកម្ពុជា" : "Kampong Thom, Cambodia"}</h3>
-            <p>{lang === "km" ? "ទីកន្លែងដែលខ្ញុំកើត និងជាកន្លែងដែលចាប់ផ្តើមដំណើររបស់ខ្ញុំជាមួយបច្ចេកវិទ្យា។" : "The place I was born and where my journey with technology began."}</p>
+            <h3>{lang === "km" ? "ទីតាំងបច្ចុប្បន្នរបស់ខ្ញុំ" : "My live location"}</h3>
+            <p>
+              {lang === "km"
+                ? "ប្រើ GPS របស់កម្ម្មរលើក ដើម្បីបង្ហាញទីតាំងពិតប្រាកដ និងអាប់ដេតដោយស្វ័យប្រវត្តិ នៅពេលអ្នកផ្លាស់ទី។"
+                : "This map requests your browser location permission and updates automatically as you move so your real-time position is shown accurately."}
+            </p>
             <a
               className="location-link"
-              href="https://www.google.com/maps/search/?api=1&query=Kampong+Thom%2C+Cambodia"
+              href="https://www.google.com/maps"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {lang === "km" ? "បើកក្នុង Google Maps" : "Open in Google Maps"}
+              {lang === "km" ? "បើក Google Maps" : "Open Google Maps"}
               <FaArrowRight />
             </a>
           </div>
