@@ -68,7 +68,7 @@ function Experiences() {
   const expColors = ["#00d4ff", "#ff6b6b", "#a855f7", "#f59e0b", "#4ecdc4", "#61dafb"];
   const expColorsRgb = ["0, 212, 255", "255, 107, 107", "168, 85, 247", "245, 158, 11", "78, 205, 196", "97, 218, 251"];
   const years = ["2026", "2026", "2026", "2026", "2026", "2026"];
-  const experienceItems = [...t.experiences.items, ...t.experiences.items];
+  const experienceItems = t.experiences.items;
 
   return (
     <section className="exp-section" id="Experiences">

@@ -4,11 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { useLanguage } from "../contexts/LanguageContext";
-import profile from "../assets/ream.png";
+import profile from "../assets/icon.png";
+import cambodiaFlag from "../assets/flag-cambodia.svg";
 import aboutVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
 
-const defaultMapCenter = [0, 0];
+const defaultMapCenter = [11.5564, 104.9282];
 const posterImage = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
     <defs>
@@ -124,7 +125,7 @@ function LiveLocationMap() {
       <MapContainer
         className="location-map-visual"
         center={initialCenter}
-        zoom={location ? 15 : 2}
+        zoom={location ? 15 : 12}
         scrollWheelZoom
         zoomControl
         attributionControl
@@ -162,9 +163,12 @@ function LiveLocationMap() {
       </div>
 
       <div className="map-visual-label">
-        <span>LOCATION</span>
-        <strong>{locationStatus === "granted" ? "Current Position" : "Waiting for access"}</strong>
-        <small>{location ? locationLabel : "Requesting your GPS position…"}</small>
+        <div className="map-country-label">
+          <img src={cambodiaFlag} alt="" aria-hidden="true" />
+          <span>Cambodia</span>
+        </div>
+        <strong>{locationStatus === "granted" ? "Live GPS position" : "Phnom Penh"}</strong>
+        <small>{location ? locationLabel : "Kampong Thom · Cambodia"}</small>
       </div>
 
       {locationStatus !== "granted" && (
@@ -477,7 +481,6 @@ function About() {
       </div>
 
       <div className="about-container">
-        <ModernVideoPlayer />
         <div className="about-header">
           <h2 className="section-heading">{t.about.heading}</h2>
           <p className="section-subheading">{t.about.subheading}</p>
@@ -485,6 +488,7 @@ function About() {
             <p className="khmer-intro">{t.about.khmerIntro}</p>
           )}
         </div>
+        <ModernVideoPlayer />
 
         {/* Personal Info Section */}
         <div className="personal-info-section">
