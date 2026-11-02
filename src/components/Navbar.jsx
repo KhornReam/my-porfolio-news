@@ -61,7 +61,7 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navItems]);
 
   const toggleTheme = () => setIsDark((prev) => !prev);
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
@@ -82,27 +82,36 @@ function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="nav-links">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`nav-link ${activeLink === item.href ? "active" : ""}`}
-              onClick={() => handleNavClick(item.href)}
-            >
-              <span className="nav-dot"></span> {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isActive = activeLink === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`nav-link ${isActive ? "active" : ""}`}
+                onClick={() => handleNavClick(item.href)}
+              >
+                {isActive && <span className="nav-dot" aria-hidden="true" />}
+                <span>{item.label}</span>
+              </a>
+            );
+          })}
         </div>
 
         {/* Actions */}
         <div className="nav-actions">
           <button
             className="theme-toggle"
-            aria-label="Toggle theme"
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
             onClick={toggleTheme}
           >
-            {isDark ? <FaMoon /> : <FaSun />}
-          </button>          {/* Language Dropdown Selector */}
+            <span className="theme-toggle-icon">
+              {isDark ? <FaMoon /> : <FaSun />}
+            </span>
+          </button>
+
+          {/* Language Dropdown Selector */}
           <LanguageDropdown
             lang={lang}
             setLang={setLang}
@@ -111,11 +120,12 @@ function Navbar() {
           />
 
           <a href="#contact" className="btn-nav" onClick={() => setIsMobileMenuOpen(false)}>
-            <FaEnvelope /> <span>{t.nav.contact}</span>
+            <FaEnvelope className="btn-nav-icon" />
+            <span className="btn-nav-label">{t.nav.contact}</span>
           </a>
 
           <button
-            className="mobile-menu-toggle"
+            className={`mobile-menu-toggle ${isMobileMenuOpen ? "active" : ""}`}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             onClick={toggleMobileMenu}
           >
@@ -207,6 +217,7 @@ function LanguageDropdown({ lang, setLang, flagCambodia, flagUk }) {
         aria-label="Select language"
       >
         <img src={current.flag} alt={current.label} className="flag-img" />
+        <span className="lang-code-tag">{current.code.toUpperCase()}</span>
         <FaChevronDown className={`chevron ${open ? "open" : ""}`} />
       </button>
 

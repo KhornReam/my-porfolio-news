@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import "../css/Contact.css";
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaCheckCircle, FaPaperPlane, FaUser, FaCommentAlt, FaArrowRight, FaRobot } from "react-icons/fa";
+import {
+  FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaCheckCircle, FaPaperPlane,
+  FaUser, FaCommentAlt, FaArrowRight, FaRobot, FaCopy, FaCheck, FaRedo,
+  FaCode, FaBriefcase, FaGraduationCap
+} from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi2";
 import { useLanguage } from "../contexts/LanguageContext";
 import contactVideo from "../assets/262696.mp4";
 
@@ -14,16 +19,42 @@ function Contact() {
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("");
   const itemsRef = useRef([]);
+
+  // Modern Chatbot states
   const [chatInput, setChatInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [copiedMsgId, setCopiedMsgId] = useState(null);
+  const chatMessagesContainerRef = useRef(null);
+
   const [chatMessages, setChatMessages] = useState([
     {
       id: 1,
       sender: "bot",
       text: lang === "km"
-        ? "សួស្តី! ខ្ញុំជាជំនួយការរបស់រាម។ សួរខ្ញុំអំពីជំនាញ គម្រោង ការសិក្សា ឬបទពិសោធន៍របស់គាត់បាន។"
-        : "Hi! I’m Ream’s portfolio assistant. Ask me about his skills, projects, education, experience, or availability.",
+        ? "សួស្តី! ខ្ញុំជាជំនួយការ AI របស់រាម។ សួរខ្ញុំអំពីជំនាញ គម្រោង ការសិក្សា ឬឱកាសការងាររបស់គាត់បាន។"
+        : "Hi! I'm Ream's AI portfolio assistant. Ask me anything about his skills, projects, education, experience, or availability.",
+      time: "Online",
     },
   ]);
+
+  // Synchronize initial greeting when language changes
+  useEffect(() => {
+    setChatMessages((prev) => {
+      if (prev.length === 1 && prev[0].id === 1) {
+        return [
+          {
+            id: 1,
+            sender: "bot",
+            text: lang === "km"
+              ? "សួស្តី! ខ្ញុំជាជំនួយការ AI របស់រាម។ សួរខ្ញុំអំពីជំនាញ គម្រោង ការសិក្សា ឬឱកាសការងាររបស់គាត់បាន។"
+              : "Hi! I'm Ream's AI portfolio assistant. Ask me anything about his skills, projects, education, experience, or availability.",
+            time: "Online",
+          },
+        ];
+      }
+      return prev;
+    });
+  }, [lang]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -234,10 +265,10 @@ function Contact() {
         ? "រាមមានអាយុ 20 ឆ្នាំ កើតនៅខេត្តកំពង់ធំ និងមកពីគ្រួសារដែលមានសមាជិក 2 នាក់។ គាត់មានចរិតរួសរាយរាក់ទាក់ ចូលចិត្តជួយអ្នកដទៃ និងធ្វើការជាក្រុម។"
         : "Ream is 20 years old, was born in Kampong Thom, and comes from a family of two. He is kind, friendly, collaborative, and enjoys helping people through technology.";
     }
-    if (/(available|hire|job|intern|work|ការងារ|ជួល)/i.test(query)) {
+    if (/(available|hire|job|intern|work|full time|full-time|software|program|programming|web dev|web program|ការងារ|ជួល|ពេញម៉ោង)/i.test(query)) {
       return isKhmer
-        ? "បាទ/ចាស រាមកំពុងស្វែងរកឱកាសការងារ និង internship ដើម្បីបង្កើនបទពិសោធន៍។ អ្នកអាចផ្ញើសារតាម form ឬទាក់ទងតាម reamkhorn12345@gmail.com។"
-        : "Yes. Ream is currently open to job and internship opportunities. You can use the form here or email him at reamkhorn12345@gmail.com.";
+        ? "បាទ! រាមត្រៀមខ្លួនរួចរាល់ និងកំពុងបើកចំហទទួលយកការងារពេញម៉ោង (Full-Time Job) ក្នុងការធ្វើជា Software Engineer ឬ Web Programmer / Developer ព្រមទាំងឱកាស Internship ផងដែរ។ គាត់មានជំនាញច្បាស់លាស់ក្នុងការបង្កើតគេហទំព័រនិងកម្មវិធីទំនើបជាមួយ React, TypeScript, Node.js, Express និង Laravel ព្រមទាំងមូលដ្ឋានទិន្នន័យរឹងមាំ (PostgreSQL, MySQL)។ រាមត្រៀមខ្លួនចូលរួមជាមួយក្រុមការងារទាំង On-site នៅភ្នំពេញ, Hybrid ឬ Remote ទូទាំងពិភពលោក! អ្នកអាចទាក់ទងគាត់បានតាម form ខាងក្រោម ឬតាមអ៊ីមែល reamkhorn12345@gmail.com / ទូរស័ព្ទ +855 863 393 350។"
+        : "Yes! Ream is actively available and seeking a Full-Time Job as a Software Engineer or Web Programmer / Developer, as well as professional internships. He specializes in building modern, high-performance web applications with React, TypeScript, Node.js, Express, and Laravel, backed by solid database architecture (PostgreSQL, MySQL). Ream is ready to join a collaborative tech team on-site in Phnom Penh, hybrid, or remote worldwide! You can contact him directly through the form below or via email at reamkhorn12345@gmail.com / phone +855 863 393 350.";
     }
     if (/(contact|email|phone|ទំនាក់ទំនង|អ៊ីមែល|ទូរស័ព្ទ)/i.test(query)) {
       return isKhmer
@@ -250,17 +281,89 @@ function Contact() {
       : "I don’t want to invent information. I can answer about Ream’s verified profile, skills, projects, education, experience, learning style, career goals, communication, and availability.";
   };
 
+  const scrollToBottom = (behavior = "smooth") => {
+    if (chatMessagesContainerRef.current) {
+      chatMessagesContainerRef.current.scrollTo({
+        top: chatMessagesContainerRef.current.scrollHeight,
+        behavior: behavior,
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom("smooth");
+  }, [chatMessages, isTyping]);
+
   const sendChatMessage = (message = chatInput) => {
     const trimmedMessage = message.trim();
-    if (!trimmedMessage) return;
+    if (!trimmedMessage || isTyping) return;
 
+    const userMsgId = Date.now();
+    const botReplyText = getBotReply(trimmedMessage);
+    const nowTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+    // Instantly append user's question
     setChatMessages((previous) => [
       ...previous,
-      { id: Date.now(), sender: "user", text: trimmedMessage },
-      { id: Date.now() + 1, sender: "bot", text: getBotReply(trimmedMessage) },
+      { id: userMsgId, sender: "user", text: trimmedMessage, time: nowTime },
     ]);
     setChatInput("");
+    setIsTyping(true);
+
+    // Realistic smooth typing delay
+    setTimeout(() => {
+      setChatMessages((previous) => [
+        ...previous,
+        {
+          id: userMsgId + 1,
+          sender: "bot",
+          text: botReplyText,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        },
+      ]);
+      setIsTyping(false);
+    }, 550);
   };
+
+  const handleCopyMessage = (id, text) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text);
+      setCopiedMsgId(id);
+      setTimeout(() => setCopiedMsgId(null), 2000);
+    }
+  };
+
+  const handleResetChat = () => {
+    setChatMessages([
+      {
+        id: 1,
+        sender: "bot",
+        text: lang === "km"
+          ? "សួស្តី! ខ្ញុំជាជំនួយការ AI របស់រាម។ សួរខ្ញុំអំពីជំនាញ គម្រោង ការសិក្សា ឬឱកាសការងាររបស់គាត់បាន។"
+          : "Hi! I'm Ream's AI portfolio assistant. Ask me anything about his skills, projects, education, experience, or availability.",
+        time: "Online",
+      },
+    ]);
+    setIsTyping(false);
+  };
+
+  const quickSuggestions = lang === "km"
+    ? [
+        { label: "⚡ ជំនាញ & Stack", query: "តើជំនាញរបស់រាមមានអ្វីខ្លះ?" },
+        { label: "🚀 គម្រោងសំខាន់ៗ", query: "តើរាមបានបង្កើតគម្រោងអ្វីខ្លះ?" },
+        { label: "🎓 ការសិក្សា PNC", query: "តើរាមបានសិក្សានៅឯណា?" },
+        { label: "💬 ភាសាទំនាក់ទំនង", query: "តើរាមនិយាយភាសាអ្វីខ្លះ?" },
+        { label: "🎯 គោលដៅអាជីព", query: "តើគោលដៅអាជីពរបស់រាមជាអ្វី?" },
+        { label: "💼 ការងារ Full-Time", query: "តើរាមបើកចំហការងារ Full-Time ឬ Internship ទេ?" },
+      ]
+    : [
+        { label: "⚡ Skills & Stack", query: "What are your core skills and tech stack?" },
+        { label: "🚀 Featured Projects", query: "What featured projects has Ream built?" },
+        { label: "🎓 PNC Education", query: "Tell me about Ream's education and PNC" },
+        { label: "💬 Languages", query: "What languages does he speak?" },
+        { label: "🎯 Career Goals", query: "What is your career goal?" },
+        { label: "💼 Full-Time Job", query: "Is Ream available for hire or internship as a software or web programmer?" },
+      ];
 
   return (
     <section className="contact-section" id="contact">
@@ -360,15 +463,17 @@ function Contact() {
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-header">
                 <div className="form-header-icon">
-                  <FaEnvelope />
+                  <FaPaperPlane />
                 </div>
                 <h3 className="form-title">{t.contacts.formTitle}</h3>
                 <p className="form-subtitle">{t.contacts.formSubtitle}</p>
               </div>
+
               <div className="form-grid">
                 <div className="form-group">
                   <label htmlFor="name" className="form-label">
-                    <FaUser className="form-label-icon" /> {t.contacts.nameLabel}
+                    <span>{t.contacts.nameLabel}</span>
+                    <span className="req-star">*</span>
                   </label>
                   <div className="input-wrapper">
                     <FaUser className="input-field-icon" />
@@ -381,12 +486,13 @@ function Contact() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="input-border"></span>
                   </div>
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="email" className="form-label">
-                    <FaEnvelope className="form-label-icon" /> {t.contacts.emailLabel}
+                    <span>{t.contacts.emailLabel}</span>
+                    <span className="req-star">*</span>
                   </label>
                   <div className="input-wrapper">
                     <FaEnvelope className="input-field-icon" />
@@ -399,12 +505,13 @@ function Contact() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="input-border"></span>
                   </div>
                 </div>
+
                 <div className="form-group full-width">
                   <label htmlFor="message" className="form-label">
-                    <FaCommentAlt className="form-label-icon" /> {t.contacts.messageLabel}
+                    <span>{t.contacts.messageLabel}</span>
+                    <span className="req-star">*</span>
                   </label>
                   <div className="input-wrapper">
                     <FaCommentAlt className="input-field-icon input-textarea-icon" />
@@ -417,14 +524,27 @@ function Contact() {
                       onChange={handleChange}
                       required
                     ></textarea>
-                    <span className="input-border"></span>
                   </div>
                 </div>
               </div>
+
               <button type="submit" className="form-submit">
-                <FaPaperPlane /> {t.contacts.sendBtn}
+                <FaPaperPlane className="submit-icon" />
+                <span>{t.contacts.sendBtn}</span>
                 <span className="submit-glow"></span>
               </button>
+
+              <div className="form-trust-badges">
+                <span className="trust-pill">
+                  <FaCheckCircle className="trust-icon" />
+                  {lang === "km" ? "ឆ្លើយតបក្នុងរយៈពេល < 24 ម៉ោង" : "Response within 24h"}
+                </span>
+                <span className="trust-pill">
+                  <FaCheckCircle className="trust-icon" />
+                  {lang === "km" ? "ផ្ញើផ្ទាល់ទៅកាន់ Ream" : "Direct to Ream's Inbox"}
+                </span>
+              </div>
+
               {status && (
                 <p className={`form-status ${statusType}`}>
                   {statusType === "success" && <FaCheckCircle />} {status}
@@ -435,43 +555,183 @@ function Contact() {
         </div>
 
         <div id="portfolio-chatbot" className="portfolio-chatbot" ref={(el) => (itemsRef.current[6] = el)}>
+          {/* Ambient Glow Aura */}
+          <div className="chatbot-glow" aria-hidden="true"></div>
+
+          {/* Chatbot Header */}
           <div className="chatbot-header">
             <div className="chatbot-avatar-wrap">
-              <div className="chatbot-avatar" aria-hidden="true"><FaRobot /></div>
+              <div className="chatbot-avatar" aria-hidden="true">
+                <FaRobot />
+              </div>
               <span className="chatbot-avatar-status"></span>
             </div>
-            <div>
-              <h3>{lang === "km" ? "សួរអំពីរាម" : "Ask Ream’s AI Assistant"}</h3>
-              <p><span className="chatbot-status-dot"></span>{lang === "km" ? "ជំនួយការផតថលីអូ · Online" : "Portfolio assistant · Online"}</p>
+            <div className="chatbot-title-box">
+              <div className="chatbot-name-row">
+                <h3>{lang === "km" ? "ជំនួយការ AI របស់រាម" : "Ask Ream's AI Assistant"}</h3>
+                <span className="ai-badge"><HiSparkles className="sparkle-icon" /> AI 2.0</span>
+              </div>
+              <p>
+                <span className="chatbot-status-dot"></span>
+                {lang === "km" ? "ជំនួយការផតថលីអូ · Online" : "Portfolio Assistant · Online"}
+              </p>
             </div>
-            <span className="chatbot-powered">AI PROFILE</span>
+            <div className="chatbot-header-actions">
+              <button
+                type="button"
+                className="chatbot-reset-btn"
+                onClick={handleResetChat}
+                title={lang === "km" ? "ចាប់ផ្តើមសារថ្មី" : "Reset conversation"}
+              >
+                <FaRedo className="reset-icon" />
+                <span className="reset-label">{lang === "km" ? "សារថ្មី" : "Reset"}</span>
+              </button>
+            </div>
           </div>
-          <div className="chatbot-intro">
-            <FaRobot aria-hidden="true" />
-            <span>{lang === "km" ? "ខ្ញុំអាចជួយប្រាប់អំពីរាម និងការងាររបស់គាត់បាន។" : "I can help you discover Ream’s story, skills, and work."}</span>
-          </div>
-          <div className="chatbot-messages" aria-live="polite">
+
+          {/* Chat Messages Feed */}
+          <div className="chatbot-messages" ref={chatMessagesContainerRef} aria-live="polite">
             {chatMessages.map((message) => (
               <div key={message.id} className={`chat-message ${message.sender}`}>
-                {message.sender === "bot" && <FaRobot className="chat-message-icon" />}
-                <p>{message.text}</p>
+                {message.sender === "bot" && (
+                  <div className="bot-avatar-mini" aria-hidden="true">
+                    <FaRobot />
+                  </div>
+                )}
+                <div className={`message-content-wrap ${message.sender === "user" ? "user-wrap" : ""}`}>
+                  <div className={`message-bubble ${message.sender === "user" ? "user-bubble" : "bot-bubble"}`}>
+                    <p>{message.text}</p>
+                  </div>
+                  <div className="message-meta-bar">
+                    <span className="message-time">{message.time || "Just now"}</span>
+                    {message.sender === "bot" && (
+                      <button
+                        type="button"
+                        className={`copy-msg-btn ${copiedMsgId === message.id ? "copied" : ""}`}
+                        onClick={() => handleCopyMessage(message.id, message.text)}
+                        title={lang === "km" ? "ចម្លងចម្លើយ" : "Copy response"}
+                      >
+                        {copiedMsgId === message.id ? <FaCheck /> : <FaCopy />}
+                        <span>{copiedMsgId === message.id ? (lang === "km" ? "បានចម្លង" : "Copied") : (lang === "km" ? "ចម្លង" : "Copy")}</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
             ))}
+
+            {/* Smooth Typing Bubble Indicator */}
+            {isTyping && (
+              <div className="chat-message bot typing-bubble">
+                <div className="bot-avatar-mini" aria-hidden="true">
+                  <FaRobot />
+                </div>
+                <div className="message-content-wrap">
+                  <div className="message-bubble bot-bubble typing-box">
+                    <span className="typing-dot"></span>
+                    <span className="typing-dot"></span>
+                    <span className="typing-dot"></span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Starter Topic Cards (Shown when chat is new) */}
+            {chatMessages.length === 1 && !isTyping && (
+              <div className="chatbot-starter-grid">
+                <button
+                  type="button"
+                  className="starter-card"
+                  onClick={() => sendChatMessage(lang === "km" ? "តើជំនាញរបស់រាមមានអ្វីខ្លះ?" : "What are your core skills and tech stack?")}
+                >
+                  <div className="starter-icon-wrap code-icon"><FaCode /></div>
+                  <div className="starter-text">
+                    <h4>{lang === "km" ? "ជំនាញ & Tech Stack" : "Tech Stack & Skills"}</h4>
+                    <p>React, TypeScript, Node.js, Laravel</p>
+                  </div>
+                  <FaArrowRight className="starter-arrow" />
+                </button>
+
+                <button
+                  type="button"
+                  className="starter-card"
+                  onClick={() => sendChatMessage(lang === "km" ? "តើរាមបានបង្កើតគម្រោងអ្វីខ្លះ?" : "What featured projects has Ream built?")}
+                >
+                  <div className="starter-icon-wrap project-icon"><FaBriefcase /></div>
+                  <div className="starter-text">
+                    <h4>{lang === "km" ? "គម្រោងសំខាន់ៗ" : "Featured Projects"}</h4>
+                    <p>Business App, Weather, E-commerce</p>
+                  </div>
+                  <FaArrowRight className="starter-arrow" />
+                </button>
+
+                <button
+                  type="button"
+                  className="starter-card"
+                  onClick={() => sendChatMessage(lang === "km" ? "តើរាមបានសិក្សានៅឯណា?" : "Tell me about Ream's education and PNC")}
+                >
+                  <div className="starter-icon-wrap edu-icon"><FaGraduationCap /></div>
+                  <div className="starter-text">
+                    <h4>{lang === "km" ? "ការសិក្សានៅ PNC" : "PNC Education"}</h4>
+                    <p>Passerelles numériques Cambodia</p>
+                  </div>
+                  <FaArrowRight className="starter-arrow" />
+                </button>
+
+                <button
+                  type="button"
+                  className="starter-card"
+                  onClick={() => sendChatMessage(lang === "km" ? "តើរាមបើកចំហការងារ Full-Time ឬ Internship ទេ?" : "Is Ream available for hire or internship as a software or web programmer?")}
+                >
+                  <div className="starter-icon-wrap hire-icon"><HiSparkles /></div>
+                  <div className="starter-text">
+                    <h4>{lang === "km" ? "ការងារ Full-Time & Hire" : "Full-Time Job & Hire"}</h4>
+                    <p>{lang === "km" ? "Software & Web Programming" : "Software & Web Programming"}</p>
+                  </div>
+                  <FaArrowRight className="starter-arrow" />
+                </button>
+              </div>
+            )}
           </div>
-          <div className="chatbot-quick-actions">
-            {(lang === "km" ? ["ជំនាញរបស់រាម?", "គាត់និយាយភាសាអ្វី?", "តើរាមរៀនយ៉ាងដូចម្តេច?", "គោលដៅអាជីព?", "តើរាមចង់កែលម្អអ្វី?", "គម្រោងរបស់រាម?", "តើអាចជួលបានទេ?"] : ["What are his skills?", "What languages does he speak?", "How does Ream learn?", "What is his career goal?", "How does he want to grow?", "What projects has he built?", "Is he available?"]).map((question) => (
-              <button key={question} type="button" onClick={() => sendChatMessage(question)}>{question}</button>
-            ))}
+
+          {/* Quick-Prompt Strip */}
+          <div className="chatbot-quick-strip">
+            <span className="strip-label">{lang === "km" ? "សំណួររហ័ស ៖" : "Quick Prompts :"}</span>
+            <div className="quick-pills-row">
+              {quickSuggestions.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  className="quick-action-pill"
+                  onClick={() => sendChatMessage(item.query)}
+                  disabled={isTyping}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Chat Input Form */}
           <form className="chatbot-form" onSubmit={(event) => { event.preventDefault(); sendChatMessage(); }}>
-            <input
-              value={chatInput}
-              onChange={(event) => setChatInput(event.target.value)}
-              placeholder={lang === "km" ? "សរសេរសំណួររបស់អ្នក..." : "Ask about Ream’s skills, story, or work..."}
-              aria-label={lang === "km" ? "សំណួរ" : "Question about Ream"}
-              maxLength={300}
-            />
-            <button type="submit" aria-label={lang === "km" ? "ផ្ញើ" : "Send question"}><FaPaperPlane /></button>
+            <div className="input-glow-wrapper">
+              <input
+                value={chatInput}
+                onChange={(event) => setChatInput(event.target.value)}
+                placeholder={lang === "km" ? "សួរអំពីរាម (ឧ. ជំនាញ គម្រោង ការងារ)..." : "Ask about Ream's skills, experience, or hire status..."}
+                aria-label={lang === "km" ? "សំណួរ" : "Question about Ream"}
+                maxLength={300}
+                disabled={isTyping}
+              />
+              <button
+                type="submit"
+                className="chatbot-send-btn"
+                aria-label={lang === "km" ? "ផ្ញើ" : "Send question"}
+                disabled={!chatInput.trim() || isTyping}
+              >
+                <FaPaperPlane />
+              </button>
+            </div>
           </form>
         </div>
       </div>

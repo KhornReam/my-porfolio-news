@@ -16,21 +16,33 @@ const translations = {
       greeting: "Hello, I'm",
       nameFirst: "Ream",
       nameLast: "Khorn",
+      badge: "Open for Full-Time Job · Software & Web Programming",
       roles: [
-        "Modern Full Stack Developer",
-        "React.js & Node.js & Vue.js & laravel",
-        "UI/UX-Focused modern",
-        "Database Adminstrator",
+        "Full-Stack Web Developer",
+        "React & TypeScript Specialist",
+        "Node.js & Laravel Architect",
+        "Modern UI/UX Designer & Engineer",
+        "Database Administrator",
       ],
       description:
-        "Before: simple websites. Now: modern digital products with polished UI, fast performance, and scalable architecture. I build web experiences that feel fresh, functional, and ready for today — designed to impress hiring teams and support product growth. Right now I am looking for a job and internship to gain my experiences in the future.",
-      viewWork: "View My Work",
-      contactMe: "Contact Me",
+        "Passionate Full-Stack Developer creating fast, modern web applications with polished UI, clean architecture, and robust backend engineering. Focused on delivering real-world value and ready for professional opportunities.",
+      viewWork: "View Projects",
+      downloadCv: "Download CV",
+      askAi: "Ask AI Assistant",
+      contactMe: "Get in Touch",
       profileRole: "Full-Stack Developer",
       profileLocation: "Cambodia",
-      available: "Available for Work",
+      available: "Open for Full-Time Job",
       bgFirstName: "REAM",
       bgLastName: "KHORN",
+      stats: {
+        expVal: "3+",
+        expLabel: "Years Coding",
+        projectsVal: "10+",
+        projectsLabel: "Projects Built",
+        statusVal: "Open",
+        statusLabel: "Full-Time Software / Web",
+      },
     },
 
     // About
@@ -87,25 +99,31 @@ const translations = {
       journey3Tag: "Foundation",
       journey3Desc:
         "HTML, CSS, JavaScript,python fundamentals and built portfolio projects independently through online resources and documentation.",
+      journey4Title: "Web Software Engineering Intern — The Luminix Company",
+      journey4Date: "4 Months",
+      journey4Tag: "Internship",
+      journey4Desc:
+        "Completed a four-month internship at The Luminix Company, contributing to web software engineering work and learning professional development workflows.",
       expertise: "What I Do",
+      expertiseSub: "Technical services and specialized solutions I deliver",
       expertise1Title: "Frontend Development",
       expertise1Desc:
-        "Modern Reac & Vue applications with responsive design and exceptional user experience",
-      expertise2Title: "Backend Development",
+        "Modern React & Vue applications with responsive design, fluid animations, and exceptional user experience.",
+      expertise2Title: "Backend & API Engineering",
       expertise2Desc:
-        "Scalable server-side applications with robust APIs and database architecture",
-      expertise3Title: "Mobile Responsive",
+        "Scalable server-side architecture, RESTful APIs, authentication, and database integration with Node.js and Laravel.",
+      expertise3Title: "Responsive & Mobile-First",
       expertise3Desc:
-        "Pixel-perfect mobile-first designs that work seamlessly across all devices",
-      expertise4Title: "DevOps & Tools",
+        "Pixel-perfect, adaptive interfaces engineered to deliver flawless performance across phones, tablets, and desktops.",
+      expertise4Title: "DevOps & Cloud Tools",
       expertise4Desc:
-        "CI/CD pipelines, version control, MobaXterm deployment and development workflows",
-      expertise5Title: "UX/UI Design",
+        "Git version control, Docker containerization, CI/CD pipelines, and cloud deployments on Vercel and AWS.",
+      expertise5Title: "UI/UX Design & Prototyping",
       expertise5Desc:
-        "Crafting intuitive interfaces and engaging user experiences with modern design principles",
-      expertise6Title: "IT Support",
+        "User-centered digital designs, design systems, wireframes, and interactive clickable prototypes crafted with Figma.",
+      expertise6Title: "Database Administration",
       expertise6Desc:
-        "Providing technical assistance, troubleshooting, and maintaining IT infrastructure",
+        "Relational & NoSQL database architecture, schema modeling, query optimization, and secure data storage with MySQL & MongoDB.",
       // Khmer-specific about content
       khmerIntro:
         "ខ្ញុំជាអ្នកអភិវឌ្ឍន៍កម្ពុជា ដែលមានចំណង់ចំណូលចិត្តក្នុងការបង្កើតគេហទំព័រឌីជីថលទំនើបៗ",
@@ -115,6 +133,7 @@ const translations = {
     experiences: {
       badge: "🎯 Additional Experiences",
       titleMain: "My Journey",
+      titleAccent: "& Highlights",
       subtitle:
         "Exploring new skills, participating in workshops, and contributing to the tech community",
       seeMore: "See more",
@@ -219,6 +238,13 @@ const translations = {
           desc: "Data visualization dashboard focusing on COVID-19 analytics.",
           tech: ["Python", "GitHub", "MySQL"],
         },
+
+         {
+          title: "Blog website",
+          year: "2026",
+          desc: "Full-stack finance tracking system with user authentication and admin dashboard statistics.",
+          tech: ["Nux.js", "TypeScript", "GitHub", "Tailwind CSS"],
+        },
       ],
     },
 
@@ -226,17 +252,18 @@ const translations = {
     contacts: {
       badge: "📬 Get In Touch",
       titleMain: "Let's",
+      titleAccent: "Connect",
       subtitle:
         "Have a project in mind? I'm always open to discussing new opportunities and ideas.",
       infoTitle: "Contact Info",
       formTitle: "Send a Message",
-      formSubtitle: "I'll get back to you as soon as possible",
-      nameLabel: "YName",
-      namePlaceholder: "ream",
-      emailLabel: "Email",
-      emailPlaceholder: "ream@example.com",
+      formSubtitle: "Have a project in mind or want to hire? I'll get back to you within 24 hours.",
+      nameLabel: "Your Name",
+      namePlaceholder: "e.g. John Doe",
+      emailLabel: "Email Address",
+      emailPlaceholder: "e.g. name@company.com",
       messageLabel: "Message",
-      messagePlaceholder: "Tell me about your project...",
+      messagePlaceholder: "Tell me about your project, goals, or job opportunity...",
       sendBtn: "Send Message",
       copyTooltip: "Tap to copy",
       show: "Show",
@@ -302,21 +329,33 @@ const translations = {
       greeting: "សួស្តី ខ្ញុំគឺ",
       nameFirst: "រាម",
       nameLast: "ខន",
+      badge: "បើកចំហការងារពេញម៉ោង · Software & Web Programming",
       roles: [
-        "អ្នកអភិវឌ្ឍន៍ Full Stack ទំនើប",
-        "អ្នកជំនាញ React Vue & Node.js Laravel",
-        "វិស្វករផ្នែក UI/UX",
-        "អ្នកបង្កើតមូលដ្ឋានទិន្នន័យ",
+        "អ្នកអភិវឌ្ឍន៍ Full-Stack ទំនើប",
+        "អ្នកជំនាញ React & TypeScript",
+        "អ្នកអភិវឌ្ឍន៍ Node.js & Laravel",
+        "វិស្វករ UI/UX & Frontend ទំនើប",
+        "អ្នកគ្រប់គ្រងមូលដ្ឋានទិន្នន័យ",
       ],
       description:
-        "ពីមុន៖ គេហទំព័រសាមញ្ញ។ ឥឡូវ៖ ផលិតផលឌីជីថលទំនើបដែលមាន UI ស្អាត ដំណើរការលឿន និងស្ថាបត្យកម្មដែលអាចពង្រីកបាន។ ខ្ញុំបង្កើតបទពិសោធន៍គេហទំព័រដែលមានអារម្មណ៍ថ្មី មានមុខងារ និងត្រៀមរួចរាល់សម្រាប់ថ្ងៃនេះ។",
-      viewWork: "មើលការងាររបស់ខ្ញុំ",
+        "អ្នកអភិវឌ្ឍន៍ Full-Stack ដែលមានចំណង់ចំណូលចិត្តក្នុងការបង្កើតគេហទំព័រទំនើប UI ស្រស់ស្អាត លឿន និងមានស្ថាបត្យកម្មរឹងមាំ។ ត្រៀមខ្លួនចូលរួមជាមួយក្រុមការងារ ដើម្បីបង្កើតផលិតផលឌីជីថលដ៏មានតម្លៃ។",
+      viewWork: "មើលគម្រោង",
+      downloadCv: "ទាញយក CV",
+      askAi: "សួរជំនួយការ AI",
       contactMe: "ទាក់ទងខ្ញុំ",
       profileRole: "អ្នកអភិវឌ្ឍន៍ Full-Stack",
       profileLocation: "កម្ពុជា",
-      available: "ទំនេរសម្រាប់ការងារ",
+      available: "បើកចំហការងារ Full-Time",
       bgFirstName: "រាម",
       bgLastName: "ខន",
+      stats: {
+        expVal: "២+ ឆ្នាំ",
+        expLabel: "ការសិក្សា & អនុវត្ត",
+        projectsVal: "១០+",
+        projectsLabel: "គម្រោងបានបញ្ចប់",
+        statusVal: "បើកចំហ",
+        statusLabel: "Full-Time Software / Web",
+      },
     },
 
     // About
@@ -373,25 +412,31 @@ const translations = {
       journey3Tag: "មូលដ្ឋានគ្រឹះ",
       journey3Desc:
         "មូលដ្ឋានគ្រឹះ HTML, CSS, JavaScript និងបង្កើតគម្រោងផ្ទាល់ខ្លួនតាមរយៈធនធានអនឡាញ និងឯកសារ។",
+      journey4Title: "អ្នកហាត់ការវិស្វកម្មកម្មវិធីគេហទំព័រ — The Luminix Company",
+      journey4Date: "៤ ខែ",
+      journey4Tag: "កម្មសិក្សា",
+      journey4Desc:
+        "បានបញ្ចប់កម្មសិក្សារយៈពេលបួនខែនៅ The Luminix Company ដោយចូលរួមការងារវិស្វកម្មកម្មវិធីគេហទំព័រ និងរៀនពីដំណើរការអភិវឌ្ឍន៍វិជ្ជាជីវៈ។",
       expertise: "អ្វីដែលខ្ញុំធ្វើ",
+      expertiseSub: "សេវាកម្មបច្ចេកវិទ្យា និងដំណោះស្រាយជំនាញដែលខ្ញុំផ្តល់ជូន",
       expertise1Title: "ការអភិវឌ្ឍន៍ Frontend",
       expertise1Desc:
-        "កម្មវិធី React ទំនើបជាមួយការរចនាឆ្លើយតប និងបទពិសោធន៍អ្នកប្រើប្រាស់ល្អឥតខ្ចោះ",
-      expertise2Title: "ការអភិវឌ្ឍន៍ Backend",
+        "កម្មវិធី React & Vue ទំនើបជាមួយការរចនាឆ្លើយតបគ្រប់ឧបករណ៍ និងបទពិសោធន៍អ្នកប្រើប្រាស់យ៉ាងរលូន។",
+      expertise2Title: "ការអភិវឌ្ឍន៍ Backend & API",
       expertise2Desc:
-        "កម្មវិធីខាងម៉ាស៊ីនមេដែលអាចពង្រីកបានជាមួយ API រឹងមាំ និងស្ថាបត្យកម្មមូលដ្ឋានទិន្នន័យ",
-      expertise3Title: "ការរចនាសម្រាប់ទូរស័ព្ទ",
+        "ស្ថាបត្យកម្មម៉ាស៊ីនមេរឹងមាំ ប្រព័ន្ធ API និងប្រព័ន្ធសុវត្ថិភាព ដំណើរការដោយ Node.js និង Laravel។",
+      expertise3Title: "ការរចនាឆ្លើយតប Mobile-First",
       expertise3Desc:
-        "ការរចនា Mobile-First ដែលដំណើរការបានល្អលើគ្រប់ឧបករណ៍",
-      expertise4Title: "DevOps និងឧបករណ៍",
+        "ការរចនាទម្រង់គេហទំព័រដែលសម្របខ្លួនយ៉ាងរលូន និងស្រស់ស្អាតលើទូរស័ព្ទ Tablet និងកុំព្យូទ័រ។",
+      expertise4Title: "DevOps & Cloud Tools",
       expertise4Desc:
-        "CI/CD, ការគ្រប់គ្រងកំណែ, ការដាក់ពង្រាយលើពពក និងលំហូរការងារអភិវឌ្ឍន៍",
-      expertise5Title: "ការរចនា UX/UI",
+        "ការគ្រប់គ្រងកំណែកូដតាម Git, Docker containerization, CI/CD pipelines និងការដាក់ដំណើរការលើ Vercel/Cloud។",
+      expertise5Title: "ការរចនា UI/UX & Prototyping",
       expertise5Desc:
-        "ការបង្កើតចំណុចប្រទាក់វិចារណញាណ និងបទពិសោធន៍អ្នកប្រើប្រាស់ដ៏ទាក់ទាញ",
-      expertise6Title: "ការគាំទ្រ IT",
+        "ការរចនាផលិតផលឌីជីថលផ្តោតលើអ្នកប្រើប្រាស់ ការបង្កើត Wireframe និង Prototype លើ Figma។",
+      expertise6Title: "ការគ្រប់គ្រងមូលដ្ឋានទិន្នន័យ",
       expertise6Desc:
-        "ការផ្តល់ជំនួយបច្ចេកទេស ការដោះស្រាយបញ្ហា និងថែទាំហេដ្ឋារចនាសម្ព័ន្ធ IT",
+        "ការរចនា Schema មូលដ្ឋានទិន្នន័យ ការបង្កើនល្បឿន Query និងការរក្សាទុកទិន្នន័យសុវត្ថិភាពជាមួយ MySQL & MongoDB។",
       khmerIntro:
         "ខ្ញុំជាអ្នកអភិវឌ្ឍន៍កម្ពុជា ដែលមានចំណង់ចំណូលចិត្តក្នុងការបង្កើតគេហទំព័រឌីជីថលទំនើបៗ",
     },

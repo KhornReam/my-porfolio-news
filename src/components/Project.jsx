@@ -128,7 +128,11 @@ function Projects() {
         {/* Project Grid */}
         <div className="projects-grid">
           {t.projects.items.map((project, index) => {
-            const proj = projects[index] || {};
+            const proj = projects[index];
+
+            // Translation entries can outnumber the project metadata. Skip an
+            // unmatched entry rather than rendering buttons with missing URLs.
+            if (!proj) return null;
 
             return (
               <div
@@ -192,7 +196,7 @@ function Projects() {
                   {/* Action buttons */}
                   <div className="project-actions">
                     <a
-                      href={projects[index].repository}
+                      href={proj.repository}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="project-btn primary"
@@ -205,7 +209,7 @@ function Projects() {
                       <span>{t.projects.viewRepo}</span>
                     </a>
                     <a
-                      href={projects[index].liveDemo}
+                      href={proj.liveDemo}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="project-btn secondary"

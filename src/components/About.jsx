@@ -1,453 +1,151 @@
 import "../css/About.css";
-import { FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase, FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5, FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer, FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress, FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart, FaUser, FaHome, FaSmile, FaTimes, FaArrowRight, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaExpand, FaExclamationTriangle, FaSpinner } from "react-icons/fa";
+import {
+  FaReact, FaCode, FaLaptopCode, FaGraduationCap, FaNodeJs, FaDatabase,
+  FaGitAlt, FaCloud, FaMobileAlt, FaPalette, FaChartLine, FaChartBar,
+  FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5,
+  FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer,
+  FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress,
+  FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart,
+  FaUser, FaHome, FaSmile, FaTimes, FaArrowRight, FaCheck, FaEye, FaClock, FaGlobeAmericas, FaCompass
+} from "react-icons/fa";
+import {
+  SiTypescript, SiLaravel, SiMongodb, SiPostgresql, SiTailwindcss, SiDocker as SiDockerBrand,
+  SiSequelize, SiNuxtdotjs, SiNextdotjs
+} from "react-icons/si";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { useLanguage } from "../contexts/LanguageContext";
-import profile from "../assets/icon.png";
+import profile from "../assets/ream1.png";
 import cambodiaFlag from "../assets/flag-cambodia.svg";
-import aboutVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
 
 const defaultMapCenter = [11.5564, 104.9282];
-const posterImage = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
-    <defs>
-      <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0%" stop-color="#0f172a"/>
-        <stop offset="55%" stop-color="#111827"/>
-        <stop offset="100%" stop-color="#1d4ed8"/>
-      </linearGradient>
-      <radialGradient id="glow" cx="50%" cy="25%" r="60%">
-        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
-        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <rect width="1200" height="700" fill="url(#bg)"/>
-    <circle cx="620" cy="240" r="260" fill="url(#glow)"/>
-    <rect x="110" y="110" width="980" height="480" rx="28" fill="rgba(15,23,42,0.38)" stroke="rgba(148,163,184,0.48)"/>
-    <circle cx="430" cy="300" r="80" fill="rgba(59,130,246,0.45)"/>
-    <circle cx="840" cy="260" r="120" fill="rgba(168,85,247,0.35)"/>
-    <path d="M540 410L630 320L720 360L850 230" fill="none" stroke="#e2e8f0" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-    <text x="600" y="530" text-anchor="middle" font-family="Segoe UI, Arial" font-size="54" fill="#f8fafc" font-weight="700">Portfolio Reel</text>
-  </svg>
-`)}`;
 
-function formatTime(seconds) {
-  if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
-  const totalSeconds = Math.floor(seconds);
-  const minutes = Math.floor(totalSeconds / 60);
-  const remainingSeconds = totalSeconds % 60;
-  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-function MapCenter({ position }) {
+function MapFlyCenter({ position }) {
   const map = useMap();
-
   useEffect(() => {
     if (position) {
-      map.flyTo([position.lat, position.lng], 15, {
+      map.flyTo([position.lat, position.lng], position.zoom || 13, {
         animate: true,
-        duration: 1.5,
+        duration: 1.4,
       });
     }
   }, [map, position]);
-
   return null;
 }
 
 function LiveLocationMap() {
-  const [location, setLocation] = useState(null);
-  const [locationStatus, setLocationStatus] = useState("requesting");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { lang } = useLanguage();
+  const [activeCityIndex, setActiveCityIndex] = useState(0);
 
-  useEffect(() => {
-    if (!("geolocation" in navigator)) {
-      setLocationStatus("unsupported");
-      setErrorMessage("Location access is not supported in this browser.");
-      return undefined;
-    }
+  const cambodiaCities = useMemo(
+    () => [
+      {
+        id: "phnom-penh",
+        name: lang === "km" ? "រាជធានីភ្នំពេញ" : "Phnom Penh",
+        tag: lang === "km" ? "ទីតាំងសិក្សា & អភិវឌ្ឍន៍" : "Tech & Education Base",
+        landmark: "Passerelles numériques Cambodia (PNC)",
+        coords: [11.5564, 104.9282],
+        zoom: 13,
+      },
+      {
+        id: "kampong-thom",
+        name: lang === "km" ? "ខេត្តកំពង់ធំ" : "Kampong Thom",
+        tag: lang === "km" ? "ស្រុកកំណើត" : "Hometown & Roots",
+        landmark: "Born & Raised in Cambodia",
+        coords: [12.7111, 104.8887],
+        zoom: 12,
+      },
+    ],
+    [lang]
+  );
 
-    const onSuccess = (position) => {
-      const nextLocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-      };
+  const activeCity = cambodiaCities[activeCityIndex];
 
-      setLocation(nextLocation);
-      setLocationStatus("granted");
-      setErrorMessage("");
-    };
-
-    const onError = (error) => {
-      const message =
-        error.code === error.PERMISSION_DENIED
-          ? "Location permission was denied. Enable location access to show your live position."
-          : "Unable to read your current location right now. Please try again.";
-
-      setLocationStatus("denied");
-      setErrorMessage(message);
-    };
-
-    const watchId = navigator.geolocation.watchPosition(onSuccess, onError, {
-      enableHighAccuracy: true,
-      timeout: 15000,
-      maximumAge: 1000,
-    });
-
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
-
-  const markerIcon = useMemo(
+  // Custom modern radar pulse pin
+  const radarIcon = useMemo(
     () =>
       L.divIcon({
-        className: "live-location-marker",
-        html: '<span class="live-marker-dot"></span>',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
+        className: "modern-radar-marker",
+        html: `
+          <div class="radar-pulse-ring"></div>
+          <div class="radar-core-dot"></div>
+        `,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
       }),
     []
   );
 
-  const initialCenter = location ? [location.lat, location.lng] : defaultMapCenter;
-  const locationLabel = location
-    ? `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`
-    : "Waiting for GPS";
-
   return (
     <div className="location-map-wrap">
-      <div className="map-toolbar">
-        <span className="map-toolbar-title">{"LOCATION MAP"}</span>
-        <span className="map-toolbar-mode">{locationStatus === "granted" ? "LIVE" : "GPS"}</span>
+      {/* Floating Top Control Bar */}
+      <div className="map-glass-topbar">
+        <div className="map-hq-badge">
+          <span className="live-radar-indicator" aria-hidden="true"></span>
+          <span className="hq-text">
+            {lang === "km" ? "មូលដ្ឋានកម្ពុជា" : "CAMBODIA HQ"} · {activeCity.name}
+          </span>
+        </div>
+
+        {/* City Switcher Tabs */}
+        <div className="map-city-tabs" role="tablist">
+          {cambodiaCities.map((city, idx) => (
+            <button
+              key={city.id}
+              type="button"
+              className={`map-city-pill ${activeCityIndex === idx ? "active" : ""}`}
+              onClick={() => setActiveCityIndex(idx)}
+              role="tab"
+              aria-selected={activeCityIndex === idx}
+            >
+              <span>{city.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <MapContainer
         className="location-map-visual"
-        center={initialCenter}
-        zoom={location ? 15 : 12}
-        scrollWheelZoom
-        zoomControl
-        attributionControl
+        center={activeCity.coords}
+        zoom={activeCity.zoom}
+        scrollWheelZoom={false}
+        zoomControl={false}
+        attributionControl={false}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
+        <MapFlyCenter position={{ lat: activeCity.coords[0], lng: activeCity.coords[1], zoom: activeCity.zoom }} />
 
-        {location && (
-          <>
-            <MapCenter position={location} />
-            <Circle
-              center={[location.lat, location.lng]}
-              radius={location.accuracy || 25}
-              pathOptions={{
-                color: "#38bdf8",
-                fillColor: "#38bdf8",
-                fillOpacity: 0.12,
-                weight: 1,
-              }}
-            />
-            <Marker position={[location.lat, location.lng]} icon={markerIcon}>
-              <Popup>
-                You are here.\n{locationLabel}
-              </Popup>
-            </Marker>
-          </>
-        )}
+        {cambodiaCities.map((city) => (
+          <Marker key={city.id} position={city.coords} icon={radarIcon}>
+            <Popup className="custom-glass-popup">
+              <div className="popup-body">
+                <strong>{city.name}</strong>
+                <span>{city.landmark}</span>
+                <small>{city.tag}</small>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
 
-      <div className="location-map-badge">
-        <span className="live-map-status-dot" aria-hidden="true" />
-        <span>{locationStatus === "granted" ? "Live location" : "Location status"}</span>
-      </div>
-
-      <div className="map-visual-label">
-        <div className="map-country-label">
-          <img src={cambodiaFlag} alt="" aria-hidden="true" />
+      {/* Floating Coordinates Bar */}
+      <div className="map-bottom-bar">
+        <div className="map-coords-pill">
+          <FaMapMarkerAlt className="coords-icon" />
+          <span>
+            {activeCity.coords[0].toFixed(4)}° N, {activeCity.coords[1].toFixed(4)}° E · ICT (UTC+7)
+          </span>
+        </div>
+        <div className="map-flag-pill">
+          <img src={cambodiaFlag} alt="Cambodia" className="flag-icon" />
           <span>Cambodia</span>
         </div>
-        <strong>{locationStatus === "granted" ? "Live GPS position" : "Phnom Penh"}</strong>
-        <small>{location ? locationLabel : "Kampong Thom · Cambodia"}</small>
-      </div>
-
-      {locationStatus !== "granted" && (
-        <div className="location-status-toast" role="status" aria-live="polite">
-          {locationStatus === "requesting"
-            ? "Requesting your location permission…"
-            : errorMessage}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ModernVideoPlayer() {
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const [volume, setVolume] = useState(0.7);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return undefined;
-
-    const syncValues = () => {
-      setDuration(Number.isFinite(video.duration) ? video.duration : 0);
-      setProgress(video.currentTime || 0);
-      setIsPlaying(!video.paused && !video.ended);
-      setIsMuted(video.muted || volume === 0);
-    };
-
-    const handleLoadedMetadata = () => {
-      video.volume = volume;
-      video.playbackRate = playbackRate;
-      setDuration(Number.isFinite(video.duration) ? video.duration : 0);
-      setIsLoading(false);
-      setError("");
-      syncValues();
-    };
-
-    const handleCanPlay = () => {
-      setIsLoading(false);
-      setError("");
-      if (!video.paused) {
-        setIsPlaying(true);
-      }
-    };
-
-    const handleWaiting = () => setIsLoading(true);
-    const handlePlaying = () => {
-      setIsLoading(false);
-      setIsPlaying(true);
-    };
-    const handlePause = () => setIsPlaying(false);
-    const handleTimeUpdate = () => setProgress(video.currentTime);
-    const handleError = () => {
-      setIsLoading(false);
-      setError("Unable to load the video. Please refresh or try again.");
-    };
-    const handleFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
-
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    video.addEventListener("canplay", handleCanPlay);
-    video.addEventListener("waiting", handleWaiting);
-    video.addEventListener("playing", handlePlaying);
-    video.addEventListener("pause", handlePause);
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    video.addEventListener("error", handleError);
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-
-    return () => {
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      video.removeEventListener("canplay", handleCanPlay);
-      video.removeEventListener("waiting", handleWaiting);
-      video.removeEventListener("playing", handlePlaying);
-      video.removeEventListener("pause", handlePause);
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-      video.removeEventListener("error", handleError);
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-    };
-  }, [playbackRate, volume]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.volume = volume;
-    video.muted = isMuted;
-  }, [isMuted, volume]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.playbackRate = playbackRate;
-  }, [playbackRate]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.autoPlay = true;
-    video.loop = true;
-    video.muted = isMuted;
-    video.playsInline = true;
-    video.preload = "metadata";
-    video.play().catch(() => setIsPlaying(false));
-  }, []);
-
-  const togglePlay = async () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (video.paused) {
-      try {
-        await video.play();
-        setIsPlaying(true);
-      } catch {
-        setError("Playback was blocked. Please interact with the player again.");
-      }
-      return;
-    }
-
-    video.pause();
-    setIsPlaying(false);
-  };
-
-  const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const nextMuted = !video.muted;
-    video.muted = nextMuted;
-    setIsMuted(nextMuted);
-
-    if (!nextMuted && volume === 0) {
-      setVolume(0.7);
-      video.volume = 0.7;
-    }
-  };
-
-  const handleSeek = (event) => {
-    const video = videoRef.current;
-    if (!video) return;
-    const nextTime = Number(event.target.value);
-    video.currentTime = nextTime;
-    setProgress(nextTime);
-  };
-
-  const handleVolume = (event) => {
-    const nextVolume = Number(event.target.value);
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.volume = nextVolume;
-    setVolume(nextVolume);
-    setIsMuted(nextVolume === 0);
-    video.muted = nextVolume === 0;
-  };
-
-  const toggleFullscreen = async () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    try {
-      if (!document.fullscreenElement) {
-        await video.requestFullscreen();
-      } else {
-        await document.exitFullscreen();
-      }
-    } catch {
-      setError("Fullscreen is not available in this browser.");
-    }
-  };
-
-  const cyclePlaybackRate = () => {
-    const options = [1, 1.25, 1.5, 2];
-    const nextIndex = (options.indexOf(playbackRate) + 1) % options.length;
-    const nextRate = options[nextIndex];
-    const video = videoRef.current;
-    if (video) video.playbackRate = nextRate;
-    setPlaybackRate(nextRate);
-  };
-
-  return (
-    <div className="about-video-shell">
-      <div className="video-topbar">
-        <span className="video-badge">Featured reel</span>
-        <span className={`video-status ${isLoading ? "loading" : isPlaying ? "playing" : "ready"}`}>
-          {error ? "Error" : isLoading ? "Loading" : isPlaying ? "Playing" : "Ready"}
-        </span>
-      </div>
-
-      <div className="video-frame">
-        <video
-          ref={videoRef}
-          className="about-video-player"
-          src={aboutVideo}
-          poster={posterImage}
-          playsInline
-          preload="metadata"
-          muted={isMuted}
-          loop
-          autoPlay
-          aria-label="Portfolio video showcase"
-        />
-
-        {isLoading && (
-          <div className="video-loading-overlay" aria-live="polite">
-            <FaSpinner className="video-spinner" />
-            <span>Loading video</span>
-          </div>
-        )}
-
-        {error && (
-          <div className="video-error-overlay" role="alert">
-            <FaExclamationTriangle />
-            <span>{error}</span>
-          </div>
-        )}
-
-        <div className="video-play-overlay">
-          <button
-            type="button"
-            className="video-main-toggle"
-            onClick={togglePlay}
-            aria-label={isPlaying ? "Pause video" : "Play video"}
-          >
-            {isPlaying ? <FaPause /> : <FaPlay />}
-          </button>
-        </div>
-      </div>
-
-      <div className="video-controls">
-        <button type="button" className="video-control-btn" onClick={togglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
-          {isPlaying ? <FaPause /> : <FaPlay />}
-        </button>
-
-        <button type="button" className="video-control-btn" onClick={toggleMute} aria-label={isMuted ? "Unmute" : "Mute"}>
-          {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-        </button>
-
-        <input
-          aria-label="Video progress"
-          className="video-progress"
-          type="range"
-          min="0"
-          max={duration || 0}
-          step="0.1"
-          value={progress}
-          onChange={handleSeek}
-        />
-
-        <span className="video-time">{formatTime(progress)} / {formatTime(duration)}</span>
-
-        <button type="button" className="video-speed-btn" onClick={cyclePlaybackRate} aria-label="Change playback speed">
-          {playbackRate}x
-        </button>
-
-        <button type="button" className="video-control-btn" onClick={toggleFullscreen} aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}>
-          <FaExpand />
-        </button>
-      </div>
-
-      <div className="video-volume-wrap">
-        <label htmlFor="video-volume" className="sr-only">Volume</label>
-        <input
-          id="video-volume"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={handleVolume}
-          className="video-volume"
-          aria-label="Volume"
-        />
       </div>
     </div>
   );
@@ -455,6 +153,25 @@ function ModernVideoPlayer() {
 
 function About() {
   const { t, lang } = useLanguage();
+  const [cambodiaTime, setCambodiaTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCambodiaTime(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Phnom_Penh",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })
+      );
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
   const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
@@ -482,77 +199,170 @@ function About() {
 
       <div className="about-container">
         <div className="about-header">
-          <h2 className="section-heading">{t.about.heading}</h2>
+          <div className="header-badge">
+            <span className="badge-text">{lang === "km" ? "ជីវប្រវត្តិ & ជំនាញ" : "BIOGRAPHY & BACKGROUND"}</span>
+          </div>
+          <h2 className="section-heading">
+            <span className="heading-main">{t.about.heading}</span>
+          </h2>
+          <div className="heading-underline" aria-hidden="true"></div>
           <p className="section-subheading">{t.about.subheading}</p>
           {lang === "km" && (
             <p className="khmer-intro">{t.about.khmerIntro}</p>
           )}
         </div>
-        <ModernVideoPlayer />
 
-        {/* Personal Info Section */}
+        {/* Personal Info Section - 2026 Developer Glassmorphism */}
         <div className="personal-info-section">
           <div className="personal-info-container">
+            {/* Left Column: Story, Bento Attributes & CTAs */}
             <div className="personal-info-left">
-              <div className="personal-info-badge">
-                <FaHeart className="badge-icon" />
-                <span>{t.about.personalInfo}</span>
+              {/* Category Pill */}
+              <div className="personal-kicker-badge">
+                <span className="kicker-pulse-dot" aria-hidden="true"></span>
+                <span>{t.about.personalInfo || "Personal Profile"}</span>
               </div>
-              <h2 className="personal-info-title">{t.about.personalInfoSub}</h2>
-              <p className="personal-info-bio">{t.about.personalBio}</p>
-              <div className="personal-details-grid">
-                <div className="personal-detail-item">
-                  <div className="detail-icon"><FaUser /></div>
-                  <div className="detail-content">
-                    <span className="detail-label">{t.about.personalDetails.age}</span>
-                    <span className="detail-value">{t.about.personalDetails.ageValue}</span>
+
+              {/* High-Impact Headline with Crisp Contrast */}
+              <h2 className="personal-headline">
+                <span className="headline-title">{t.about.personalInfoSub}</span>
+              </h2>
+              <div className="personal-title-underline" aria-hidden="true"></div>
+
+              <p className="personal-story-bio">{t.about.personalBio}</p>
+
+              {/* Quick Tech & Status Chips */}
+              <div className="personal-credentials-strip">
+                <span className="credential-chip">
+                  <FaGraduationCap className="cred-icon edu" />
+                  <span>Passerelles numériques (PNC)</span>
+                </span>
+                <span className="credential-chip">
+                  <FaMapMarkerAlt className="cred-icon loc" />
+                  <span>Kampong Thom · Cambodia</span>
+                </span>
+                <span className="credential-chip">
+                  <FaCode className="cred-icon code" />
+                  <span>Full-Stack Web Dev</span>
+                </span>
+                <span className="credential-chip status-live">
+                  <span className="live-pulse-dot" aria-hidden="true"></span>
+                  <span>{lang === "km" ? "ទំនេរសម្រាប់ការងារ" : "Available for Work"}</span>
+                </span>
+              </div>
+
+              {/* Bento Attributes Grid */}
+              <div className="personal-bento-grid">
+                {/* 1. Location / Roots */}
+                <div className="bento-tile tile-location">
+                  <div className="tile-icon-box box-cyan">
+                    <FaHome />
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.birthplace}</span>
+                    <strong className="tile-value">{t.about.personalDetails.birthplaceValue}</strong>
                   </div>
                 </div>
-                <div className="personal-detail-item">
-                  <div className="detail-icon"><FaHome /></div>
-                  <div className="detail-content">
-                    <span className="detail-label">{t.about.personalDetails.birthplace}</span>
-                    <span className="detail-value">{t.about.personalDetails.birthplaceValue}</span>
+
+                {/* 2. Age & Development Stage */}
+                <div className="bento-tile tile-age">
+                  <div className="tile-icon-box box-amber">
+                    <FaUser />
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.age}</span>
+                    <strong className="tile-value">
+                      {t.about.personalDetails.ageValue} {lang === "km" ? "ឆ្នាំ" : "Years Old"}
+                    </strong>
                   </div>
                 </div>
-                <div className="personal-detail-item">
-                  <div className="detail-icon"><FaHeart /></div>
-                  <div className="detail-content">
-                    <span className="detail-label">{t.about.personalDetails.family}</span>
-                    <span className="detail-value">{t.about.personalDetails.familyValue}</span>
+
+                {/* 3. Family / Roots */}
+                <div className="bento-tile tile-family">
+                  <div className="tile-icon-box box-rose">
+                    <FaHeart />
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.family}</span>
+                    <strong className="tile-value">{t.about.personalDetails.familyValue}</strong>
                   </div>
                 </div>
-                <div className="personal-detail-item">
-                  <div className="detail-icon"><FaSmile /></div>
-                  <div className="detail-content">
-                    <span className="detail-label">{t.about.personalDetails.personality}</span>
-                    <span className="detail-value">{t.about.personalDetails.personalityValue}</span>
+
+                {/* 4. Personality & Collaboration */}
+                <div className="bento-tile tile-personality">
+                  <div className="tile-icon-box box-emerald">
+                    <FaSmile />
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.personality}</span>
+                    <strong className="tile-value">{t.about.personalDetails.personalityValue}</strong>
                   </div>
                 </div>
+              </div>
+
+              {/* High-Converting CTA Buttons */}
+              <div className="personal-cta-group">
+                <a
+                  href={cvFile}
+                  download="Ream-Khorn-Resume.pdf"
+                  className="cta-btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaDownload className="cta-icon" />
+                  <span>{lang === "km" ? "ទាញយក CV" : "Download CV"}</span>
+                </a>
+                <a href="#Contacts" className="cta-btn-secondary">
+                  <span>{lang === "km" ? "ទាក់ទងខ្ញុំ" : "Get In Touch"}</span>
+                  <FaArrowRight className="cta-icon-right" />
+                </a>
               </div>
             </div>
+
+            {/* Right Column: Modern Framed Portrait Showcase */}
             <div className="personal-info-right">
-              <div className="personal-profile-card">
-                <div className="personal-profile-glow"></div>
-                <div className="personal-image-wrapper">
+              <div className="personal-portrait-card">
+                {/* Luminous Ambient Background Glow */}
+                <div className="portrait-glow-aura" aria-hidden="true"></div>
+
+                {/* Floating Tech Chips positioned gracefully outside */}
+                <div className="floating-tech-chip chip-top-right">
+                  <FaReact className="chip-icon react" />
+                  <span>React.js</span>
+                </div>
+                <div className="floating-tech-chip chip-mid-left">
+                  <SiTypescript className="chip-icon ts" />
+                  <span>TypeScript</span>
+                </div>
+                <div className="floating-tech-chip chip-bottom-right">
+                  <FaNodeJs className="chip-icon node" />
+                  <span>Node.js</span>
+                </div>
+
+                {/* Modern Framed Portrait Image */}
+                <div className="portrait-image-frame">
                   <button
                     type="button"
-                    className="image-trigger"
+                    className="portrait-trigger-btn"
                     onClick={() => setIsImageOpen(true)}
-                    aria-label="View a larger profile image"
+                    aria-label={lang === "km" ? "មើលរូបភាពពេញ" : "View full portrait"}
                   >
-                    <img src={profile} alt="Ream Khorn" className="personal-profile-image" />
-                    <span className="image-view-label">View image</span>
+                    <img
+                      src={profile}
+                      alt="Ream Khorn - Full-Stack Developer"
+                      className="portrait-img"
+                    />
+                    <div className="portrait-gradient-sheen" aria-hidden="true"></div>
+                    <span className="portrait-zoom-pill">
+                      <FaEye /> {lang === "km" ? "មើលរូបភាពពេញ" : "View Portrait"}
+                    </span>
                   </button>
-                  <div className="profile-orbit" aria-hidden="true">
-                    <span className="orbit-icon orbit-react"><FaReact /></span>
-                    <span className="orbit-icon orbit-node"><FaNodeJs /></span>
-                    <span className="orbit-icon orbit-js"><FaJsSquare /></span>
-                    <span className="orbit-icon orbit-python"><FaPython /></span>
+
+                  {/* Status Pill on Bottom of Image */}
+                  <div className="portrait-status-pill">
+                    <span className="live-status-dot" aria-hidden="true"></span>
+                    <span>{lang === "km" ? "ត្រៀមខ្លួនសម្រាប់ការងារ" : "Open for Opportunities"}</span>
                   </div>
-                  <div className="personal-sparkle"></div>
-                  <div className="personal-sparkle"></div>
-                  <div className="personal-sparkle"></div>
                 </div>
               </div>
             </div>
@@ -562,22 +372,84 @@ function About() {
         <div className="location-card">
           <LiveLocationMap />
           <div className="location-content">
-            <div className="location-icon"><FaMapMarkerAlt /></div>
-            <span className="location-eyebrow">{lang === "km" ? "កន្លែងកំណើត" : "MY ROOTS"}</span>
-            <h3>{lang === "km" ? "ទីតាំងបច្ចុប្បន្នរបស់ខ្ញុំ" : "My live location"}</h3>
-            <p>
+            <div className="location-badge">
+              <FaMapMarkerAlt className="loc-badge-icon" />
+              <span>{lang === "km" ? "ទីតាំង & តំបន់ម៉ោង" : "LOCATION & TIMEZONE"}</span>
+            </div>
+
+            <h3 className="location-heading">
               {lang === "km"
-                ? "ប្រើ GPS របស់កម្ម្មរលើក ដើម្បីបង្ហាញទីតាំងពិតប្រាកដ និងអាប់ដេតដោយស្វ័យប្រវត្តិ នៅពេលអ្នកផ្លាស់ទី។"
-                : "This map requests your browser location permission and updates automatically as you move so your real-time position is shown accurately."}
+                ? "មានមូលដ្ឋាននៅកម្ពុជា ត្រៀមខ្លួនសម្រាប់សកលលោក"
+                : "Based in Cambodia, Collaborating Globally"}
+            </h3>
+
+            <p className="location-description">
+              {lang === "km"
+                ? "មានមូលដ្ឋាននៅរាជធានីភ្នំពេញ (PNC) និងខេត្តកំពង់ធំ។ ខ្ញុំត្រៀមខ្លួនជាស្រេចក្នុងការធ្វើការងារពីចម្ងាយ (Remote) ជាមួយក្រុមការងារអន្តរជាតិ និងការងារផ្ទាល់ (On-site) នៅកម្ពុជា។"
+                : "Rooted in Kampong Thom and advancing full-stack engineering in Phnom Penh at PNC. Equipped for asynchronous remote collaboration across global time zones and on-site delivery in Cambodia."}
             </p>
+
+            {/* Quick Location Metrics Bento */}
+            <div className="location-metrics-list">
+              {/* 1. Timezone & Live Clock */}
+              <div className="loc-metric-item">
+                <div className="loc-metric-icon icon-clock">
+                  <FaClock />
+                </div>
+                <div className="loc-metric-text">
+                  <span className="loc-metric-label">
+                    {lang === "km" ? "តំបន់ម៉ោងកម្ពុជា (ICT)" : "LOCAL TIMEZONE (ICT)"}
+                  </span>
+                  <div className="loc-metric-live">
+                    <strong className="loc-metric-value">UTC+7 · Phnom Penh</strong>
+                    <span className="live-clock-pill">
+                      <span className="clock-pulse-dot" aria-hidden="true"></span>
+                      <span>{cambodiaTime || "Active"}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Collaboration Mode */}
+              <div className="loc-metric-item">
+                <div className="loc-metric-icon icon-globe">
+                  <FaGlobeAmericas />
+                </div>
+                <div className="loc-metric-text">
+                  <span className="loc-metric-label">
+                    {lang === "km" ? "របៀបធ្វើការ" : "WORK CAPABILITY"}
+                  </span>
+                  <strong className="loc-metric-value">
+                    {lang === "km" ? "Remote ទូទាំងពិភពលោក & On-Site" : "Remote Worldwide & On-Site"}
+                  </strong>
+                </div>
+              </div>
+
+              {/* 3. Tech Campus */}
+              <div className="loc-metric-item">
+                <div className="loc-metric-icon icon-campus">
+                  <FaGraduationCap />
+                </div>
+                <div className="loc-metric-text">
+                  <span className="loc-metric-label">
+                    {lang === "km" ? "ស្ថាប័នបច្ចេកវិទ្យា" : "CAMPUS & HUB"}
+                  </span>
+                  <strong className="loc-metric-value">
+                    Passerelles numériques (PNC)
+                  </strong>
+                </div>
+              </div>
+            </div>
+
             <a
-              className="location-link"
-              href="https://www.google.com/maps"
+              className="location-cta-btn"
+              href="https://maps.google.com/?q=Phnom+Penh+Cambodia"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {lang === "km" ? "បើក Google Maps" : "Open Google Maps"}
-              <FaArrowRight />
+              <FaCompass className="btn-icon" />
+              <span>{lang === "km" ? "បើកមើលក្នុង Google Maps" : "Explore on Google Maps"}</span>
+              <FaArrowRight className="btn-arrow" />
             </a>
           </div>
         </div>
@@ -634,21 +506,25 @@ function About() {
                       <div className="lang-marquee-track reverse">
                         <div className="lang-marquee-content">
                           <div className="lang-marquee-item frontend-item"><FaVuejs className="lang-icon vue" /><span>Vue.js</span></div>
-                          <div className="lang-marquee-item frontend-item"><FaJsSquare className="lang-icon ts" /><span>TypeScript</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiTypescript className="lang-icon ts" /><span>TypeScript</span></div>
                           <div className="lang-marquee-item frontend-item"><FaJsSquare className="lang-icon js" /><span>JavaScript</span></div>
                           <div className="lang-marquee-item frontend-item"><FaHtml5 className="lang-icon html" /><span>HTML</span></div>
                           <div className="lang-marquee-item frontend-item"><FaCss3Alt className="lang-icon css" /><span>CSS</span></div>
                           <div className="lang-marquee-item frontend-item"><FaFigma className="lang-icon figma" /><span>Figma</span></div>
                           <div className="lang-marquee-item frontend-item"><FaWordpress className="lang-icon wp" /><span>WordPress</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiNuxtdotjs className="lang-icon nuxt" /><span>Nuxt</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiNextdotjs className="lang-icon next" /><span>Next.js</span></div>
                         </div>
                         <div className="lang-marquee-content frontend-items" aria-hidden="true">
                           <div className="lang-marquee-item frontend-item"><FaVuejs className="lang-icon vue" /><span>Vue.js</span></div>
-                          <div className="lang-marquee-item frontend-item"><FaJsSquare className="lang-icon ts" /><span>TypeScript</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiTypescript className="lang-icon ts" /><span>TypeScript</span></div>
                           <div className="lang-marquee-item frontend-item"><FaJsSquare className="lang-icon js" /><span>JavaScript</span></div>
                           <div className="lang-marquee-item frontend-item"><FaHtml5 className="lang-icon html" /><span>HTML</span></div>
                           <div className="lang-marquee-item frontend-item"><FaCss3Alt className="lang-icon css" /><span>CSS</span></div>
                           <div className="lang-marquee-item frontend-item"><FaFigma className="lang-icon figma" /><span>Figma</span></div>
                           <div className="lang-marquee-item frontend-item"><FaWordpress className="lang-icon wp" /><span>WordPress</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiNuxtdotjs className="lang-icon nuxt" /><span>Nuxt</span></div>
+                          <div className="lang-marquee-item frontend-item"><SiNextdotjs className="lang-icon next" /><span>Next.js</span></div>
                         </div>
                       </div>
                     </div>
@@ -665,18 +541,21 @@ function About() {
                         <div className="lang-marquee-content">
                           <div className="lang-marquee-item backend-item"><FaPhp className="lang-icon php" /><span>PHP</span></div>
                           <div className="lang-marquee-item backend-item"><FaNodeJs className="lang-icon node" /><span>Node.js</span></div>
-                          <div className="lang-marquee-item backend-item"><FaDatabase className="lang-icon mongo" /><span>MongoDB</span></div>
-                          <div className="lang-marquee-item backend-item"><FaDatabase className="lang-icon sql" /><span>SQL</span></div>
+                          <div className="lang-marquee-item backend-item"><SiMongodb className="lang-icon mongo" /><span>MongoDB</span></div>
+                          <div className="lang-marquee-item backend-item"><SiPostgresql className="lang-icon sql" /><span>PostgreSQL</span></div>
                           <div className="lang-marquee-item backend-item"><FaPython className="lang-icon python" /><span>Python</span></div>
-                          <div className="lang-marquee-item backend-item"><FaPhp className="lang-icon laravel" /><span>Laravel</span></div>
+                          <div className="lang-marquee-item backend-item"><SiLaravel className="lang-icon laravel" /><span>Laravel</span></div>
+                          <div className="lang-marquee-item backend-item"><SiSequelize className="lang-icon sqlserver" /><span>sql Server</span></div>
                         </div>
                         <div className="lang-marquee-content backend-items" aria-hidden="true">
                           <div className="lang-marquee-item backend-item"><FaPhp className="lang-icon php" /><span>PHP</span></div>
                           <div className="lang-marquee-item backend-item"><FaNodeJs className="lang-icon node" /><span>Node.js</span></div>
-                          <div className="lang-marquee-item backend-item"><FaDatabase className="lang-icon mongo" /><span>MongoDB</span></div>
-                          <div className="lang-marquee-item backend-item"><FaDatabase className="lang-icon sql" /><span>SQL</span></div>
+                          <div className="lang-marquee-item backend-item"><SiMongodb className="lang-icon mongo" /><span>MongoDB</span></div>
+                          <div className="lang-marquee-item backend-item"><SiPostgresql className="lang-icon sql" /><span>PostgreSQL</span></div>
                           <div className="lang-marquee-item backend-item"><FaPython className="lang-icon python" /><span>Python</span></div>
-                          <div className="lang-marquee-item backend-item"><FaPhp className="lang-icon laravel" /><span>Laravel</span></div>
+                          <div className="lang-marquee-item backend-item"><SiLaravel className="lang-icon laravel" /><span>Laravel</span></div>
+                          <div className="lang-marquee-item backend-item"><BiSolidMessageSquareDetail  className="lang-icon laravel" /><span>sql server</span></div>
+
                         </div>
                       </div>
                     </div>
@@ -692,21 +571,21 @@ function About() {
                       <div className="lang-marquee-track">
                         <div className="lang-marquee-content">
                           <div className="lang-marquee-item tools-item"><FaAws className="lang-icon aws" /><span>AWS</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon vercel" /><span>Vercel</span></div>
-                          <div className="lang-marquee-item tools-item"><FaChartLine className="lang-icon data" /><span>Data Analysis</span></div>
+                          <div className="lang-marquee-item tools-item"><FaCloud className="lang-icon vercel" /><span>Vercel</span></div>
+                          <div className="lang-marquee-item tools-item"><FaChartBar className="lang-icon data" /><span>Data Analysis</span></div>
                           <div className="lang-marquee-item tools-item"><FaGithub className="lang-icon github" /><span>GitHub</span></div>
                           <div className="lang-marquee-item tools-item"><FaGitAlt className="lang-icon git" /><span>Git</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon laragon" /><span>Laragon</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon Power BI" /><span>Power BI</span></div>
+                          <div className="lang-marquee-item tools-item"><SiDockerBrand className="lang-icon docker" /><span>Docker</span></div>
+                          <div className="lang-marquee-item tools-item"><FaChartLine className="lang-icon powerbi" /><span>Power BI</span></div>
                         </div>
                         <div className="lang-marquee-content tools-items" aria-hidden="true">
                           <div className="lang-marquee-item tools-item"><FaAws className="lang-icon aws" /><span>AWS</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon vercel" /><span>Vercel</span></div>
-                          <div className="lang-marquee-item tools-item"><FaChartLine className="lang-icon data" /><span>Data Analysis</span></div>
+                          <div className="lang-marquee-item tools-item"><FaCloud className="lang-icon vercel" /><span>Vercel</span></div>
+                          <div className="lang-marquee-item tools-item"><FaChartBar className="lang-icon data" /><span>Data Analysis</span></div>
                           <div className="lang-marquee-item tools-item"><FaGithub className="lang-icon github" /><span>GitHub</span></div>
                           <div className="lang-marquee-item tools-item"><FaGitAlt className="lang-icon git" /><span>Git</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon laragon" /><span>Laragon</span></div>
-                          <div className="lang-marquee-item tools-item"><FaServer className="lang-icon Power BI" /><span>Power BI</span></div>
+                          <div className="lang-marquee-item tools-item"><SiDockerBrand className="lang-icon docker" /><span>Docker</span></div>
+                          <div className="lang-marquee-item tools-item"><FaChartLine className="lang-icon powerbi" /><span>Power BI</span></div>
                         </div>
                       </div>
                     </div>
@@ -720,12 +599,12 @@ function About() {
           <div className="achievements-section">
             <div className="achievement-item">
               <FaTrophy className="achievement-icon" />
-              <span className="achievement-value">12+</span>
+              <span className="achievement-value">20+</span>
               <span className="achievement-label">{t.about.achievements.projects}</span>
             </div>
             <div className="achievement-item">
               <FaBriefcase className="achievement-icon" />
-              <span className="achievement-value">2+</span>
+              <span className="achievement-value">3+</span>
               <span className="achievement-label">{t.about.achievements.experience}</span>
             </div>
             <div className="achievement-item">
@@ -735,7 +614,7 @@ function About() {
             </div>
             <div className="achievement-item">
               <FaAward className="achievement-icon" />
-              <span className="achievement-value">4+</span>
+              <span className="achievement-value">12+</span>
               <span className="achievement-label">{t.about.achievements.certifications}</span>
             </div>
           </div>
@@ -777,150 +656,164 @@ function About() {
                   <p>{t.about.journey3Desc}</p>
                 </div>
               </div>
+              <div className="journey-item">
+                <div className="journey-marker"></div>
+                <div className="journey-content">
+                  <div className="journey-header">
+                    <h4>{t.about.journey4Title}</h4>
+                    <span className="journey-date"><FaCalendarAlt /> {t.about.journey4Date}</span>
+                  </div>
+                  <span className="journey-tag past">{t.about.journey4Tag}</span>
+                  <p>{t.about.journey4Desc}</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Core Services Cards */}
+          {/* What I Do - Premium Services Cards */}
           <div className="expertise-section">
-            <h3 className="section-title">{t.about.expertise}</h3>
+            <div className="expertise-header">
+              <span className="expertise-pretitle">{lang === "km" ? "ជំនាញ & សេវាកម្ម" : "Services & Expertise"}</span>
+              <h3 className="section-title">{t.about.expertise}</h3>
+              {t.about.expertiseSub && (
+                <p className="expertise-subheading">{t.about.expertiseSub}</p>
+              )}
+            </div>
+
             <div className="expertise-grid">
+              {/* 1. Frontend Development */}
               <div className="expertise-card frontend">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #61dafb, #38bdf8)'}}>
-                  <FaPalette className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap frontend-icon">
+                    <FaLaptopCode className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">Frontend</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise1Title}</h4>
                   <p>{t.about.expertise1Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(97, 218, 251, 0.15)', color: '#61dafb'}}>{lang === 'km' ? 'ជំនាញ' : 'Expert'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '90%', background: 'linear-gradient(90deg, #61dafb, #38bdf8)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#61dafb'}}>90%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">React.js</span>
+                  <span className="expertise-tag-pill">TypeScript</span>
+                  <span className="expertise-tag-pill">Vue.js</span>
+                  <span className="expertise-tag-pill">Tailwind CSS</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
 
+              {/* 2. Backend & API Engineering */}
               <div className="expertise-card backend">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #68a063, #4caf50)'}}>
-                  <FaServer className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap backend-icon">
+                    <FaServer className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">Backend</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise2Title}</h4>
                   <p>{t.about.expertise2Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(104, 160, 99, 0.15)', color: '#68a063'}}>{lang === 'km' ? 'ជំនាញ' : 'Expert'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '85%', background: 'linear-gradient(90deg, #68a063, #4caf50)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#68a063'}}>85%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">Node.js</span>
+                  <span className="expertise-tag-pill">Express.js</span>
+                  <span className="expertise-tag-pill">Laravel</span>
+                  <span className="expertise-tag-pill">REST APIs</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
 
+              {/* 3. Responsive & Mobile-First */}
               <div className="expertise-card mobile">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #4ecdc4, #2dd4bf)'}}>
-                  <FaMobileAlt className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap mobile-icon">
+                    <FaMobileAlt className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">Mobile-First</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise3Title}</h4>
                   <p>{t.about.expertise3Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(78, 205, 196, 0.15)', color: '#4ecdc4'}}>{lang === 'km' ? 'ជំនាញ' : 'Advanced'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '95%', background: 'linear-gradient(90deg, #4ecdc4, #2dd4bf)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#4ecdc4'}}>95%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">Responsive Design</span>
+                  <span className="expertise-tag-pill">Cross-Browser</span>
+                  <span className="expertise-tag-pill">Fluid Layouts</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
 
+              {/* 4. DevOps & Cloud Tools */}
               <div className="expertise-card tools">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #f59e0b, #eab308)'}}>
-                  <FaTools className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap tools-icon">
+                    <FaCloud className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">DevOps</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise4Title}</h4>
                   <p>{t.about.expertise4Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b'}}>{lang === 'km' ? 'ជំនាញ' : 'Proficient'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '80%', background: 'linear-gradient(90deg, #f59e0b, #eab308)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#f59e0b'}}>80%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">Git / GitHub</span>
+                  <span className="expertise-tag-pill">Docker</span>
+                  <span className="expertise-tag-pill">Vercel</span>
+                  <span className="expertise-tag-pill">CI/CD</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
 
-              {/* UX/UI Design */}
+              {/* 5. UI/UX Design & Prototyping */}
               <div className="expertise-card uxui">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #a855f7, #8b5cf6)'}}>
-                  <FaFigma className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap uxui-icon">
+                    <FaFigma className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">UI / UX</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise5Title}</h4>
                   <p>{t.about.expertise5Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(168, 85, 247, 0.15)', color: '#a855f7'}}>{lang === 'km' ? 'ជំនាញ' : 'Proficient'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '70%', background: 'linear-gradient(90deg, #a855f7, #8b5cf6)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#a855f7'}}>70%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">Figma</span>
+                  <span className="expertise-tag-pill">Wireframing</span>
+                  <span className="expertise-tag-pill">Design Systems</span>
+                  <span className="expertise-tag-pill">Prototyping</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
 
-              {/* IT Support */}
+              {/* 6. Database Administration */}
               <div className="expertise-card itsupport">
-                <div className="expertise-glow"></div>
-                <div className="expertise-card-bg"></div>
-                <div className="expertise-icon-wrap" style={{background: 'linear-gradient(135deg, #f43f5e, #e11d48)'}}>
-                  <FaHeadset className="expertise-icon" />
+                <div className="expertise-glow" aria-hidden="true"></div>
+                <div className="expertise-card-top">
+                  <div className="expertise-icon-wrap itsupport-icon">
+                    <FaDatabase className="expertise-icon" />
+                  </div>
+                  <span className="expertise-category-badge">Database</span>
                 </div>
                 <div className="expertise-card-content">
                   <h4>{t.about.expertise6Title}</h4>
                   <p>{t.about.expertise6Desc}</p>
                 </div>
-                <div className="expertise-footer">
-                  <div className="expertise-tag" style={{background: 'rgba(244, 63, 94, 0.15)', color: '#f43f5e'}}>{lang === 'km' ? 'ជំនាញ' : 'Proficient'}</div>
-                  <div className="expertise-stat">
-                    <div className="expertise-stat-bar">
-                      <div className="expertise-stat-fill" style={{width: '60%', background: 'linear-gradient(90deg, #f43f5e, #e11d48)'}}></div>
-                    </div>
-                    <span className="expertise-stat-value" style={{color: '#f43f5e'}}>60%</span>
-                  </div>
+                <div className="expertise-tags-row">
+                  <span className="expertise-tag-pill">MySQL</span>
+                  <span className="expertise-tag-pill">PostgreSQL</span>
+                  <span className="expertise-tag-pill">MongoDB</span>
+                  <span className="expertise-tag-pill">SQL Optimization</span>
                 </div>
-                <div className="expertise-border"></div>
+                <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       {isImageOpen && (
