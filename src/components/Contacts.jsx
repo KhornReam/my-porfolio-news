@@ -207,6 +207,11 @@ function Contact() {
         ? "រាមបានសិក្សា 2 ឆ្នាំនៅ Passerelles Numériques Cambodia (PNC) ក្នុងវិស័យ Full-Stack Web Development និង Information Technology។ គាត់បានបញ្ចប់វិទ្យាល័យក្នុងឆ្នាំ 2024។"
         : "Ream completed two years of study at Passerelles Numériques Cambodia (PNC), focusing on Full-Stack Web Development and Information Technology. He completed high school in 2024.";
     }
+    if (/(certif|achievement|qualys|palo|dell|proofpoint|checkpoint|credly|license|វិញ្ញាបនបត្រ|សមិទ្ធផល)/i.test(query)) {
+      return isKhmer
+        ? "រាមមានវិញ្ញាបនបត្រជំនាញវិជ្ជាជីវៈកម្រិតអន្តរជាតិចំនួន 5 រួមមាន៖\n1. Qualys Certified Specialist: Vulnerability Management Detection and Response (VMDR)\n2. Palo Alto Networks: Network Threats and Security (Cert ID: C625337)\n3. Proofpoint Cybersecurity Academy: Partner Program Sales Engineer\n4. Check Point Sales Certification (Credly Verifiable)\n5. Dell Technologies Partner Program: SE: Hyper-Converged Infrastructure (HCI) 2026\nអ្នកអាចមើលរូបភាពវិញ្ញាបនបត្រដើមពេញលេញនៅផ្នែក Additional Experiences!"
+        : "Ream holds 5 prestigious, verified industry certifications:\n1. Qualys Certified Specialist: Vulnerability Management Detection and Response (VMDR) (2026 - 2028)\n2. Palo Alto Networks: Network Threats and Security (Cert ID: C625337)\n3. Proofpoint Cybersecurity Academy: Partner Program Sales Engineer\n4. Check Point Sales Certification (Credly verified, 2026 - 2028)\n5. Dell Technologies Partner Program: SE: Hyper-Converged Infrastructure (HCI) 2026\nYou can view and inspect all original certificate documents in the Additional Experiences section!";
+    }
     if (/(experience|workshop|journey|បទពិសោធន៍|ដំណើរ)/i.test(query)) {
       return isKhmer
         ? "បទពិសោធន៍របស់រាមរួមមាន Cybersecurity Workshop, mentoring យុវជនកម្ពុជា, Figma Workshop, technology competitions, company visits និង Canva/Cybersecurity training។"

@@ -131,13 +131,162 @@ const translations = {
 
     // Experiences
     experiences: {
-      badge: "🎯 Additional Experiences",
-      titleMain: "My Journey",
-      titleAccent: "& Highlights",
+      badge: "🏆 Experiences & Industry Credentials",
+      titleMain: "My Journey,",
+      titleAccent: "Certifications & Highlights",
       subtitle:
-        "Exploring new skills, participating in workshops, and contributing to the tech community",
+        "Verified industry credentials, hands-on cybersecurity certifications, technical workshops, and community leadership",
       seeMore: "See more",
       showLess: "Show less",
+      filterAll: "All Activities",
+      filterCerts: "Certifications & Credentials",
+      filterWorkshops: "Workshops & Community",
+      verifiedBadge: "Verified Credential",
+      viewCertificate: "View Certificate",
+      issuedBy: "Issued by",
+      validUntil: "Valid through",
+      certifications: [
+        {
+          id: "qualys",
+          title: "Qualys Certified Specialist",
+          subtitle: "Vulnerability Management Detection and Response (VMDR)",
+          issuer: "Qualys",
+          category: "Security Certification",
+          date: "Oct 19, 2026",
+          validUntil: "Oct 18, 2028",
+          description:
+            "Certified specialist in deploying, operating, and monitoring the Qualys Cloud Platform to implement, manage, and protect IT systems, devices, and web applications.",
+          more:
+            "Validated competence in enterprise vulnerability scanning, continuous asset discovery, threat prioritization using TruRisk, automated remediation tracking, and web application threat mitigation across cloud and hybrid environments.",
+          skills: [
+            "Vulnerability Management",
+            "Threat Detection & Response",
+            "Qualys Cloud Platform",
+            "Web Application Security",
+            "Risk Assessment",
+            "Patch Prioritization"
+          ],
+          highlights: [
+            "Passed official Qualys Specialist certification exam",
+            "Authorized to deploy & operate Qualys Cloud enterprise platforms",
+            "Endorsed by Dilip Bachwani, Chief Technology Officer at Qualys",
+            "Valid 2-year specialist credential (Oct 2026 – Oct 2028)"
+          ],
+          credentialId: "Qualys-VMDR-2026",
+          year: "2026"
+        },
+        {
+          id: "paloalto",
+          title: "Palo Alto Networks Certification",
+          subtitle: "Network Threats and Security",
+          issuer: "Palo Alto Networks",
+          category: "Network Defense",
+          date: "Oct 21, 2026",
+          validUntil: "Lifetime Credential",
+          description:
+            "Successfully completed professional certification coursework on modern network threats, enterprise threat prevention architectures, and next-generation firewall concepts.",
+          more:
+            "Trained in identifying advanced persistent threats (APTs), zero-trust network access (ZTNA), SSL/TLS decryption inspection, DNS security, and perimeter policy enforcement to safeguard enterprise data networks.",
+          skills: [
+            "Network Threats & Security",
+            "Next-Gen Firewalls (NGFW)",
+            "Zero-Trust Architecture",
+            "Threat Prevention",
+            "Malware Analysis",
+            "Network Traffic Inspection"
+          ],
+          highlights: [
+            "Official Palo Alto Networks Certificate of Completion",
+            "Certificate ID: C625337",
+            "Endorsed by Nikesh Arora, Chairman & CEO of Palo Alto Networks",
+            "Rigorous technical training on enterprise perimeter defense"
+          ],
+          credentialId: "C625337",
+          year: "2026"
+        },
+        {
+          id: "proofpoint",
+          title: "Proofpoint Partner Program: Sales Engineer",
+          subtitle: "Cybersecurity Academy Partner Training",
+          issuer: "Proofpoint Cybersecurity Academy",
+          category: "Email & Cloud Security",
+          date: "Sep 30, 2026",
+          validUntil: "Active Partner Status",
+          description:
+            "Technical partner credential focused on human-centric cybersecurity defense, enterprise email protection, business email compromise (BEC) prevention, and threat intelligence.",
+          more:
+            "Acquired in-depth technical knowledge of inbound and outbound email security gateways, cloud threat detection, phishing simulation platforms, data loss prevention (DLP), and technical sales engineering advisory.",
+          skills: [
+            "Email Security Architecture",
+            "Phishing & BEC Defense",
+            "Technical Sales Engineering",
+            "Threat Intelligence",
+            "Human-Centric Defense",
+            "Cloud Security"
+          ],
+          highlights: [
+            "Official Proofpoint Partner Program credential",
+            "Trained in enterprise threat protection and customer advisory",
+            "Comprehensive coverage of global email threat vectors"
+          ],
+          credentialId: "Proofpoint-SE-2026",
+          year: "2026"
+        },
+        {
+          id: "checkpoint",
+          title: "Check Point Sales Certification",
+          subtitle: "Check Point Software Technologies",
+          issuer: "Check Point Software Technologies",
+          category: "Security Architecture",
+          date: "Sep 21, 2026",
+          validUntil: "Sep 20, 2028",
+          description:
+            "Demonstrated validated technical knowledge and sales engineering mastery of Check Point's enterprise cybersecurity architecture and threat prevention solutions.",
+          more:
+            "Covers Quantum network security appliances, CloudGuard multi-cloud security, and Harmony unified workspace security with real-time ThreatCloud AI intelligence to stop zero-day cyber attacks.",
+          skills: [
+            "Unified Cyber Defense",
+            "Quantum Network Security",
+            "Cloud Security Architecture",
+            "ThreatCloud AI Prevention",
+            "Technical Solutions Design"
+          ],
+          highlights: [
+            "Credly-verifiable industry credential (2026 – 2028)",
+            "Issued by Eitan Lugassi, VP Check Point Services",
+            "Mastery of multi-layered perimeter and cloud defense"
+          ],
+          credentialId: "CheckPoint-Sales-2026",
+          year: "2026"
+        },
+        {
+          id: "dell",
+          title: "Dell Technologies HCI Credential 2026",
+          subtitle: "SE: Hyper-Converged Infrastructure Credential",
+          issuer: "Dell Technologies Partner Program",
+          category: "Infrastructure & Cloud",
+          date: "Sep 11, 2026",
+          validUntil: "Credential 2026",
+          description:
+            "Recognized credential for Systems Engineering in Hyper-Converged Infrastructure (HCI), software-defined storage, virtualization, and enterprise hybrid cloud data center modernization.",
+          more:
+            "Detailed training on Dell VxRail appliances, VMware vSAN architecture, scalable compute/storage clustering, disaster recovery planning, and seamless private/hybrid cloud deployments.",
+          skills: [
+            "Hyper-Converged Infrastructure (HCI)",
+            "Dell VxRail & Storage Systems",
+            "VMware Virtualization & vSAN",
+            "Data Center Modernization",
+            "High Availability Architecture"
+          ],
+          highlights: [
+            "Official Dell Technologies Partner Program Credential",
+            "Recognized SE: Hyper-Converged Infrastructure specialist",
+            "Architectural expertise in modern enterprise cloud computing"
+          ],
+          credentialId: "Dell-SE-HCI-2026",
+          year: "2026"
+        }
+      ],
       items: [
         {
           title: "Cybersecurity Awareness Workshop",
@@ -443,13 +592,159 @@ const translations = {
 
     // Experiences
     experiences: {
-      badge: "🎯 បទពិសោធន៍បន្ថែម",
-      titleMain: "ដំណើរ",
-      titleAccent: "",
+      badge: "🏆 បទពិសោធន៍ & វិញ្ញាបនបត្រផ្លូវការ",
+      titleMain: "ដំណើរ និង",
+      titleAccent: "វិញ្ញាបនបត្រសមិទ្ធផល",
       subtitle:
-        "ស្វែងយល់ជំនាញថ្មីៗ ចូលរួមសិក្ខាសាលា និងរួមចំណែកដល់សហគមន៍បច្ចេកវិទ្យា",
+        "វិញ្ញាបនបត្រស្តង់ដារអន្តរជាតិ សន្តិសុខតាមអ៊ីនធឺណិត សិក្ខាសាលាបច្ចេកវិទ្យា និងការចូលរួមក្នុងសហគមន៍",
       seeMore: "មើលបន្ថែម",
       showLess: "បង្ហាញតិច",
+      filterAll: "ទាំងអស់",
+      filterCerts: "វិញ្ញាបនបត្រ & សមិទ្ធផល",
+      filterWorkshops: "សិក្ខាសាលា & សហគមន៍",
+      verifiedBadge: "វិញ្ញាបនបត្រផ្លូវការ",
+      viewCertificate: "មើលវិញ្ញាបនបត្រ",
+      issuedBy: "ចេញដោយ",
+      validUntil: "សុពលភាពដល់",
+      certifications: [
+        {
+          id: "qualys",
+          title: "អ្នកឯកទេសវិញ្ញាបនបត្រ Qualys",
+          subtitle: "Vulnerability Management Detection and Response (VMDR)",
+          issuer: "Qualys",
+          category: "វិញ្ញាបនបត្រសន្តិសុខ",
+          date: "១៩ តុលា ២០២៦",
+          validUntil: "១៨ តុលា ២០២៨",
+          description:
+            "បានប្រលងជាប់វិញ្ញាបនបត្រផ្លូវការលើការដាក់ពង្រាយ ដំណើរការ និងត្រួតពិនិត្យប្រព័ន្ធ Qualys Cloud Platform ដើម្បីគ្រប់គ្រង និងការពារប្រព័ន្ធ IT ឧបករណ៍ និងកម្មវិធីគេហទំព័រ។",
+          more:
+            "ជំនាញក្នុងការស្កេនរកភាពងាយរងគ្រោះ ការវាយតម្លៃហានិភ័យ ការការពារកម្មវិធីគេហទំព័រ និងការដោះស្រាយបញ្ហាសុវត្ថិភាពទូទាំងហេដ្ឋារចនាសម្ព័ន្ធសហគ្រាស។",
+          skills: [
+            "Vulnerability Management",
+            "Threat Detection & Response",
+            "Qualys Cloud Platform",
+            "Web Application Security",
+            "Risk Assessment"
+          ],
+          highlights: [
+            "ប្រលងជាប់វិញ្ញាបនបត្រឯកទេសផ្លូវការពី Qualys",
+            "មានសិទ្ធិដាក់ពង្រាយ និងដំណើរការប្រព័ន្ធ Qualys Cloud",
+            "ចុះហត្ថលេខាដោយ Dilip Bachwani, CTO នៃ Qualys",
+            "សុពលភាព ២ ឆ្នាំពេញ (២០២៦ - ២០២៨)"
+          ],
+          credentialId: "Qualys-VMDR-2026",
+          year: "2026"
+        },
+        {
+          id: "paloalto",
+          title: "វិញ្ញាបនបត្រ Palo Alto Networks",
+          subtitle: "Network Threats and Security",
+          issuer: "Palo Alto Networks",
+          category: "សុវត្ថិភាពបណ្តាញ",
+          date: "២១ តុលា ២០២៦",
+          validUntil: "ពេញមួយជីវិត",
+          description:
+            "បានបញ្ចប់ការបណ្តុះបណ្តាលវិជ្ជាជីវៈលើការគំរាមកំហែងបណ្តាញកម្រិតខ្ពស់ យុទ្ធសាស្ត្រការពារ និងស្ថាបត្យកម្ម Next-Generation Firewall។",
+          more:
+            "ស្វែងយល់ស៊ីជម្រៅលើ Threat Vectors, គោលការណ៍ Zero-Trust Network, ការត្រួតពិនិត្យ Traffic និងការកំណត់គោលការណ៍សុវត្ថិភាពបណ្តាញសហគ្រាស។",
+          skills: [
+            "Network Threats & Security",
+            "Next-Gen Firewalls (NGFW)",
+            "Zero-Trust Architecture",
+            "Threat Prevention",
+            "Malware Analysis"
+          ],
+          highlights: [
+            "វិញ្ញាបនបត្របញ្ចប់ការសិក្សាផ្លូវការពី Palo Alto Networks",
+            "លេខសម្គាល់វិញ្ញាបនបត្រ: C625337",
+            "ចុះហត្ថលេខាដោយ Nikesh Arora, ប្រធាន & CEO Palo Alto Networks",
+            "ការបណ្តុះបណ្តាលបច្ចេកទេសការពារបណ្តាញកម្រិតសហគ្រាស"
+          ],
+          credentialId: "C625337",
+          year: "2026"
+        },
+        {
+          id: "proofpoint",
+          title: "Proofpoint Partner Program: Sales Engineer",
+          subtitle: "Cybersecurity Academy Partner Training",
+          issuer: "Proofpoint Cybersecurity Academy",
+          category: "សុវត្ថិភាពអ៊ីមែល & Cloud",
+          date: "៣០ កញ្ញា ២០២៦",
+          validUntil: "ដៃគូផ្លូវការ",
+          description:
+            "វិញ្ញាបនបត្របច្ចេកទេស Sales Engineer ផ្តោតលើការការពារសន្តិសុខតាមអ៊ីនធឺណិតផ្តោតលើមនុស្ស ការពារអ៊ីមែលកម្រិតខ្ពស់ និងការទប់ស្កាត់ការក្លែងបន្លំ (Phishing/BEC)។",
+          more:
+            "បានទទួលចំណេះដឹងស៊ីជម្រៅលើច្រកផ្លូវសុវត្ថិភាពអ៊ីមែល ការក្លែងបន្លំគំរាមកំហែង និងការការពារការលេចធ្លាយទិន្នន័យ (DLP) សម្រាប់សហគ្រាស។",
+          skills: [
+            "Email Security Architecture",
+            "Phishing & BEC Defense",
+            "Technical Sales Engineering",
+            "Threat Intelligence",
+            "Human-Centric Defense"
+          ],
+          highlights: [
+            "វិញ្ញាបនបត្រកម្មវិធីដៃគូផ្លូវការ Proofpoint",
+            "បណ្តុះបណ្តាលលើការការពារអ៊ីមែល និងការប្រឹក្សាបច្ចេកទេស",
+            "គ្របដណ្តប់លើការគំរាមកំហែងតាមអ៊ីមែលទូទាំងពិភពលោក"
+          ],
+          credentialId: "Proofpoint-SE-2026",
+          year: "2026"
+        },
+        {
+          id: "checkpoint",
+          title: "វិញ្ញាបនបត្រ Check Point Sales Certification",
+          subtitle: "Check Point Software Technologies",
+          issuer: "Check Point Software Technologies",
+          category: "ស្ថាបត្យកម្មសន្តិសុខ",
+          date: "២១ កញ្ញា ២០២៦",
+          validUntil: "២០ កញ្ញា ២០២៨",
+          description:
+            "បានបង្ហាញចំណេះដឹងវិជ្ជាជីវៈ និងជំនាញបច្ចេកទេសលើប្រព័ន្ធការពារសន្តិសុខតាមអ៊ីនធឺណិតរបស់ Check Point សម្រាប់សហគ្រាស។",
+          more:
+            "គ្របដណ្តប់លើ Quantum Network Security, CloudGuard multi-cloud security និង Harmony workspace security ជាមួយប្រព័ន្ធ ThreatCloud AI ការពារការវាយប្រហារ zero-day។",
+          skills: [
+            "Unified Cyber Defense",
+            "Quantum Network Security",
+            "Cloud Security Architecture",
+            "ThreatCloud AI Prevention",
+            "Technical Solutions Design"
+          ],
+          highlights: [
+            "វិញ្ញាបនបត្រផ្ទៀងផ្ទាត់បានតាម Credly (២០២៦ - ២០២៨)",
+            "ចេញដោយ Eitan Lugassi, អនុប្រធាន Check Point Services",
+            "ស្ទាត់ជំនាញលើការរៀបចំស្ថាបត្យកម្មការពារសន្តិសុខកម្រិតខ្ពស់"
+          ],
+          credentialId: "CheckPoint-Sales-2026",
+          year: "2026"
+        },
+        {
+          id: "dell",
+          title: "វិញ្ញាបនបត្រ Dell Technologies HCI 2026",
+          subtitle: "SE: Hyper-Converged Infrastructure Credential",
+          issuer: "Dell Technologies Partner Program",
+          category: "ហេដ្ឋារចនាសម្ព័ន្ធ & Cloud",
+          date: "១១ កញ្ញា ២០២៦",
+          validUntil: "វិញ្ញាបនបត្រ ២០២៦",
+          description:
+            "វិញ្ញាបនបត្រទទួលស្គាល់លើវិស្វកម្មប្រព័ន្ធ Hyper-Converged Infrastructure (HCI), Software-Defined Storage និងមជ្ឈមណ្ឌលទិន្នន័យ Hybrid Cloud ទំនើប។",
+          more:
+            "ការបណ្តុះបណ្តាលលម្អិតលើ Dell VxRail, ស្ថាបត្យកម្ម VMware vSAN, ការធ្វើផែនការ High Availability និងការដាក់ដំណើរការ Private/Hybrid Cloud។",
+          skills: [
+            "Hyper-Converged Infrastructure (HCI)",
+            "Dell VxRail & Storage Systems",
+            "VMware Virtualization & vSAN",
+            "Data Center Modernization",
+            "High Availability Architecture"
+          ],
+          highlights: [
+            "វិញ្ញាបនបត្រកម្មវិធីដៃគូផ្លូវការ Dell Technologies",
+            "ទទួលស្គាល់ជាអ្នកឯកទេស SE: Hyper-Converged Infrastructure",
+            "ជំនាញស្ថាបត្យកម្មលើ Cloud & Server សម្រាប់សហគ្រាសទំនើប"
+          ],
+          credentialId: "Dell-SE-HCI-2026",
+          year: "2026"
+        }
+      ],
       items: [
         {
           title: "សិក្ខាសាលាស្តីពីសន្តិសុខតាមអ៊ីនធឺណិត",
