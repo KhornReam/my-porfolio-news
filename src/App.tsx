@@ -6,6 +6,7 @@ import About from './components/About'
 import Experiences from './components/Experiences'
 import Project from './components/Project'
 import Contacts from './components/Contacts'
+import InstallApp from './components/InstallApp'
 import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <InstallApp />
       <Headers />
       <About />
       <Experiences />
