@@ -5,8 +5,8 @@ import {
   FaAward, FaRocket, FaGithub, FaLanguage, FaCertificate, FaHtml5,
   FaCss3Alt, FaJsSquare, FaPython, FaDocker, FaAws, FaFigma, FaServer,
   FaTools, FaStar, FaTrophy, FaBriefcase, FaCalendarAlt, FaWordpress,
-  FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt, FaHeart,
-  FaUser, FaHome, FaSmile, FaTimes, FaArrowRight, FaCheck, FaEye, FaClock, FaGlobeAmericas, FaCompass
+  FaPhp, FaVuejs, FaHeadset, FaDownload, FaMapMarkerAlt,
+  FaTimes, FaArrowRight, FaCheck, FaEye, FaClock, FaGlobeAmericas, FaCompass
 } from "react-icons/fa";
 import {
   SiTypescript, SiLaravel, SiMongodb, SiPostgresql, SiTailwindcss, SiDocker as SiDockerBrand,
@@ -212,95 +212,67 @@ function About() {
           )}
         </div>
 
-        {/* Personal Info Section - 2026 Developer Glassmorphism */}
+        {/* Executive Profile Overview Section */}
         <div className="personal-info-section">
           <div className="personal-info-container">
-            {/* Left Column: Story, Bento Attributes & CTAs */}
+            {/* Left Column: Clean Editorial Bio & Structured Specs */}
             <div className="personal-info-left">
-              {/* Category Pill */}
               <div className="personal-kicker-badge">
-                <span className="kicker-pulse-dot" aria-hidden="true"></span>
-                <span>{t.about.personalInfo || "Personal Profile"}</span>
+                <span>{t.about.personalInfo || "Profile Overview"}</span>
               </div>
 
-              {/* High-Impact Headline with Crisp Contrast */}
               <h2 className="personal-headline">
                 <span className="headline-title">{t.about.personalInfoSub}</span>
               </h2>
-              <div className="personal-title-underline" aria-hidden="true"></div>
 
               <p className="personal-story-bio">{t.about.personalBio}</p>
 
-              {/* Quick Tech & Status Chips */}
-              <div className="personal-credentials-strip">
-                <span className="credential-chip">
-                  <FaGraduationCap className="cred-icon edu" />
-                  <span>Passerelles numériques (PNC)</span>
-                </span>
-                <span className="credential-chip">
-                  <FaMapMarkerAlt className="cred-icon loc" />
-                  <span>Kampong Thom · Cambodia</span>
-                </span>
-                <span className="credential-chip">
-                  <FaCode className="cred-icon code" />
-                  <span>Full-Stack Web Dev</span>
-                </span>
-                <span className="credential-chip status-live">
-                  <span className="live-pulse-dot" aria-hidden="true"></span>
-                  <span>{lang === "km" ? "ទំនេរសម្រាប់ការងារ" : "Available for Work"}</span>
-                </span>
-              </div>
-
-              {/* Bento Attributes Grid */}
+              {/* Clean 2x2 Professional Specification Grid */}
               <div className="personal-bento-grid">
-                {/* 1. Location / Roots */}
-                <div className="bento-tile tile-location">
-                  <div className="tile-icon-box box-cyan">
-                    <FaHome />
+                <div className="bento-tile">
+                  <div className="tile-icon-box">
+                    <FaCode />
                   </div>
                   <div className="tile-content">
-                    <span className="tile-label">{t.about.personalDetails.birthplace}</span>
-                    <strong className="tile-value">{t.about.personalDetails.birthplaceValue}</strong>
+                    <span className="tile-label">{t.about.personalDetails.role}</span>
+                    <strong className="tile-value">{t.about.personalDetails.roleValue}</strong>
                   </div>
                 </div>
 
-                {/* 2. Age & Development Stage */}
-                <div className="bento-tile tile-age">
-                  <div className="tile-icon-box box-amber">
-                    <FaUser />
+                <div className="bento-tile">
+                  <div className="tile-icon-box">
+                    <FaGraduationCap />
                   </div>
                   <div className="tile-content">
-                    <span className="tile-label">{t.about.personalDetails.age}</span>
-                    <strong className="tile-value">
-                      {t.about.personalDetails.ageValue} {lang === "km" ? "ឆ្នាំ" : "Years Old"}
+                    <span className="tile-label">{t.about.personalDetails.education}</span>
+                    <strong className="tile-value">{t.about.personalDetails.educationValue}</strong>
+                  </div>
+                </div>
+
+                <div className="bento-tile">
+                  <div className="tile-icon-box">
+                    <FaMapMarkerAlt />
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.location}</span>
+                    <strong className="tile-value">{t.about.personalDetails.locationValue}</strong>
+                  </div>
+                </div>
+
+                <div className="bento-tile tile-availability">
+                  <div className="tile-icon-box box-status">
+                    <span className="live-pulse-dot" aria-hidden="true"></span>
+                  </div>
+                  <div className="tile-content">
+                    <span className="tile-label">{t.about.personalDetails.availability}</span>
+                    <strong className="tile-value value-status">
+                      {t.about.personalDetails.availabilityValue}
                     </strong>
                   </div>
                 </div>
-
-                {/* 3. Family / Roots */}
-                <div className="bento-tile tile-family">
-                  <div className="tile-icon-box box-rose">
-                    <FaHeart />
-                  </div>
-                  <div className="tile-content">
-                    <span className="tile-label">{t.about.personalDetails.family}</span>
-                    <strong className="tile-value">{t.about.personalDetails.familyValue}</strong>
-                  </div>
-                </div>
-
-                {/* 4. Personality & Collaboration */}
-                <div className="bento-tile tile-personality">
-                  <div className="tile-icon-box box-emerald">
-                    <FaSmile />
-                  </div>
-                  <div className="tile-content">
-                    <span className="tile-label">{t.about.personalDetails.personality}</span>
-                    <strong className="tile-value">{t.about.personalDetails.personalityValue}</strong>
-                  </div>
-                </div>
               </div>
 
-              {/* High-Converting CTA Buttons */}
+              {/* Clean Action Buttons */}
               <div className="personal-cta-group">
                 <a
                   href={cvFile}
@@ -310,36 +282,20 @@ function About() {
                   rel="noopener noreferrer"
                 >
                   <FaDownload className="cta-icon" />
-                  <span>{lang === "km" ? "ទាញយក CV" : "Download CV"}</span>
+                  <span>{lang === "km" ? "ទាញយក CV" : "Download Resume"}</span>
                 </a>
-                <a href="#Contacts" className="cta-btn-secondary">
-                  <span>{lang === "km" ? "ទាក់ទងខ្ញុំ" : "Get In Touch"}</span>
+                <a href="#contact" className="cta-btn-secondary">
+                  <span>{lang === "km" ? "ទាក់ទងខ្ញុំ" : "Get in Touch"}</span>
                   <FaArrowRight className="cta-icon-right" />
                 </a>
               </div>
             </div>
 
-            {/* Right Column: Modern Framed Portrait Showcase */}
+            {/* Right Column: Clean Editorial Portrait Showcase */}
             <div className="personal-info-right">
               <div className="personal-portrait-card">
-                {/* Luminous Ambient Background Glow */}
                 <div className="portrait-glow-aura" aria-hidden="true"></div>
 
-                {/* Floating Tech Chips positioned gracefully outside */}
-                <div className="floating-tech-chip chip-top-right">
-                  <FaReact className="chip-icon react" />
-                  <span>React.js</span>
-                </div>
-                <div className="floating-tech-chip chip-mid-left">
-                  <SiTypescript className="chip-icon ts" />
-                  <span>TypeScript</span>
-                </div>
-                <div className="floating-tech-chip chip-bottom-right">
-                  <FaNodeJs className="chip-icon node" />
-                  <span>Node.js</span>
-                </div>
-
-                {/* Modern Framed Portrait Image */}
                 <div className="portrait-image-frame">
                   <button
                     type="button"
@@ -349,7 +305,7 @@ function About() {
                   >
                     <img
                       src={profile}
-                      alt="Ream Khorn - Full-Stack Developer"
+                      alt="Ream Khorn - Full-Stack Software Engineer"
                       className="portrait-img"
                     />
                     <div className="portrait-gradient-sheen" aria-hidden="true"></div>
@@ -358,10 +314,13 @@ function About() {
                     </span>
                   </button>
 
-                  {/* Status Pill on Bottom of Image */}
+                  {/* Minimal Editorial Caption Bar */}
                   <div className="portrait-status-pill">
-                    <span className="live-status-dot" aria-hidden="true"></span>
-                    <span>{lang === "km" ? "ត្រៀមខ្លួនសម្រាប់ការងារ" : "Open for Opportunities"}</span>
+                    <span className="portrait-caption-name">Ream Khorn</span>
+                    <span className="portrait-caption-sep" aria-hidden="true">·</span>
+                    <span className="portrait-caption-role">
+                      {lang === "km" ? "វិស្វករ Full-Stack" : "Full-Stack Engineer"}
+                    </span>
                   </div>
                 </div>
               </div>

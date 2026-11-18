@@ -9,16 +9,14 @@ import {
   FaDownload,
   FaRobot,
   FaArrowRight,
-  FaCode,
   FaCheckCircle,
   FaCheck,
   FaCopy,
-  FaTerminal,
   FaGraduationCap,
-  FaBolt,
   FaPaperPlane,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
-import { SiTypescript, SiLaravel, SiVuedotjs } from "react-icons/si";
+import { SiTypescript, SiLaravel } from "react-icons/si";
 import profile from "../assets/ream1.png";
 import heroVideo from "../assets/262696.mp4";
 import cvFile from "../assets/Deep Purple Professional College Student CV Resume.pdf";
@@ -32,42 +30,7 @@ function Headers() {
   const [displayText, setDisplayText] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Interactive profile card states
-  const [activeTab, setActiveTab] = useState("ts"); // 'ts' | 'stack' | 'status'
-  const [copiedCode, setCopiedCode] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-
-  const codeSnippets = {
-    ts: `const developer: Engineer = {
-  name: "Ream Khorn",
-  role: "Full-Stack Developer",
-  education: "Passerelles numériques (PNC)",
-  status: "Open for Full-Time Job 🚀",
-  openFor: ["Full-Time Software", "Web Programming"]
-};`,
-    stack: `{
-  "frontend": ["React 19", "TypeScript", "Tailwind"],
-  "backend": ["Node.js", "Express", "Laravel"],
-  "database": ["PostgreSQL", "MySQL", "MongoDB"],
-  "tools": ["Git", "Docker", "Figma", "Vite"]
-}`,
-    status: `$ npx ream-khorn --status
-✔ Developer: Ream Khorn
-✔ Availability: Open for Full-Time Software & Web Programming
-✔ Location: Phnom Penh, Cambodia (ICT · UTC+7)
-✔ Contact: reamkhorn12345@gmail.com
-$ _`,
-  };
-
-  const handleCopyCode = () => {
-    const text = codeSnippets[activeTab];
-    if (navigator?.clipboard?.writeText) {
-      navigator.clipboard.writeText(text);
-    }
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  };
 
   const handleCopyEmail = () => {
     if (navigator?.clipboard?.writeText) {
@@ -236,218 +199,102 @@ $ _`,
           </div>
         </div>
 
-        {/* RIGHT SIDE: Modern Glassmorphic Showcase */}
+        {/* RIGHT SIDE: Clean Executive Profile Card */}
         <div className="hero-right">
           <div className="showcase-wrapper">
-            {/* Ambient Card Backlight Glow */}
+            {/* Subtle Ambient Backlight */}
             <div className="showcase-glow" aria-hidden="true"></div>
 
-            {/* Main Profile Glass Card */}
+            {/* Minimalist Profile Glass Card */}
             <div className="profile-glass-card">
-              {/* Card Top Status Bar */}
+              {/* Top Meta Row */}
               <div className="card-top-bar">
                 <div className="card-top-status">
                   <span className="pulse-dot"></span>
                   <span className="status-label">
-                    {lang === "km" ? "បើកចំហការងារ Full-Time" : "Open for Full-Time Job"}
+                    {lang === "km" ? "បើកចំហការងារ Full-Time" : "Available for Full-Time"}
                   </span>
                 </div>
                 <div className="card-location-tag">
-                  <span className="flag-icon">🇰🇭</span>
-                  <span>Phnom Penh</span>
+                  <FaMapMarkerAlt className="location-pin-icon" />
+                  <span>Phnom Penh, KH</span>
                 </div>
               </div>
 
-              {/* Avatar Frame with Dynamic Floating Tech Chips */}
-              <div className="avatar-constellation">
-                {/* Tech Chips */}
-                <div className="tech-chip chip-react" title="React 19 & Next.js">
-                  <FaReact className="chip-icon" />
-                  <span>React 19</span>
-                </div>
-                <div className="tech-chip chip-ts" title="TypeScript">
-                  <SiTypescript className="chip-icon" />
-                  <span>TypeScript</span>
-                </div>
-                <div className="tech-chip chip-node" title="Node.js & Express">
-                  <FaNodeJs className="chip-icon" />
-                  <span>Node.js</span>
-                </div>
-                <div className="tech-chip chip-laravel" title="Laravel & PHP">
-                  <SiLaravel className="chip-icon" />
-                  <span>Laravel</span>
-                </div>
-
-                {/* Portrait Frame */}
+              {/* Clean Studio Portrait */}
+              <div className="portrait-stage">
                 <div className="avatar-frame">
-                  <div className="avatar-ring-glow"></div>
                   <img
                     src={profile}
                     alt="Ream Khorn"
                     className="avatar-img"
                   />
-                  <div className="avatar-verified-badge" title="Verified Full-Stack Developer">
+                  <div
+                    className="avatar-verified-badge"
+                    title={lang === "km" ? "អ្នកអភិវឌ្ឍន៍ Full-Stack" : "Verified Full-Stack Engineer"}
+                  >
                     <FaCheckCircle />
                   </div>
                 </div>
               </div>
 
-              {/* Profile Details & Credentials */}
+              {/* Executive Identity */}
               <div className="profile-identity">
-                <div className="profile-name-row">
-                  <h3 className="profile-name">
-                    {t.hero.nameFirst} {t.hero.nameLast}
-                  </h3>
-                  <span className="profile-badge-pill">Full-Stack</span>
-                </div>
-                <p className="profile-education">
-                  <FaGraduationCap className="edu-icon" /> Passerelles numériques (PNC)
+                <h3 className="profile-name">
+                  {t.hero.nameFirst} {t.hero.nameLast}
+                </h3>
+                <p className="profile-role-subtitle">
+                  {lang === "km" ? "វិស្វករសូហ្វវែរ Full-Stack" : "Full-Stack Software Engineer"}
                 </p>
-                <div className="profile-focus-row">
-                  <span className="focus-pill"><FaBolt className="focus-icon" /> Modern UI/UX</span>
-                  <span className="focus-pill">Scalable APIs</span>
-                  <span className="focus-pill">Clean Code</span>
-                </div>
+                <p className="profile-education">
+                  <FaGraduationCap className="edu-icon" />
+                  <span>Passerelles Numériques Cambodia (PNC)</span>
+                </p>
               </div>
 
-              {/* Interactive Code & Stack Studio */}
-              <div className="hero-terminal">
-                {/* Terminal Header with Tabs & Copy Button */}
-                <div className="terminal-header">
-                  <div className="terminal-dots">
-                    <span className="t-dot dot-red"></span>
-                    <span className="t-dot dot-yellow"></span>
-                    <span className="t-dot dot-green"></span>
-                  </div>
-
-                  <div className="terminal-tabs">
-                    <button
-                      type="button"
-                      className={`t-tab ${activeTab === "ts" ? "active" : ""}`}
-                      onClick={() => setActiveTab("ts")}
-                    >
-                      <FaCode className="tab-icon" /> developer.ts
-                    </button>
-                    <button
-                      type="button"
-                      className={`t-tab ${activeTab === "stack" ? "active" : ""}`}
-                      onClick={() => setActiveTab("stack")}
-                    >
-                      stack.json
-                    </button>
-                    <button
-                      type="button"
-                      className={`t-tab ${activeTab === "status" ? "active" : ""}`}
-                      onClick={() => setActiveTab("status")}
-                    >
-                      <FaTerminal className="tab-icon" /> status.sh
-                    </button>
-                  </div>
-
-                  <button
-                    type="button"
-                    className={`terminal-copy-btn ${copiedCode ? "copied" : ""}`}
-                    onClick={handleCopyCode}
-                    title="Copy snippet"
-                    aria-label="Copy snippet"
-                  >
-                    {copiedCode ? <FaCheck /> : <FaCopy />}
-                    <span className="copy-label">{copiedCode ? "Copied" : "Copy"}</span>
-                  </button>
-                </div>
-
-                {/* Line-by-Line Formatted Code with Syntax Highlighting */}
-                <div className="terminal-body" tabIndex={0} role="region" aria-label="Developer Code Snippet">
-                  {activeTab === "ts" && (
-                    <div className="code-block">
-                      <div className="code-line">
-                        <span className="line-num">1</span>
-                        <span className="code-text"><span className="syn-k">const</span> <span className="syn-d">developer</span>: <span className="syn-t">Engineer</span> = &#123;</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">2</span>
-                        <span className="code-text indent-1"><span className="syn-p">name</span>: <span className="syn-s">"Ream Khorn"</span>,</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">3</span>
-                        <span className="code-text indent-1"><span className="syn-p">role</span>: <span className="syn-s">"Full-Stack Developer"</span>,</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">4</span>
-                        <span className="code-text indent-1"><span className="syn-p">education</span>: <span className="syn-s">"Passerelles numériques (PNC)"</span>,</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">5</span>
-                        <span className="code-text indent-1"><span className="syn-p">status</span>: <span className="syn-s">"Open for Full-Time Job 🚀"</span>,</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">6</span>
-                        <span className="code-text indent-1"><span className="syn-p">openFor</span>: [<span className="syn-s">"Full-Time Software"</span>, <span className="syn-s">"Web Programming"</span>]</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">7</span>
-                        <span className="code-text">&#125;;</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === "stack" && (
-                    <div className="code-block">
-                      <div className="code-line">
-                        <span className="line-num">1</span>
-                        <span className="code-text">&#123;</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">2</span>
-                        <span className="code-text indent-1"><span className="syn-p">"frontend"</span>: [<span className="syn-s">"React 19"</span>, <span className="syn-s">"TypeScript"</span>, <span className="syn-s">"Tailwind"</span>],</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">3</span>
-                        <span className="code-text indent-1"><span className="syn-p">"backend"</span>: [<span className="syn-s">"Node.js"</span>, <span className="syn-s">"Express"</span>, <span className="syn-s">"Laravel"</span>],</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">4</span>
-                        <span className="code-text indent-1"><span className="syn-p">"database"</span>: [<span className="syn-s">"PostgreSQL"</span>, <span className="syn-s">"MySQL"</span>, <span className="syn-s">"MongoDB"</span>],</span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">5</span>
-                        <span className="code-text indent-1"><span className="syn-p">"mindset"</span>: <span className="syn-s">"Clean code & high performance"</span></span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">6</span>
-                        <span className="code-text">&#125;</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === "status" && (
-                    <div className="code-block">
-                      <div className="code-line">
-                        <span className="line-num">1</span>
-                        <span className="code-text"><span className="syn-prompt">$</span> <span className="syn-cmd">npx ream-khorn</span> <span className="syn-flag">--status</span></span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">2</span>
-                        <span className="code-text syn-success">✔ Developer: <span className="syn-white">Ream Khorn</span></span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">3</span>
-                        <span className="code-text syn-success">✔ Availability: <span className="syn-white">Open for Full-Time Software & Web Programming</span></span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">4</span>
-                        <span className="code-text syn-success">✔ Location: <span className="syn-white">Phnom Penh, Cambodia (UTC+7)</span></span>
-                      </div>
-                      <div className="code-line">
-                        <span className="line-num">5</span>
-                        <span className="code-text"><span className="syn-prompt">$</span> <span className="cursor-blink">█</span></span>
-                      </div>
-                    </div>
-                  )}
-                </div>
+              {/* Clean 3-Column Credential Strip */}
+              <div className="profile-stats-grid">
+                <a href="#Experiences" className="profile-stat-cell">
+                  <span className="stat-num">5</span>
+                  <span className="stat-caption">
+                    {lang === "km" ? "វិញ្ញាបនបត្រ" : "Certifications"}
+                  </span>
+                </a>
+                <div className="stat-divider" aria-hidden="true"></div>
+                <a href="#projects" className="profile-stat-cell">
+                  <span className="stat-num">10+</span>
+                  <span className="stat-caption">
+                    {lang === "km" ? "គម្រោង" : "Projects"}
+                  </span>
+                </a>
+                <div className="stat-divider" aria-hidden="true"></div>
+                <a href="#contact" className="profile-stat-cell">
+                  <span className="stat-num stat-highlight">
+                    {lang === "km" ? "ពេញម៉ោង" : "Full-Time"}
+                  </span>
+                  <span className="stat-caption">
+                    {lang === "km" ? "ត្រៀមខ្លួនរួចរាល់" : "Open to Work"}
+                  </span>
+                </a>
               </div>
 
-              {/* Card Footer Strip with One-Click Email Copy & Quick Contact */}
+              {/* Quiet Core Stack Row */}
+              <div className="profile-stack-strip" aria-label="Core technologies">
+                <span className="stack-item">
+                  <FaReact className="stack-icon icon-react" /> React
+                </span>
+                <span className="stack-item">
+                  <SiTypescript className="stack-icon icon-ts" /> TypeScript
+                </span>
+                <span className="stack-item">
+                  <FaNodeJs className="stack-icon icon-node" /> Node.js
+                </span>
+                <span className="stack-item">
+                  <SiLaravel className="stack-icon icon-laravel" /> Laravel
+                </span>
+              </div>
+
+              {/* Clean Footer Action Bar */}
               <div className="card-footer-strip">
                 <button
                   type="button"
