@@ -4410,6 +4410,7 @@ body.light-mode .journey-marker {
   align-items: center;
   justify-content: center;
   min-width: 0;
+  perspective: 1200px;
 }
 
 .personal-portrait-card {
@@ -4419,6 +4420,7 @@ body.light-mode .journey-marker {
   display: flex;
   align-items: center;
   justify-content: center;
+  transform-style: preserve-3d;
 }
 
 .portrait-glow-aura {
@@ -4429,26 +4431,47 @@ body.light-mode .journey-marker {
   width: 300px;
   height: 360px;
   border-radius: 36px;
-  background: radial-gradient(ellipse, rgba(56, 189, 248, 0.14) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 72%);
+  background: radial-gradient(ellipse, rgba(56, 189, 248, 0.16) 0%, rgba(99, 102, 241, 0.1) 50%, transparent 72%);
   filter: blur(48px);
   pointer-events: none;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* Framed Portrait Image */
+.personal-portrait-card:hover .portrait-glow-aura {
+  transform: translate(-50%, -50%) scale(1.12);
+  opacity: 1;
+}
+
+/* 3D Framed Portrait Image */
 .portrait-image-frame {
   position: relative;
   width: 100%;
   max-width: 315px;
   aspect-ratio: 4 / 5;
-  border-radius: 22px;
+  border-radius: 24px;
   overflow: hidden;
   background: linear-gradient(165deg, #162438 0%, #0d1727 60%, #111827 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
-    0 24px 56px -14px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 30px 65px -15px rgba(0, 0, 0, 0.75),
+    0 14px 28px -10px rgba(14, 165, 233, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
   z-index: 2;
   isolation: isolate;
+  transform: rotateX(2deg) rotateY(-2deg) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.personal-portrait-card:hover .portrait-image-frame {
+  transform: translateY(-8px) rotateX(4deg) rotateY(-3deg) scale(1.02);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow:
+    0 45px 90px -18px rgba(0, 0, 0, 0.85),
+    0 22px 42px -10px rgba(14, 165, 233, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.6);
 }
 
 .portrait-trigger-btn {
@@ -4472,11 +4495,31 @@ body.light-mode .journey-marker {
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* 3D Specular Glass Reflection Layer */
+.portrait-specular-glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%
+  );
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.personal-portrait-card:hover .portrait-specular-glass {
+  opacity: 0.9;
+}
+
 .portrait-gradient-sheen {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 52%, rgba(2, 8, 23, 0.82) 100%);
+  background: linear-gradient(180deg, transparent 48%, rgba(2, 8, 23, 0.88) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
 .personal-portrait-card:hover .portrait-img,
@@ -4484,25 +4527,28 @@ body.light-mode .journey-marker {
   transform: scale(1.035);
 }
 
+/* Top-Right Clean Zoom Pill (Never obscures the face) */
 .portrait-zoom-pill {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -40%);
+  top: 14px;
+  right: 14px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   color: #ffffff;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-6px) scale(0.94);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   z-index: 4;
 }
@@ -4510,27 +4556,40 @@ body.light-mode .journey-marker {
 .portrait-trigger-btn:hover .portrait-zoom-pill,
 .portrait-trigger-btn:focus-visible .portrait-zoom-pill {
   opacity: 1;
-  transform: translate(-50%, -50%);
+  transform: translateY(0) scale(1);
 }
 
+/* 3D Docked Editorial Caption Bar */
 .portrait-status-pill {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 9px 14px;
-  border-radius: 12px;
-  background: rgba(10, 15, 30, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(10, 15, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 12px 28px -6px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   font-size: 0.76rem;
   z-index: 3;
   pointer-events: none;
+  transform: translateZ(18px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.personal-portrait-card:hover .portrait-status-pill {
+  transform: translateZ(26px) translateY(-2px);
+  box-shadow: 
+    0 16px 36px -6px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .portrait-caption-name {
@@ -4622,9 +4681,46 @@ body.light-mode .cta-btn-secondary:hover {
   color: #0f172a;
 }
 
+body.light-mode .portrait-image-frame {
+  background: linear-gradient(165deg, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow:
+    0 28px 55px -12px rgba(15, 23, 42, 0.18),
+    0 12px 24px -8px rgba(14, 165, 233, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    inset 0 -2px 4px rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .personal-portrait-card:hover .portrait-image-frame {
+  border-color: rgba(14, 165, 233, 0.5);
+  box-shadow:
+    0 38px 75px -14px rgba(15, 23, 42, 0.24),
+    0 18px 32px -8px rgba(14, 165, 233, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+body.light-mode .portrait-specular-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.15) 30%,
+    transparent 55%
+  );
+}
+
+body.light-mode .portrait-zoom-pill {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+}
+
 body.light-mode .portrait-status-pill {
   background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(15, 23, 42, 0.09);
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 
+    0 10px 24px -4px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 body.light-mode .portrait-caption-name {
@@ -4632,12 +4728,7 @@ body.light-mode .portrait-caption-name {
 }
 
 body.light-mode .portrait-caption-role {
-  color: #475569;
-}
-
-body.light-mode .portrait-image-frame {
-  background: linear-gradient(165deg, #e2e8f0 0%, #f1f5f9 60%, #e0e7ff 100%);
-  border-color: rgba(15, 23, 42, 0.1);
+  color: #0284c7;
 }
 
 /* Responsive Media Queries */

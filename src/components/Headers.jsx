@@ -221,20 +221,24 @@ function Headers() {
                 </div>
               </div>
 
-              {/* Clean Studio Portrait */}
+              {/* Clean 3D Studio Portrait Stage */}
               <div className="portrait-stage">
-                <div className="avatar-frame">
-                  <img
-                    src={profile}
-                    alt="Ream Khorn"
-                    className="avatar-img"
-                  />
-                  <div
-                    className="avatar-verified-badge"
-                    title={lang === "km" ? "អ្នកអភិវឌ្ឍន៍ Full-Stack" : "Verified Full-Stack Engineer"}
-                  >
-                    <FaCheckCircle />
+                <div className="avatar-3d-wrapper">
+                  <div className="avatar-frame">
+                    <img
+                      src={profile}
+                      alt="Ream Khorn"
+                      className="avatar-img"
+                    />
+                    <div className="avatar-glass-lens" aria-hidden="true"></div>
+                    <div
+                      className="avatar-verified-badge"
+                      title={lang === "km" ? "អ្នកអភិវឌ្ឍន៍ Full-Stack" : "Verified Full-Stack Engineer"}
+                    >
+                      <FaCheckCircle />
+                    </div>
                   </div>
+                  <div className="avatar-3d-glow" aria-hidden="true"></div>
                 </div>
               </div>
 

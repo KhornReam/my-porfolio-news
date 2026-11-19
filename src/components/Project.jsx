@@ -1,5 +1,15 @@
 import { useEffect, useRef } from "react";
-import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaCode, FaServer, FaShoppingCart, FaCloud } from "react-icons/fa";
+import {
+  FaGithub,
+  FaExternalLinkAlt,
+  FaCalendarAlt,
+  FaCode,
+  FaServer,
+  FaShoppingCart,
+  FaCloud,
+  FaGraduationCap,
+  FaDatabase,
+} from "react-icons/fa";
 import "../css/Project.css";
 import { useLanguage } from "../contexts/LanguageContext";
 import projectVideo from "../assets/262696.mp4";
@@ -29,33 +39,33 @@ function Projects() {
 
   const projects = [
     {
-      title: "Business System for Selling Product",
-      year: "2025",
-      desc: "Full-stack product selling system with user authentication and admin dashboard statistics.",
-      tech: ["React", "TypeScript", "GitHub", "Tailwind CSS"],
-      repository: "https://github.com/reamkhorn12345-art/potiofilo-ream-html.git",
-      liveDemo: "https://bussiness-85po.vercel.app/",
-      icon: <FaShoppingCart />,
-      color: "#61dafb",
-      colorRgb: "97, 218, 251",
-      gradient: "linear-gradient(135deg, #61dafb, #38bdf8)",
+      title: "My Journey of PNC",
+      year: "2026",
+      desc: "Interactive educational journey and skills portfolio showcasing PNC milestones, coursework, and technical competencies.",
+      tech: ["Next.js", "TypeScript", "React", "MVC", "Docker", "Vercel"],
+      repository: "https://github.com/KhornReam/Next.js_pnc",
+      liveDemo: "https://jouney-pnc-ream.vercel.app/skills-projects",
+      icon: <FaGraduationCap />,
+      color: "#38bdf8",
+      colorRgb: "56, 189, 248",
+      gradient: "linear-gradient(135deg, #0284c7, #38bdf8)",
     },
     {
-      title: "Weather App",
-      year: "2025",
-      desc: "A simple weather application that displays current conditions and forecasts.",
-      tech: ["JavaScript", "OpenWeather API", "CSS", "HTML", "GitHub", "Postman"],
-      repository: "https://github.com/Ream111222333/Weather-group2.git",
-      liveDemo: "https://weather-system-group2.vercel.app/",
-      icon: <FaCloud />,
-      color: "#f59e0b",
-      colorRgb: "245, 158, 11",
-      gradient: "linear-gradient(135deg, #f59e0b, #eab308)",
+      title: "Student Management System",
+      year: "2026",
+      desc: "Full-stack academic administration system featuring student records, course enrollment, and secure RESTful backend APIs.",
+      tech: ["Vue.js", "Laravel", "REST API", "Docker", "MySQL", "Postman", "GitHub"],
+      repository: "https://github.com/KhornReam/frontend-.git",
+      liveDemo: "#",
+      icon: <FaDatabase />,
+      color: "#10b981",
+      colorRgb: "16, 185, 129",
+      gradient: "linear-gradient(135deg, #059669, #10b981)",
     },
     {
       title: "Achar Booking System",
       year: "2026",
-      desc: "Booking platform with user authentication and admin dashboard management.",
+      desc: "Booking platform with user authentication, Redis caching, and admin dashboard management.",
       tech: ["Vue.js", "Laravel", "MySQL", "Redis", "REST API", "Jira", "GitHub", "Postman"],
       repository: "https://github.com/Jame2026/Achar-Event-Booking.git",
       liveDemo: "https://achar-event-booking-232f.vercel.app/",
@@ -65,21 +75,9 @@ function Projects() {
       gradient: "linear-gradient(135deg, #a855f7, #8b5cf6)",
     },
     {
-      title: "E-commerce Platform",
-      year: "2025",
-      desc: "E-commerce platform with product management, shopping cart, and checkout functionality.",
-      tech: ["React", "Node.js", "MongoDB", "Stripe API"],
-      repository: "https://github.com/Ream111222333/v0-e-commerce-website-build.git",
-      liveDemo: "https://e-commersream.vercel.app",
-      icon: <FaCode />,
-      color: "#10b981",
-      colorRgb: "16, 185, 129",
-      gradient: "linear-gradient(135deg, #10b981, #059669)",
-    },
-      {
       title: "Personal Finance Tracker",
       year: "2026",
-      desc: "Full-stack product selling system with user authentication and admin dashboard statistics.",
+      desc: "Full-stack finance tracking system with user authentication and admin dashboard statistics.",
       tech: ["Vue.js", "TypeScript", "GitHub", "Tailwind CSS"],
       repository: "https://github.com/reamkhorn12345-art/potiofilo-ream-html.git",
       liveDemo: "https://tracker-kohl-alpha.vercel.app/",
@@ -88,17 +86,53 @@ function Projects() {
       colorRgb: "97, 218, 251",
       gradient: "linear-gradient(135deg, #61dafb, #38bdf8)",
     },
-        {
-      title: "Power BI Dasborad",
+    {
+      title: "Business System for Selling Product",
+      year: "2025",
+      desc: "Full-stack product selling system with user authentication and admin dashboard statistics.",
+      tech: ["React", "TypeScript", "GitHub", "Tailwind CSS"],
+      repository: "https://github.com/reamkhorn12345-art/potiofilo-ream-html.git",
+      liveDemo: "https://bussiness-85po.vercel.app/",
+      icon: <FaShoppingCart />,
+      color: "#61dafb",
+      colorRgb: "97, 218, 251",
+      gradient: "linear-gradient(135deg, #0284c7, #38bdf8)",
+    },
+    {
+      title: "E-commerce Platform",
+      year: "2025",
+      desc: "E-commerce platform with product management, shopping cart, and checkout functionality.",
+      tech: ["React", "Node.js", "MongoDB", "Stripe API"],
+      repository: "https://github.com/Ream111222333/v0-e-commerce-website-build.git",
+      liveDemo: "https://e-commersream.vercel.app",
+      icon: <FaCode />,
+      color: "#ec4899",
+      colorRgb: "236, 72, 153",
+      gradient: "linear-gradient(135deg, #ec4899, #f43f5e)",
+    },
+    {
+      title: "Weather App",
+      year: "2025",
+      desc: "A weather application that displays current atmospheric conditions and multi-day forecasts.",
+      tech: ["JavaScript", "OpenWeather API", "CSS", "HTML", "GitHub", "Postman"],
+      repository: "https://github.com/Ream111222333/Weather-group2.git",
+      liveDemo: "https://weather-system-group2.vercel.app/",
+      icon: <FaCloud />,
+      color: "#f59e0b",
+      colorRgb: "245, 158, 11",
+      gradient: "linear-gradient(135deg, #f59e0b, #eab308)",
+    },
+    {
+      title: "Power BI Dashboard",
       year: "2026",
-      desc: "That focuses on COVID-19.",
-      tech: ["Python", "Github", "MySQL"],
+      desc: "Data visualization dashboard focusing on COVID-19 analytics.",
+      tech: ["Python", "Power BI", "GitHub", "MySQL"],
       repository: "https://github.com/Jame2026/Achar-Event-Booking.git",
       liveDemo: "#",
       icon: <FaServer />,
-      color: "#a855f7",
-      colorRgb: "168, 85, 247",
-      gradient: "linear-gradient(135deg, #a855f7, #8b5cf6)",
+      color: "#8b5cf6",
+      colorRgb: "139, 92, 246",
+      gradient: "linear-gradient(135deg, #8b5cf6, #6366f1)",
     },
   ];
 
@@ -208,19 +242,35 @@ function Projects() {
                       <FaGithub className="btn-icon" />
                       <span>{t.projects.viewRepo}</span>
                     </a>
-                    <a
-                      href={proj.liveDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-btn secondary"
-                      style={{
-                        borderColor: proj.color,
-                        color: proj.color,
-                      }}
-                    >
-                      <FaExternalLinkAlt className="btn-icon" />
-                      <span>{t.projects.liveDemo}</span>
-                    </a>
+                    {proj.liveDemo && proj.liveDemo !== "#" ? (
+                      <a
+                        href={proj.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn secondary"
+                        style={{
+                          borderColor: proj.color,
+                          color: proj.color,
+                        }}
+                      >
+                        <FaExternalLinkAlt className="btn-icon" />
+                        <span>{t.projects.liveDemo}</span>
+                      </a>
+                    ) : (
+                      <a
+                        href={proj.repository}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn secondary"
+                        style={{
+                          borderColor: proj.color,
+                          color: proj.color,
+                        }}
+                      >
+                        <FaCode className="btn-icon" />
+                        <span>{lang === "km" ? "Backend API" : "REST API"}</span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

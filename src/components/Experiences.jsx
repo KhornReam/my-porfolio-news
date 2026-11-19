@@ -174,11 +174,11 @@ function Experiences() {
           <div className="header-badge">
             <span className="badge-text">{t.experiences.badge}</span>
           </div>
-          <h2 className="section-title">
-            <span className="title-main">{t.experiences.titleMain}</span>
-            <span className="title-accent">{t.experiences.titleAccent}</span>
+          <h2 className="exp-section-title">
+            <span className="exp-title-main">{t.experiences.titleMain}</span>
+            <span className="exp-title-accent">{t.experiences.titleAccent}</span>
           </h2>
-          <div className="title-underline"></div>
+          <div className="exp-title-underline"></div>
           <p className="section-subtitle">{t.experiences.subtitle}</p>
         </div>
 

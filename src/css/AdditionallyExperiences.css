@@ -48,33 +48,64 @@
   text-transform: uppercase;
 }
 
+.exp-section-title,
+.exp-header .section-title,
 .section-title {
   margin: 0;
   font-size: clamp(2.2rem, 3.8vw, 3.2rem);
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.25 !important;
   letter-spacing: -0.035em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: initial !important;
+  overflow: visible !important;
 }
 
+.exp-title-main,
+.exp-header .title-main,
 .title-main {
   color: #ffffff;
+  display: block;
+  line-height: 1.22;
+  padding: 0 4px;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: initial !important;
+  overflow: visible !important;
+  width: auto !important;
+  height: auto !important;
 }
 
-.title-accent {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 60%, #c084fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.exp-title-accent,
+.exp-header .title-accent {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1.32 !important;
+  padding: 4px 12px 10px !important;
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 60%, #c084fc 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  overflow: visible !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
 }
 
+.exp-title-underline,
+.exp-header .title-underline,
 .title-underline {
   width: 72px;
   height: 4px;
-  margin: 18px auto;
+  margin: 16px auto 20px;
   border-radius: 999px;
   background: linear-gradient(90deg, #38bdf8, #818cf8);
   box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
@@ -932,8 +963,47 @@ body.light-mode .exp-section {
   color: #0f172a;
 }
 
-body.light-mode .title-main {
-  color: #0f172a;
+body.light-mode .exp-section-title,
+body.light-mode .exp-header .section-title {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: initial !important;
+  overflow: visible !important;
+}
+
+body.light-mode .exp-title-main,
+body.light-mode .exp-header .title-main,
+body.light-mode .exp-section .title-main {
+  color: #0f172a !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  overflow: visible !important;
+}
+
+body.light-mode .exp-title-accent,
+body.light-mode .exp-header .title-accent,
+body.light-mode .exp-section .title-accent {
+  width: auto !important;
+  height: auto !important;
+  background: linear-gradient(135deg, #0284c7 0%, #4f46e5 55%, #7c3aed 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  overflow: visible !important;
+  padding: 4px 12px 10px !important;
+  border-radius: 0 !important;
+}
+
+body.light-mode .exp-title-underline,
+body.light-mode .exp-header .title-underline,
+body.light-mode .exp-section .title-underline {
+  background: linear-gradient(90deg, #0284c7, #4f46e5) !important;
+  box-shadow: 0 2px 12px rgba(2, 132, 199, 0.28) !important;
+  margin: 16px auto 20px;
 }
 
 body.light-mode .section-subtitle {

@@ -71,26 +71,26 @@
   color: #ffffff;
 }
 
-.section-title {
+.contact-header .section-title {
   font-size: clamp(2.6rem, 5vw, 3.6rem);
   font-weight: 900;
   margin-bottom: 20px;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.03em;
 }
 
-.title-main {
+.contact-header .title-main {
   display: block;
   color: #ffffff;
 }
 
-.title-accent {
+.contact-header .title-accent {
   display: block;
   color: #8b5cf6;
 }
 
 @supports (background-clip: text) or (-webkit-background-clip: text) {
-  .title-accent {
+  .contact-header .title-accent {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     -webkit-background-clip: text;
     background-clip: text;
@@ -98,7 +98,7 @@
   }
 }
 
-.title-underline {
+.contact-header .title-underline {
   width: 70px;
   height: 4px;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -1332,15 +1332,15 @@
     gap: 30px;
   }
   
-  .section-title {
+  .contact-header .section-title {
     font-size: 64px;
   }
   
-  .title-main {
+  .contact-header .title-main {
     font-size: 56px;
   }
   
-  .title-accent {
+  .contact-header .title-accent {
     font-size: 42px;
   }
 }
@@ -1351,15 +1351,15 @@
     gap: 25px;
   }
   
-  .section-title {
+  .contact-header .section-title {
     font-size: 56px;
   }
   
-  .title-main {
+  .contact-header .title-main {
     font-size: 48px;
   }
   
-  .title-accent {
+  .contact-header .title-accent {
     font-size: 36px;
   }
   
@@ -1381,15 +1381,15 @@
     margin-bottom: 60px;
   }
   
-  .section-title {
+  .contact-header .section-title {
     font-size: 48px;
   }
   
-  .title-main {
+  .contact-header .title-main {
     font-size: 42px;
   }
   
-  .title-accent {
+  .contact-header .title-accent {
     font-size: 32px;
   }
   
@@ -1428,15 +1428,15 @@
 }
 
 @media (max-width: 480px) {
-  .section-title {
+  .contact-header .section-title {
     font-size: 36px;
   }
   
-  .title-main {
+  .contact-header .title-main {
     font-size: 36px;
   }
   
-  .title-accent {
+  .contact-header .title-accent {
     font-size: 28px;
   }
   
@@ -1486,15 +1486,15 @@
 }
 
 @media (max-width: 380px) {
-  .section-title {
+  .contact-header .section-title {
     font-size: 28px;
   }
   
-  .title-main {
+  .contact-header .title-main {
     font-size: 28px;
   }
   
-  .title-accent {
+  .contact-header .title-accent {
     font-size: 22px;
   }
   
@@ -1612,14 +1612,17 @@ body.light-mode .contact-grid-overlay {
                     linear-gradient(90deg, rgba(11, 139, 255, 0.035) 1px, transparent 1px);
 }
 
-body.light-mode .title-main {
+body.light-mode .contact-header .title-main {
   background: linear-gradient(135deg, #0e1726 0%, #0b8bff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-body.light-mode .title-accent,
+body.light-mode .contact-header .title-accent {
+  color: #0b8bff;
+}
+
 body.light-mode .info-value {
   color: #0b8bff;
 }

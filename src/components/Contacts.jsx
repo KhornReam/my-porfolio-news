@@ -199,8 +199,8 @@ function Contact() {
     }
     if (/(project|portfolio|គម្រោង)/i.test(query)) {
       return isKhmer
-        ? "គម្រោងសំខាន់ៗរួមមាន Business Selling System, Weather App, Achar Booking System, E-commerce Platform, Personal Finance Tracker និង Power BI Dashboard។ អ្នកអាចមើលព័ត៌មានលម្អិតនៅផ្នែក Projects។"
-        : "Ream’s featured projects include a product-selling business system, Weather App, Achar Event Booking System, E-commerce Platform, Personal Finance Tracker, and Power BI Dashboard. See the Projects section for links.";
+        ? "គម្រោងសំខាន់ៗរួមមាន My Journey of PNC (Next.js, TypeScript, Docker), Student Management System (Vue.js, Laravel, REST API), Achar Booking System, Personal Finance Tracker, Business Selling System, E-commerce Platform, Weather App និង Power BI Dashboard។ អ្នកអាចមើលព័ត៌មានលម្អិត និង Live Demo នៅផ្នែក Projects!"
+        : "Ream’s featured projects include 'My Journey of PNC' (Next.js, TypeScript, Docker, Vercel), 'Student Management System' (Vue.js, Laravel, REST API, Docker), Achar Event Booking System, Personal Finance Tracker, Product Selling System, E-commerce Platform, Weather App, and Power BI Dashboard. Explore them all with live demos and code in the Projects section!";
     }
     if (/(education|study|school|សិក្សា|ការអប់រំ)/i.test(query)) {
       return isKhmer

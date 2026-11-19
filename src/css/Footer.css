@@ -149,11 +149,12 @@
   gap: 10px;
 }
 
-.title-accent {
+.footer-col-title .title-accent {
   width: 3px;
   height: 16px;
   background: linear-gradient(180deg, #3b82f6, #06b6d4);
   border-radius: 999px;
+  flex-shrink: 0;
 }
 
 /* ===== Brand Column ===== */

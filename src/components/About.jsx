@@ -291,7 +291,7 @@ function About() {
               </div>
             </div>
 
-            {/* Right Column: Clean Editorial Portrait Showcase */}
+            {/* Right Column: 3D Professional Portrait Showcase */}
             <div className="personal-info-right">
               <div className="personal-portrait-card">
                 <div className="portrait-glow-aura" aria-hidden="true"></div>
@@ -308,13 +308,17 @@ function About() {
                       alt="Ream Khorn - Full-Stack Software Engineer"
                       className="portrait-img"
                     />
+                    {/* 3D Specular Glass Reflection Layer */}
+                    <div className="portrait-specular-glass" aria-hidden="true"></div>
                     <div className="portrait-gradient-sheen" aria-hidden="true"></div>
+
+                    {/* Top-Right Professional Zoom Action (Never obscures face) */}
                     <span className="portrait-zoom-pill">
-                      <FaEye /> {lang === "km" ? "មើលរូបភាពពេញ" : "View Portrait"}
+                      <FaEye /> {lang === "km" ? "មើលរូបភាព" : "View Portrait"}
                     </span>
                   </button>
 
-                  {/* Minimal Editorial Caption Bar */}
+                  {/* 3D Docked Editorial Caption Bar */}
                   <div className="portrait-status-pill">
                     <span className="portrait-caption-name">Ream Khorn</span>
                     <span className="portrait-caption-sep" aria-hidden="true">·</span>
@@ -655,6 +659,7 @@ function About() {
                 </div>
                 <div className="expertise-tags-row">
                   <span className="expertise-tag-pill">React.js</span>
+                  <span className="expertise-tag-pill">Next.js</span>
                   <span className="expertise-tag-pill">TypeScript</span>
                   <span className="expertise-tag-pill">Vue.js</span>
                   <span className="expertise-tag-pill">Tailwind CSS</span>
@@ -676,10 +681,11 @@ function About() {
                   <p>{t.about.expertise2Desc}</p>
                 </div>
                 <div className="expertise-tags-row">
-                  <span className="expertise-tag-pill">Node.js</span>
-                  <span className="expertise-tag-pill">Express.js</span>
                   <span className="expertise-tag-pill">Laravel</span>
                   <span className="expertise-tag-pill">REST APIs</span>
+                  <span className="expertise-tag-pill">MySQL</span>
+                  <span className="expertise-tag-pill">Postman</span>
+                  <span className="expertise-tag-pill">Node.js</span>
                 </div>
                 <div className="expertise-card-border" aria-hidden="true"></div>
               </div>
@@ -719,9 +725,10 @@ function About() {
                   <p>{t.about.expertise4Desc}</p>
                 </div>
                 <div className="expertise-tags-row">
-                  <span className="expertise-tag-pill">Git / GitHub</span>
                   <span className="expertise-tag-pill">Docker</span>
                   <span className="expertise-tag-pill">Vercel</span>
+                  <span className="expertise-tag-pill">MVC Architecture</span>
+                  <span className="expertise-tag-pill">Git / GitHub</span>
                   <span className="expertise-tag-pill">CI/CD</span>
                 </div>
                 <div className="expertise-card-border" aria-hidden="true"></div>

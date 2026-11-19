@@ -70,7 +70,7 @@
   font-size: 0.8rem;
 }
 
-.section-title {
+.projects-header .section-title {
   text-align: center;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
@@ -81,7 +81,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-.title-underline {
+.projects-header .title-underline {
   width: 70px;
   height: 4px;
   background: linear-gradient(90deg, #3b82f6, #06b6d4);
@@ -476,14 +476,14 @@ body.light-mode .projects-badge {
   color: #0b8bff;
 }
 
-body.light-mode .section-title {
+body.light-mode .projects-header .section-title {
   background: linear-gradient(90deg, #0b8bff, #3cc6ff);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-body.light-mode .title-underline {
+body.light-mode .projects-header .title-underline {
   background: linear-gradient(90deg, #0b8bff, #3cc6ff);
 }
 
